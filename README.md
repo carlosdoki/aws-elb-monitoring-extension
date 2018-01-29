@@ -1,11 +1,11 @@
-#AWS ELB Monitoring Extension
+# AWS ELB Monitoring Extension
 
-##Use Case
+## Use Case
 Captures ELB statistics from Amazon CloudWatch and displays them in the AppDynamics Metric Browser.
 
 **Note : By default, the Machine agent can only send a fixed number of metrics to the controller. This extension potentially reports thousands of metrics, so to change this limit, please follow the instructions mentioned [here](https://docs.appdynamics.com/display/PRO40/Metrics+Limits).** 
 
-##Prerequisite
+## Prerequisite
 
 If you don't want to provide awsAccessKey and awsSecretKey, please run the extension on EC2 instance and configure Instance Profile by granting below permissions
 
@@ -15,16 +15,16 @@ If you don't want to provide awsAccessKey and awsSecretKey, please run the exten
 "cloudwatch:ListMetrics"
 ~~~
 
-##Installation
+## Installation
 
 1. Run 'mvn clean install' from aws-elb-monitoring-extension
 2. Copy and unzip AWSELBMonitor-\<version\>.zip from 'target' directory into \<machine_agent_dir\>/monitors/
 3. Edit config.yaml file in AWSELBMonitor/conf and provide the required configuration (see Configuration section)
 4. Restart the Machine Agent.
 
-##Configuration
+## Configuration
 
-###config.yaml
+### config.yaml
 
 **Note: Please avoid using tab (\t) when editing yaml files. You may want to validate the yaml file using a [yaml validator](http://yamllint.com/).**
 
@@ -110,7 +110,7 @@ concurrencyConfig:
 metricPrefix: "Custom Metrics|Amazon ELB|"
 ~~~
 
-###AWS Credentials Encryption
+### AWS Credentials Encryption
 To set an encrypted awsAccessKey and awsSecretKey in config.yaml, follow the steps below:
 
 1. Download the util jar to encrypt the AWS Credentials from [here](https://github.com/Appdynamics/maven-repo/blob/master/releases/com/appdynamics/appd-exts-commons/1.1.2/appd-exts-commons-1.1.2.jar).
@@ -127,19 +127,19 @@ To set an encrypted awsAccessKey and awsSecretKey in config.yaml, follow the ste
    	
 3. Set the decryptionKey field in config.yaml with the encryption key used, as well as the resulting encrypted awsAccessKey and awsSecretKey in their respective fields.
 
-##Metrics
+## Metrics
 Typical metric path: **Application Infrastructure Performance|\<Tier\>|Custom Metrics|Amazon ELB|\<Account Name\>|\<Region\>|LoadBalancer Name|\<LoadBalancer Name\>|Availability Zone|\<Availability Zone\>** followed by the metrics defined in the link below:
 
 - [ELB Metrics](http://docs.aws.amazon.com/AmazonCloudWatch/latest/DeveloperGuide/elb-metricscollected.html)
 
-##Contributing
+## Contributing
 
 Always feel free to fork and contribute any changes directly via [GitHub](https://github.com/Appdynamics/aws-elb-monitoring-extension).
 
-##Community
+## Community
 
 Find out more in the [AppSphere](https://www.appdynamics.com/community/exchange/extension/aws-elb-monitoring-extension/) community.
 
-##Support
+## Support
 
 For any questions or feature request, please contact [AppDynamics Center of Excellence](mailto:help@appdynamics.com).
