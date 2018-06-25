@@ -95,8 +95,8 @@ public class ELBMonitor extends SingleNamespaceCloudwatchMonitor<Configuration> 
 
 
         Map<String, String> taskArgs = new HashMap<String, String>();
-        taskArgs.put(CONFIG_ARG, "/Users/Muddam/AppDynamics/Code/extensions/aws-elb-monitoring-extension/src/main/resources/conf/config.yaml");
-        taskArgs.put(CONFIG_REGION_ENDPOINTS_ARG, "/Users/Muddam/AppDynamics/Code/extensions/aws-elb-monitoring-extension/src/main/resources/conf/region-endpoints.yaml");
+        taskArgs.put(CONFIG_ARG, "/Users/Muddam/AppDynamics/Code/extensions/aws-elb-monitoring-extension/src/main/resources/conf/config.yml");
+        taskArgs.put(CONFIG_REGION_ENDPOINTS_ARG, "/Users/Muddam/AppDynamics/Code/extensions/aws-elb-monitoring-extension/src/main/resources/conf/region-endpoints.yml");
 
         monitor.execute(taskArgs, null);
 
