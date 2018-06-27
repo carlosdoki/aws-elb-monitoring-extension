@@ -8,8 +8,6 @@
 
 package com.appdynamics.extensions.aws.elb;
 
-import static com.appdynamics.extensions.aws.Constants.CONFIG_ARG;
-import static com.appdynamics.extensions.aws.Constants.CONFIG_REGION_ENDPOINTS_ARG;
 import static com.appdynamics.extensions.aws.Constants.METRIC_PATH_SEPARATOR;
 
 import com.appdynamics.extensions.aws.SingleNamespaceCloudwatchMonitor;
@@ -22,7 +20,7 @@ import org.apache.log4j.ConsoleAppender;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PatternLayout;
-
+import com.appdynamics.extensions.aws.elb.config.ELBConfiguration;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.HashMap;
@@ -31,30 +29,50 @@ import java.util.Map;
 /**
  * @author Satish Muddam
  */
-public class ELBMonitor extends SingleNamespaceCloudwatchMonitor<Configuration> {
+public class ELBMonitor extends SingleNamespaceCloudwatchMonitor<ELBConfiguration> {
 
-    private static final Logger LOGGER = Logger.getLogger("com.singularity.extensions.aws.ELBMonitor");
+    private static final Logger LOGGER = Logger.getLogger(ELBMonitor.class);
 
     private static final String DEFAULT_METRIC_PREFIX = String.format("%s%s%s%s",
             "Custom Metrics", METRIC_PATH_SEPARATOR, "Amazon ELB", METRIC_PATH_SEPARATOR);
 
     public ELBMonitor() {
-        super(Configuration.class);
-        LOGGER.info(String.format("Using AWS ELB Monitor Version [%s]",
-                this.getClass().getPackage().getImplementationTitle()));
+        super(ELBConfiguration.class);
     }
 
     @Override
+    public String getDefaultMetricPrefix() {
+        return DEFAULT_METRIC_PREFIX;
+    }
+
+    @Override
+    public String getMonitorName() {
+        return "ELBMonitor";
+    }
+
+    @Override
+    protected int getTaskCount() {
+        return 3;
+    }
+
+    @Override
+    protected void initialize(ELBConfiguration config) {
+        super.initialize(config);
+    }
+
+
+    @Override
     protected NamespaceMetricStatisticsCollector getNamespaceMetricsCollector(
-            Configuration config) {
+            ELBConfiguration config) {
         MetricsProcessor metricsProcessor = createMetricsProcessor(config);
 
         return new NamespaceMetricStatisticsCollector
                 .Builder(config.getAccounts(),
                 config.getConcurrencyConfig(),
                 config.getMetricsConfig(),
-                metricsProcessor)
-                .withCredentialsEncryptionConfig(config.getCredentialsDecryptionConfig())
+                metricsProcessor,
+                config.getMetricPrefix())
+                .withCredentialsDecryptionConfig(config.getCredentialsDecryptionConfig())
                 .withProxyConfig(config.getProxyConfig())
                 .build();
     }
@@ -64,16 +82,11 @@ public class ELBMonitor extends SingleNamespaceCloudwatchMonitor<Configuration> 
         return LOGGER;
     }
 
-    @Override
-    protected String getMetricPrefix(Configuration config) {
-        return StringUtils.isNotBlank(config.getMetricPrefix()) ?
-                config.getMetricPrefix() : DEFAULT_METRIC_PREFIX;
-    }
 
-    private MetricsProcessor createMetricsProcessor(Configuration config) {
+    private MetricsProcessor createMetricsProcessor(ELBConfiguration config) {
         return new ELBMetricsProcessor(
-                config.getMetricsConfig().getMetricTypes(),
-                config.getMetricsConfig().getExcludeMetrics());
+                config.getMetricsConfig().getIncludeMetrics(),
+                config.getIncludeLoadBalancerName());
     }
 
 
@@ -95,9 +108,7 @@ public class ELBMonitor extends SingleNamespaceCloudwatchMonitor<Configuration> 
 
 
         Map<String, String> taskArgs = new HashMap<String, String>();
-        taskArgs.put(CONFIG_ARG, "/Users/Muddam/AppDynamics/Code/extensions/aws-elb-monitoring-extension/src/main/resources/conf/config.yml");
-        taskArgs.put(CONFIG_REGION_ENDPOINTS_ARG, "/Users/Muddam/AppDynamics/Code/extensions/aws-elb-monitoring-extension/src/main/resources/conf/region-endpoints.yml");
-
+        taskArgs.put("config-file", "/Users/Muddam/AppDynamics/Code/extensions/aws-elb-monitoring-extension/src/main/resources/conf/config.yml");
         monitor.execute(taskArgs, null);
 
     }

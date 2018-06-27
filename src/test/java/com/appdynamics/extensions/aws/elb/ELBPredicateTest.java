@@ -9,7 +9,7 @@
 package com.appdynamics.extensions.aws.elb;
 
 /**
- * Created by bhuvnesh.kumar on 6/25/18.
+ * Created by bhuvnesh.kumar on 6/27/18.
  */
-public class ELBMetricPredicate {
+public class ELBPredicateTest {
 }

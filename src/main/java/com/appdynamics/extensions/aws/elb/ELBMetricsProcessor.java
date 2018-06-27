@@ -9,17 +9,18 @@
 package com.appdynamics.extensions.aws.elb;
 
 import com.amazonaws.services.cloudwatch.AmazonCloudWatch;
+import com.amazonaws.services.cloudwatch.model.DimensionFilter;
 import com.amazonaws.services.cloudwatch.model.Metric;
-import com.appdynamics.extensions.aws.config.MetricType;
+import com.appdynamics.extensions.aws.config.IncludeMetric;
+import com.appdynamics.extensions.aws.dto.AWSMetric;
 import com.appdynamics.extensions.aws.metric.NamespaceMetricStatistics;
 import com.appdynamics.extensions.aws.metric.StatisticType;
 import com.appdynamics.extensions.aws.metric.processors.MetricsProcessor;
 import com.appdynamics.extensions.aws.metric.processors.MetricsProcessorHelper;
+import org.apache.log4j.Logger;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+import java.util.concurrent.atomic.LongAdder;
 import java.util.regex.Pattern;
 
 /**
@@ -27,35 +28,48 @@ import java.util.regex.Pattern;
  */
 public class ELBMetricsProcessor implements MetricsProcessor {
 
+    private static final Logger LOGGER = Logger.getLogger(ELBMetricsProcessor.class);
+
     private static final String NAMESPACE = "AWS/ELB";
 
-    private static final String[] DIMENSIONS = {"LoadBalancerName", "AvailabilityZone"};
+    private static final String DIMENSIONS = "LoadBalancerName";
 
-    private List<MetricType> metricTypes;
+    private List<IncludeMetric> includeMetrics;
+    private List<String> includeLoadBalancerName;
 
-    private Pattern excludeMetricsPattern;
-
-    public ELBMetricsProcessor(List<MetricType> metricTypes,
-                               Set<String> excludeMetrics) {
-        this.metricTypes = metricTypes;
-        this.excludeMetricsPattern = MetricsProcessorHelper.createPattern(excludeMetrics);
+    public ELBMetricsProcessor(List<IncludeMetric> includeMetrics, List<String> includeLoadBalancerName) {
+        this.includeMetrics = includeMetrics;
+        this.includeLoadBalancerName = includeLoadBalancerName;
     }
 
-    public List<Metric> getMetrics(AmazonCloudWatch awsCloudWatch, String accountName) {
-        return MetricsProcessorHelper.getFilteredMetrics(awsCloudWatch,
+    public List<AWSMetric> getMetrics(AmazonCloudWatch awsCloudWatch, String accountName, LongAdder awsRequestsCounter) {
+        List<DimensionFilter> dimensions = getDimensionFilters();
+
+        ELBPredicate predicate = new ELBPredicate(includeLoadBalancerName);
+
+        return MetricsProcessorHelper.getFilteredMetrics(awsCloudWatch, awsRequestsCounter,
                 NAMESPACE,
-                excludeMetricsPattern,
-                DIMENSIONS);
+                includeMetrics,
+                dimensions,
+                predicate);
+
     }
 
-    public StatisticType getStatisticType(Metric metric) {
-        return MetricsProcessorHelper.getStatisticType(metric, metricTypes);
+    private List<DimensionFilter> getDimensionFilters() {
+        List<DimensionFilter> dimensions = new ArrayList<DimensionFilter>();
+        DimensionFilter dimensionFilter = new DimensionFilter();
+        dimensionFilter.withName(DIMENSIONS);
+        dimensions.add(dimensionFilter);
+        return dimensions;
     }
 
-    public Map<String, Double> createMetricStatsMapForUpload(NamespaceMetricStatistics namespaceMetricStats) {
+    public StatisticType getStatisticType(AWSMetric metric) {
+        return MetricsProcessorHelper.getStatisticType(metric.getIncludeMetric(), includeMetrics);
+    }
+
+    public List<com.appdynamics.extensions.metrics.Metric> createMetricStatsMapForUpload(NamespaceMetricStatistics namespaceMetricStats) {
         Map<String, String> dimensionToMetricPathNameDictionary = new HashMap<String, String>();
-        dimensionToMetricPathNameDictionary.put(DIMENSIONS[0], "LoadBalancer Name");
-        dimensionToMetricPathNameDictionary.put(DIMENSIONS[1], "Availability Zone");
+        dimensionToMetricPathNameDictionary.put(DIMENSIONS, "Load Balancer Name");
 
         return MetricsProcessorHelper.createMetricStatsMapForUpload(namespaceMetricStats,
                 dimensionToMetricPathNameDictionary, false);

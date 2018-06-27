@@ -15,13 +15,13 @@ import java.util.List;
 
 public class ELBConfiguration extends Configuration {
 
-    private List<String> includeDBIdentifiers;
+    private List<String> includeLoadBalancerName;
 
-    public List<String> getIncludeDBIdentifiers() {
-        return includeDBIdentifiers;
+    public List<String> getIncludeLoadBalancerName() {
+        return includeLoadBalancerName;
     }
 
-    public void setIncludeDBIdentifiers(List<String> includeDBIdentifiers) {
-        this.includeDBIdentifiers = includeDBIdentifiers;
+    public void setIncludeLoadBalancerName(List<String> includeLoadBalancerName) {
+        this.includeLoadBalancerName = includeLoadBalancerName;
     }
 }
