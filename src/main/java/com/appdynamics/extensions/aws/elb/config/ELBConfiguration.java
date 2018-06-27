@@ -17,6 +17,11 @@ public class ELBConfiguration extends Configuration {
 
     private List<String> includeLoadBalancerName;
 
+
+    private String namespace;
+
+    private String dimensionName;
+
     public List<String> getIncludeLoadBalancerName() {
         return includeLoadBalancerName;
     }
@@ -24,4 +29,20 @@ public class ELBConfiguration extends Configuration {
     public void setIncludeLoadBalancerName(List<String> includeLoadBalancerName) {
         this.includeLoadBalancerName = includeLoadBalancerName;
     }
+    public String getDimensionName() {
+        return dimensionName;
+    }
+
+    public void setDimensionName(String dimensionName) {
+        this.dimensionName = dimensionName;
+    }
+
+    public String getNamespace() {
+        return namespace;
+    }
+
+    public void setNamespace(String namespace) {
+        this.namespace = namespace;
+    }
+
 }

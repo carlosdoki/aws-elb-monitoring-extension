@@ -4,6 +4,9 @@
 
 #This will create it in specific Tier aka Component. Replace <COMPONENT_ID>. Please make sure to have a trailing |.
 #To find out the COMPONENT_ID, please see the screen shot here https://docs.appdynamics.com/display/PRO42/Build+a+Monitoring+Extension+Using+Java
+
+# Metric list can be found here : https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/elb-metricscollected.html
+
 metricPrefix: "Server|Component:<TIER_ID>|Custom Metrics|Amazon ELB|"
 
 accounts:
@@ -27,9 +30,15 @@ proxyConfig:
     username:
     password:
 
+# ELB has three different types of Load Balancers
+# Classic (namespace : "AWS/ELB")
+# Application (namespace : "AWS/ApplicationELB")
+# Network (namespace : "AWS/NetworkELB")
 
+namespace: "AWS/ELB"
+dimension: "LoadBalancerName"
 #Filters metrics based on Availability Zone names provided. Accepts regex patterns
-includeLoadBalancerName: ["us-east-1a", "us-east-1b", "us-east-1c", "us-east-1d", "us-east-1e", "us-east-1f"]
+includeLoadBalancerName: ["us-east-1a", "blog-*", "demos"]
 
 
 concurrencyConfig:

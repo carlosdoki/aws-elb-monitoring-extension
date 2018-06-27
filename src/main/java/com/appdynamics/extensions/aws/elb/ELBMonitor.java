@@ -86,7 +86,9 @@ public class ELBMonitor extends SingleNamespaceCloudwatchMonitor<ELBConfiguratio
     private MetricsProcessor createMetricsProcessor(ELBConfiguration config) {
         return new ELBMetricsProcessor(
                 config.getMetricsConfig().getIncludeMetrics(),
-                config.getIncludeLoadBalancerName());
+                config.getIncludeLoadBalancerName(),
+                config.getDimensionName(),
+                config.getNamespace());
     }
 
 
@@ -108,7 +110,7 @@ public class ELBMonitor extends SingleNamespaceCloudwatchMonitor<ELBConfiguratio
 
 
         Map<String, String> taskArgs = new HashMap<String, String>();
-        taskArgs.put("config-file", "/Users/Muddam/AppDynamics/Code/extensions/aws-elb-monitoring-extension/src/main/resources/conf/config.yml");
+        taskArgs.put("config-file", "/Users/bhuvnesh.kumar/repos/appdynamics/extensions/aws-elb-monitoring-extension/src/main/resources/conf/config.yml");
         monitor.execute(taskArgs, null);
 
     }

@@ -8,17 +8,12 @@ metricPrefix: "Server|Component:<TIER_ID>|Custom Metrics|Amazon ELB|"
 accounts:
   - awsAccessKey: ""
     awsSecretKey: ""
-    displayAccountName: "AppD"
-
-    # Regions where cloudwatch is registered
-    # Allowed values: ap-southeast-1, ap-southeast-2, ap-northeast-1, eu-central-1,
-    #                 us-east-1, eu-west-1, us-west-1, us-west-2, sa-east-1
-    #
-    regions: ["us-west-2"]
+    displayAccountName: "TestAccount"
+    regions: ["us-east-1", "us-west-1", "us-west-2"]
 
 credentialsDecryptionConfig:
     enableDecryption: "true"
-    decryptionKey: "test"
+    encryptionKey: "test"
 
 proxyConfig:
     host: 54.72.204.154
@@ -26,9 +21,8 @@ proxyConfig:
     username:
     password:
 
-
 #Filters metrics based on Availability Zone names provided. Accepts regex patterns
-includeAvailabilityZone: ["us-east-1a", "us-east-1b", "us-east-1c", "us-east-1d", "us-east-1e", "us-east-1f"]
+includeLoadBalancerName: ["us-east-1a", "us-east-1b", "us-east-1c", "us-east-1d", "us-east-1e", "us-east-1f"]
 
 
 

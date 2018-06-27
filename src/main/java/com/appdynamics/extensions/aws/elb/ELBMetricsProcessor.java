@@ -23,23 +23,24 @@ import java.util.*;
 import java.util.concurrent.atomic.LongAdder;
 import java.util.regex.Pattern;
 
-/**
- * @author Satish Muddam
- */
 public class ELBMetricsProcessor implements MetricsProcessor {
 
     private static final Logger LOGGER = Logger.getLogger(ELBMetricsProcessor.class);
 
-    private static final String NAMESPACE = "AWS/ELB";
-
-    private static final String DIMENSIONS = "LoadBalancerName";
+//    private static final String NAMESPACE = "AWS/ELB";
+//
+//    private static final String DIMENSION = "LoadBalancerName";
 
     private List<IncludeMetric> includeMetrics;
     private List<String> includeLoadBalancerName;
+    private String dimension;
+    private String namespace;
 
-    public ELBMetricsProcessor(List<IncludeMetric> includeMetrics, List<String> includeLoadBalancerName) {
+    public ELBMetricsProcessor(List<IncludeMetric> includeMetrics, List<String> includeLoadBalancerName, String dimension, String namespace) {
         this.includeMetrics = includeMetrics;
         this.includeLoadBalancerName = includeLoadBalancerName;
+        this.dimension = dimension;
+        this.namespace = namespace;
     }
 
     public List<AWSMetric> getMetrics(AmazonCloudWatch awsCloudWatch, String accountName, LongAdder awsRequestsCounter) {
@@ -48,17 +49,16 @@ public class ELBMetricsProcessor implements MetricsProcessor {
         ELBPredicate predicate = new ELBPredicate(includeLoadBalancerName);
 
         return MetricsProcessorHelper.getFilteredMetrics(awsCloudWatch, awsRequestsCounter,
-                NAMESPACE,
+                namespace,
                 includeMetrics,
                 dimensions,
                 predicate);
-
     }
 
     private List<DimensionFilter> getDimensionFilters() {
         List<DimensionFilter> dimensions = new ArrayList<DimensionFilter>();
         DimensionFilter dimensionFilter = new DimensionFilter();
-        dimensionFilter.withName(DIMENSIONS);
+        dimensionFilter.withName(dimension);
         dimensions.add(dimensionFilter);
         return dimensions;
     }
@@ -69,14 +69,14 @@ public class ELBMetricsProcessor implements MetricsProcessor {
 
     public List<com.appdynamics.extensions.metrics.Metric> createMetricStatsMapForUpload(NamespaceMetricStatistics namespaceMetricStats) {
         Map<String, String> dimensionToMetricPathNameDictionary = new HashMap<String, String>();
-        dimensionToMetricPathNameDictionary.put(DIMENSIONS, "Load Balancer Name");
+        dimensionToMetricPathNameDictionary.put(dimension, "Load Balancer Name");
 
         return MetricsProcessorHelper.createMetricStatsMapForUpload(namespaceMetricStats,
                 dimensionToMetricPathNameDictionary, false);
     }
 
     public String getNamespace() {
-        return NAMESPACE;
+        return namespace;
     }
 
 }
