@@ -21,9 +21,10 @@ proxyConfig:
     username:
     password:
 
+namespace: "AWS/ELB"
+dimensionName: "LoadBalancerName"
 #Filters metrics based on Availability Zone names provided. Accepts regex patterns
-includeLoadBalancerName: ["us-east-1a", "us-east-1b", "us-east-1c", "us-east-1d", "us-east-1e", "us-east-1f"]
-
+includeLoadBalancerName: ["us-east-1a", "blog-*", "demos"]
 
 
 concurrencyConfig:
