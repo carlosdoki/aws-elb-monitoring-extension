@@ -21,10 +21,23 @@ proxyConfig:
     username:
     password:
 
+# ELB has three different types of Load Balancers and all of them have their own Namespaces
+# Each namespace has different Dimensions and each dimension can have different values
+
+# Classic (namespace : "AWS/ELB")
+# Dimensions : AvailabilityZone, LoadBalancerName
+
+# Application (namespace : "AWS/ApplicationELB")
+# Dimensions : AvailabilityZone, LoadBalancer, TargetGroup
+
+# Network (namespace : "AWS/NetworkELB")
+# Dimensions : AvailabilityZone, LoadBalancer, TargetGroup
+
 namespace: "AWS/ELB"
 dimensionName: "LoadBalancerName"
 #Filters metrics based on Availability Zone names provided. Accepts regex patterns
-includeLoadBalancerName: ["us-east-1a", "blog-*", "demos"]
+includeDimensionValueName: ["us-east-1a", "blog-*", "demos"]
+
 
 
 concurrencyConfig:
