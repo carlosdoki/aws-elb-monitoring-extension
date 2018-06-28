@@ -23,17 +23,17 @@ public class ELBPredicate implements Predicate<Metric> {
     private static final Logger LOGGER = Logger.getLogger(ELBPredicate.class);
 
 
-    private List<String> includeLoadBalancerName;
+    private List<String> includeDimensionValueName;
     private Predicate<CharSequence> patternPredicate;
 
-    public ELBPredicate(List<String> includeLoadBalancerName){
-        this.includeLoadBalancerName = includeLoadBalancerName;
+    public ELBPredicate(List<String> includeDimensionValueName){
+        this.includeDimensionValueName = includeDimensionValueName;
         build();
     }
 
     private void build(){
-        if(includeLoadBalancerName != null && !includeLoadBalancerName.isEmpty()){
-            for(String pattern : includeLoadBalancerName){
+        if(includeDimensionValueName != null && !includeDimensionValueName.isEmpty()){
+            for(String pattern : includeDimensionValueName){
                 Predicate<CharSequence> charSequencePredicate = Predicates.containsPattern(pattern);
                 if(patternPredicate == null){
                     patternPredicate = charSequencePredicate;
@@ -42,7 +42,7 @@ public class ELBPredicate implements Predicate<Metric> {
                 }
             }
         }else {
-            LOGGER.warn("includeLoadBalancer in config.yml not configured, hence not monitoring any tableNames");
+            LOGGER.warn("includeDimensionValueName in config.yml not configured, hence not monitoring any tableNames");
         }
     }
 
@@ -51,9 +51,9 @@ public class ELBPredicate implements Predicate<Metric> {
             return false;
         }
 
-        String loadBalancerName = metric.getDimensions().get(0).getValue();
+        String dimensionValueName = metric.getDimensions().get(0).getValue();
 
-        return patternPredicate.apply(loadBalancerName);
+        return patternPredicate.apply(dimensionValueName);
     }
 
     public Predicate<CharSequence> getPatternPredicate(){

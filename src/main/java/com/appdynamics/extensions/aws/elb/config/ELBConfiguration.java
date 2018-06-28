@@ -15,19 +15,19 @@ import java.util.List;
 
 public class ELBConfiguration extends Configuration {
 
-    private List<String> includeLoadBalancerName;
+    private List<String> includeDimensionValueName;
 
 
     private String namespace;
 
     private String dimensionName;
 
-    public List<String> getIncludeLoadBalancerName() {
-        return includeLoadBalancerName;
+    public List<String> getincludeDimensionValueName() {
+        return includeDimensionValueName;
     }
 
-    public void setIncludeLoadBalancerName(List<String> includeLoadBalancerName) {
-        this.includeLoadBalancerName = includeLoadBalancerName;
+    public void setincludeDimensionValueName(List<String> includeLoadBalancerName) {
+        this.includeDimensionValueName = includeLoadBalancerName;
     }
     public String getDimensionName() {
         return dimensionName;

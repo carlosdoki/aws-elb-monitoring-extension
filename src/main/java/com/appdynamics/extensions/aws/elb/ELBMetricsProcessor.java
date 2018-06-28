@@ -32,13 +32,13 @@ public class ELBMetricsProcessor implements MetricsProcessor {
 //    private static final String DIMENSION = "LoadBalancerName";
 
     private List<IncludeMetric> includeMetrics;
-    private List<String> includeLoadBalancerName;
+    private List<String> includeDimensionValueName;
     private String dimension;
     private String namespace;
 
-    public ELBMetricsProcessor(List<IncludeMetric> includeMetrics, List<String> includeLoadBalancerName, String dimension, String namespace) {
+    public ELBMetricsProcessor(List<IncludeMetric> includeMetrics, List<String> includeDimensionValueName, String dimension, String namespace) {
         this.includeMetrics = includeMetrics;
-        this.includeLoadBalancerName = includeLoadBalancerName;
+        this.includeDimensionValueName = includeDimensionValueName;
         this.dimension = dimension;
         this.namespace = namespace;
     }
@@ -46,7 +46,7 @@ public class ELBMetricsProcessor implements MetricsProcessor {
     public List<AWSMetric> getMetrics(AmazonCloudWatch awsCloudWatch, String accountName, LongAdder awsRequestsCounter) {
         List<DimensionFilter> dimensions = getDimensionFilters();
 
-        ELBPredicate predicate = new ELBPredicate(includeLoadBalancerName);
+        ELBPredicate predicate = new ELBPredicate(includeDimensionValueName);
 
         return MetricsProcessorHelper.getFilteredMetrics(awsCloudWatch, awsRequestsCounter,
                 namespace,
@@ -69,7 +69,7 @@ public class ELBMetricsProcessor implements MetricsProcessor {
 
     public List<com.appdynamics.extensions.metrics.Metric> createMetricStatsMapForUpload(NamespaceMetricStatistics namespaceMetricStats) {
         Map<String, String> dimensionToMetricPathNameDictionary = new HashMap<String, String>();
-        dimensionToMetricPathNameDictionary.put(dimension, "Load Balancer Name");
+        dimensionToMetricPathNameDictionary.put(dimension, "Dimension Value");
 
         return MetricsProcessorHelper.createMetricStatsMapForUpload(namespaceMetricStats,
                 dimensionToMetricPathNameDictionary, false);
