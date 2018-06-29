@@ -77,7 +77,9 @@ Configure "enableDecryption" of "credentialsDecryptionConfig" to true and provid
 
     ```
 
-5. Configure the metrics section.
+5. All the metrics listed in the config.yml have been divided in three sections. The first one is for Classic Load Balancers, the second one is for Application Load Balancers and the third one is for Network Load Balancers.
+When configuring the config.yml, please uncomment the metrics for your namespace and comment the rest out. Metrics for each of the namespace have already been configured and added to the config.yml.
+6. Configure the metrics section.
 
      For configuring the metrics, the following properties can be used:
 
