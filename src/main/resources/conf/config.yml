@@ -44,7 +44,7 @@ proxyConfig:
 
 namespace: "AWS/ELB"
 dimensionName: "LoadBalancerName"
-#Filters metrics based on Availability Zone names provided. Accepts regex patterns
+# Filters metrics based on the Dimension Value names provided. Accepts regex patterns
 includeDimensionValueName: ["us-east-1a", "blog-*", "demos"]
 
 
