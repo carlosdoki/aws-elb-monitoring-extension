@@ -60,8 +60,8 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>2.3.2</version>
 				<configuration>
-					<source>1.5</source>
-					<target>1.5</target>
+					<source>1.8</source>
+					<target>1.8</target>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -161,6 +161,22 @@
 				<configuration>
 					<tag>${project.artifactId}-${project.version}</tag>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>com.appdynamics.maven.plugin</groupId>
+				<artifactId>yaml-validate-maven-plugin</artifactId>
+				<version>1.0</version>
+				<configuration>
+					<yamlPath>src/main/resources/conf/config.yml</yamlPath>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>validate</phase>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
