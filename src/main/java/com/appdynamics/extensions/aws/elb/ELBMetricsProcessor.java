@@ -69,8 +69,9 @@ public class ELBMetricsProcessor implements MetricsProcessor {
                 dimensionToMetricPathNameDictionary, false);
     }
 
-    public String getNAMESPACE() {
+    public String getNamespace() {
         return NAMESPACE;
     }
+
 
 }

@@ -17,9 +17,6 @@ public class ELBConfiguration extends Configuration {
 
     private List<String> includeDimensionValueName;
 
-
-    private String namespace;
-
     private String dimensionName;
 
     public List<String> getincludeDimensionValueName() {
@@ -35,14 +32,6 @@ public class ELBConfiguration extends Configuration {
 
     public void setDimensionName(String dimensionName) {
         this.dimensionName = dimensionName;
-    }
-
-    public String getNamespace() {
-        return namespace;
-    }
-
-    public void setNamespace(String namespace) {
-        this.namespace = namespace;
     }
 
 }
