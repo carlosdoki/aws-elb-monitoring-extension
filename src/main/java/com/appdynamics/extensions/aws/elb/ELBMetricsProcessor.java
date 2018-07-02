@@ -10,7 +10,6 @@ package com.appdynamics.extensions.aws.elb;
 
 import com.amazonaws.services.cloudwatch.AmazonCloudWatch;
 import com.amazonaws.services.cloudwatch.model.DimensionFilter;
-import com.amazonaws.services.cloudwatch.model.Metric;
 import com.appdynamics.extensions.aws.config.IncludeMetric;
 import com.appdynamics.extensions.aws.dto.AWSMetric;
 import com.appdynamics.extensions.aws.metric.NamespaceMetricStatistics;
@@ -21,26 +20,21 @@ import org.apache.log4j.Logger;
 
 import java.util.*;
 import java.util.concurrent.atomic.LongAdder;
-import java.util.regex.Pattern;
 
 public class ELBMetricsProcessor implements MetricsProcessor {
 
     private static final Logger LOGGER = Logger.getLogger(ELBMetricsProcessor.class);
 
-//    private static final String NAMESPACE = "AWS/ELB";
-//
-//    private static final String DIMENSION = "LoadBalancerName";
 
     private List<IncludeMetric> includeMetrics;
     private List<String> includeDimensionValueName;
     private String dimension;
-    private String namespace;
+    private static final String NAMESPACE = "AWS/ELB";
 
-    public ELBMetricsProcessor(List<IncludeMetric> includeMetrics, List<String> includeDimensionValueName, String dimension, String namespace) {
+    public ELBMetricsProcessor(List<IncludeMetric> includeMetrics, List<String> includeDimensionValueName, String dimension) {
         this.includeMetrics = includeMetrics;
         this.includeDimensionValueName = includeDimensionValueName;
         this.dimension = dimension;
-        this.namespace = namespace;
     }
 
     public List<AWSMetric> getMetrics(AmazonCloudWatch awsCloudWatch, String accountName, LongAdder awsRequestsCounter) {
@@ -49,7 +43,7 @@ public class ELBMetricsProcessor implements MetricsProcessor {
         ELBPredicate predicate = new ELBPredicate(includeDimensionValueName);
 
         return MetricsProcessorHelper.getFilteredMetrics(awsCloudWatch, awsRequestsCounter,
-                namespace,
+                NAMESPACE,
                 includeMetrics,
                 dimensions,
                 predicate);
@@ -75,8 +69,8 @@ public class ELBMetricsProcessor implements MetricsProcessor {
                 dimensionToMetricPathNameDictionary, false);
     }
 
-    public String getNamespace() {
-        return namespace;
+    public String getNAMESPACE() {
+        return NAMESPACE;
     }
 
 }

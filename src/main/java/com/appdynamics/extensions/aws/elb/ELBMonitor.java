@@ -87,8 +87,7 @@ public class ELBMonitor extends SingleNamespaceCloudwatchMonitor<ELBConfiguratio
         return new ELBMetricsProcessor(
                 config.getMetricsConfig().getIncludeMetrics(),
                 config.getincludeDimensionValueName(),
-                config.getDimensionName(),
-                config.getNamespace());
+                config.getDimensionName());
     }
 
 
