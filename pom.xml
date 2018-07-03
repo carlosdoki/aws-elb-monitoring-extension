@@ -103,12 +103,27 @@
 								<transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
 									<manifestEntries>
 										<Implementation-Title>AWS ELB Monitor v${project.version} Build Date ${maven.build.timestamp}</Implementation-Title>
+
 									</manifestEntries>
 								</transformer>
 							</transformers>
 						</configuration>
 					</execution>
 				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.4</version>
+				<configuration>
+					<archive>
+						<manifestEntries>
+							<Implementation-Title>AWS ELB Monitor v${project.version} Build Date ${maven.build.timestamp}
+							</Implementation-Title>
+							<Main-Class>com.appdynamics.extensions.workbench.WorkbenchServerLauncher</Main-Class>
+						</manifestEntries>
+					</archive>
+				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -162,22 +177,22 @@
 					<tag>${project.artifactId}-${project.version}</tag>
 				</configuration>
 			</plugin>
-			<!--<plugin>-->
-				<!--<groupId>com.appdynamics.maven.plugin</groupId>-->
-				<!--<artifactId>yaml-validate-maven-plugin</artifactId>-->
-				<!--<version>1.0</version>-->
-				<!--<configuration>-->
-					<!--<yamlPath>src/main/resources/conf/config.yml</yamlPath>-->
-				<!--</configuration>-->
-				<!--<executions>-->
-					<!--<execution>-->
-						<!--<phase>validate</phase>-->
-						<!--<goals>-->
-							<!--<goal>check</goal>-->
-						<!--</goals>-->
-					<!--</execution>-->
-				<!--</executions>-->
-			<!--</plugin>-->
+			<plugin>
+				<groupId>com.appdynamics.maven.plugin</groupId>
+				<artifactId>yaml-validate-maven-plugin</artifactId>
+				<version>1.0</version>
+				<configuration>
+					<yamlPath>src/main/resources/conf/config.yml</yamlPath>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>validate</phase>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 
