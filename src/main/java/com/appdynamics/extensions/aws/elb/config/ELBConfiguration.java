@@ -11,6 +11,7 @@ package com.appdynamics.extensions.aws.elb.config;
 import com.appdynamics.extensions.aws.config.Configuration;
 
 import java.util.List;
+import java.util.Map;
 
 
 public class ELBConfiguration extends Configuration {
@@ -18,6 +19,8 @@ public class ELBConfiguration extends Configuration {
     private List<String> includeDimensionValueName;
 
     private String dimensionName;
+
+    private Map customDashboard;
 
     public List<String> getincludeDimensionValueName() {
         return includeDimensionValueName;
@@ -33,5 +36,14 @@ public class ELBConfiguration extends Configuration {
     public void setDimensionName(String dimensionName) {
         this.dimensionName = dimensionName;
     }
+
+    public Map getCustomDashboard() {
+        return customDashboard;
+    }
+
+    public void setCustomDashboard(Map customDashboard) {
+        this.customDashboard = customDashboard;
+    }
+
 
 }

@@ -16,6 +16,7 @@ import com.appdynamics.extensions.aws.metric.NamespaceMetricStatistics;
 import com.appdynamics.extensions.aws.metric.StatisticType;
 import com.appdynamics.extensions.aws.metric.processors.MetricsProcessor;
 import com.appdynamics.extensions.aws.metric.processors.MetricsProcessorHelper;
+import com.appdynamics.extensions.dashboard.CustomDashboardTask;
 import org.apache.log4j.Logger;
 
 import java.util.*;
@@ -31,10 +32,15 @@ public class ELBMetricsProcessor implements MetricsProcessor {
     private String dimension;
     private static final String NAMESPACE = "AWS/ELB";
 
-    public ELBMetricsProcessor(List<IncludeMetric> includeMetrics, List<String> includeDimensionValueName, String dimension) {
+
+    private CustomDashboardTask dashboardTask = new CustomDashboardTask();
+    private Map customDashboard;
+
+    public ELBMetricsProcessor(List<IncludeMetric> includeMetrics, List<String> includeDimensionValueName, String dimension, Map customDashboard) {
         this.includeMetrics = includeMetrics;
         this.includeDimensionValueName = includeDimensionValueName;
         this.dimension = dimension;
+        this.customDashboard = customDashboard;
     }
 
     public List<AWSMetric> getMetrics(AmazonCloudWatch awsCloudWatch, String accountName, LongAdder awsRequestsCounter) {
@@ -73,5 +79,27 @@ public class ELBMetricsProcessor implements MetricsProcessor {
         return NAMESPACE;
     }
 
+    private void getDashboardInfo(){
+        Set<String> instanceNames = getInstanceNames(customDashboard);
 
-}
+    }
+
+    private static Set<String> getInstanceNames(Map<String, ?> config) {
+        Map instances = (Map) config.get("accounts");
+        Set<String> names = new HashSet<String>();
+        if (instances != null) {
+            String name = (String) instances.get("displayAccountName");
+            if (name != null) {
+                names.add(name);
+            } else {
+                names.add("");
+            }
+        }
+
+        return names;
+
+    }
+
+
+
+    }

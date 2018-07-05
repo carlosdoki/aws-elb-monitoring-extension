@@ -12,17 +12,16 @@ import static com.appdynamics.extensions.aws.Constants.METRIC_PATH_SEPARATOR;
 
 import com.appdynamics.extensions.aws.SingleNamespaceCloudwatchMonitor;
 import com.appdynamics.extensions.aws.collectors.NamespaceMetricStatisticsCollector;
-import com.appdynamics.extensions.aws.config.Configuration;
 import com.appdynamics.extensions.aws.metric.processors.MetricsProcessor;
 import com.singularity.ee.agent.systemagent.api.exception.TaskExecutionException;
-import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.ConsoleAppender;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PatternLayout;
 import com.appdynamics.extensions.aws.elb.config.ELBConfiguration;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
+import org.yaml.snakeyaml.Yaml;
+
+import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -82,12 +81,28 @@ public class ELBMonitor extends SingleNamespaceCloudwatchMonitor<ELBConfiguratio
         return LOGGER;
     }
 
+    @Override
+    protected Map onConfigReload(File file) {
+        super.onConfigReload(file);
+
+        Yaml yaml = new Yaml();
+        Map config = new HashMap();
+        try {
+
+            config = yaml.loadAs(new FileInputStream(file), Map.class);
+        } catch (FileNotFoundException e) {
+            getLogger().error("Error wile reading the config file", e);
+        }
+
+        return config;
+    }
 
     private MetricsProcessor createMetricsProcessor(ELBConfiguration config) {
         return new ELBMetricsProcessor(
                 config.getMetricsConfig().getIncludeMetrics(),
                 config.getincludeDimensionValueName(),
-                config.getDimensionName());
+                config.getDimensionName(),
+                config.getCustomDashboard());
     }
 
 
