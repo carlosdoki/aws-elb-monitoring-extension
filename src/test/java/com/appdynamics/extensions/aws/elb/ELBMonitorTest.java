@@ -17,7 +17,7 @@ import org.junit.Test;
 import java.util.Map;
 
 public class ELBMonitorTest {
-	
+
 	private ELBMonitor classUnderTest = new ELBMonitor();
 
 	@Test

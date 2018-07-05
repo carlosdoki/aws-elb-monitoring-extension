@@ -33,11 +33,13 @@ proxyConfig:
 # Classic (namespace : "AWS/ELB")
 # Dimensions : AvailabilityZone, LoadBalancerName
 
-dimensionName: "LoadBalancerName"
-
-# Filters metrics based on the Dimension Value names provided. Accepts regex patterns
-includeDimensionValueName: ["perc*", "hammer", "eretail*" "blog-*", "demos"]
-
+dimensions:
+   - name: "LoadBalancerName"
+     displayName: "LoadBalancer Name"
+     values: ["csi", "tools"]
+   - name: "AvailabilityZone"
+     displayName: "Availability Zone"
+     values: ["us-east-1a", "us-east-1b"]
 
 concurrencyConfig:
   noOfAccountThreads: 3

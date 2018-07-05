@@ -10,12 +10,14 @@ package com.appdynamics.extensions.aws.elb;
 
 import com.amazonaws.services.cloudwatch.AmazonCloudWatch;
 import com.amazonaws.services.cloudwatch.model.DimensionFilter;
+import com.appdynamics.extensions.aws.config.Dimension;
 import com.appdynamics.extensions.aws.config.IncludeMetric;
 import com.appdynamics.extensions.aws.dto.AWSMetric;
 import com.appdynamics.extensions.aws.metric.NamespaceMetricStatistics;
 import com.appdynamics.extensions.aws.metric.StatisticType;
 import com.appdynamics.extensions.aws.metric.processors.MetricsProcessor;
 import com.appdynamics.extensions.aws.metric.processors.MetricsProcessorHelper;
+import com.appdynamics.extensions.aws.predicate.MultiDimensionPredicate;
 import com.appdynamics.extensions.dashboard.CustomDashboardTask;
 import org.apache.log4j.Logger;
 
@@ -28,39 +30,38 @@ public class ELBMetricsProcessor implements MetricsProcessor {
 
 
     private List<IncludeMetric> includeMetrics;
-    private List<String> includeDimensionValueName;
-    private String dimension;
+    private List<Dimension> dimensions;
     private static final String NAMESPACE = "AWS/ELB";
 
 
     private CustomDashboardTask dashboardTask = new CustomDashboardTask();
     private Map customDashboard;
 
-    public ELBMetricsProcessor(List<IncludeMetric> includeMetrics, List<String> includeDimensionValueName, String dimension, Map customDashboard) {
+    public ELBMetricsProcessor(List<IncludeMetric> includeMetrics, List<Dimension> dimensions) {
         this.includeMetrics = includeMetrics;
-        this.includeDimensionValueName = includeDimensionValueName;
-        this.dimension = dimension;
-        this.customDashboard = customDashboard;
+        this.dimensions = dimensions;
     }
 
     public List<AWSMetric> getMetrics(AmazonCloudWatch awsCloudWatch, String accountName, LongAdder awsRequestsCounter) {
-        List<DimensionFilter> dimensions = getDimensionFilters();
+        List<DimensionFilter> dimensionFilters = getDimensionFilters();
 
-        ELBPredicate predicate = new ELBPredicate(includeDimensionValueName);
+        MultiDimensionPredicate predicate = new MultiDimensionPredicate(dimensions);
 
         return MetricsProcessorHelper.getFilteredMetrics(awsCloudWatch, awsRequestsCounter,
                 NAMESPACE,
                 includeMetrics,
-                dimensions,
+                dimensionFilters,
                 predicate);
     }
 
     private List<DimensionFilter> getDimensionFilters() {
-        List<DimensionFilter> dimensions = new ArrayList<DimensionFilter>();
-        DimensionFilter dimensionFilter = new DimensionFilter();
-        dimensionFilter.withName(dimension);
-        dimensions.add(dimensionFilter);
-        return dimensions;
+        List<DimensionFilter> dimensionFilters = new ArrayList<DimensionFilter>();
+        for (Dimension dimension : dimensions) {
+            DimensionFilter dimensionFilter = new DimensionFilter();
+            dimensionFilter.withName(dimension.getName());
+            dimensionFilters.add(dimensionFilter);
+        }
+        return dimensionFilters;
     }
 
     public StatisticType getStatisticType(AWSMetric metric) {
@@ -69,7 +70,10 @@ public class ELBMetricsProcessor implements MetricsProcessor {
 
     public List<com.appdynamics.extensions.metrics.Metric> createMetricStatsMapForUpload(NamespaceMetricStatistics namespaceMetricStats) {
         Map<String, String> dimensionToMetricPathNameDictionary = new HashMap<String, String>();
-        dimensionToMetricPathNameDictionary.put(dimension, "Dimension Value");
+
+        for (Dimension dimension : dimensions) {
+            dimensionToMetricPathNameDictionary.put(dimension.getName(), dimension.getDisplayName());
+        }
 
         return MetricsProcessorHelper.createMetricStatsMapForUpload(namespaceMetricStats,
                 dimensionToMetricPathNameDictionary, false);
@@ -79,10 +83,6 @@ public class ELBMetricsProcessor implements MetricsProcessor {
         return NAMESPACE;
     }
 
-    private void getDashboardInfo(){
-        Set<String> instanceNames = getInstanceNames(customDashboard);
-
-    }
 
     private static Set<String> getInstanceNames(Map<String, ?> config) {
         Map instances = (Map) config.get("accounts");

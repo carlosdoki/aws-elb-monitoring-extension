@@ -16,26 +16,26 @@ import java.util.Map;
 
 public class ELBConfiguration extends Configuration {
 
-    private List<String> includeDimensionValueName;
-
-    private String dimensionName;
+//    private List<String> includeDimensionValueName;
+//
+//    private String dimensionName;
 
     private Map customDashboard;
 
-    public List<String> getincludeDimensionValueName() {
-        return includeDimensionValueName;
-    }
-
-    public void setincludeDimensionValueName(List<String> includeLoadBalancerName) {
-        this.includeDimensionValueName = includeLoadBalancerName;
-    }
-    public String getDimensionName() {
-        return dimensionName;
-    }
-
-    public void setDimensionName(String dimensionName) {
-        this.dimensionName = dimensionName;
-    }
+//    public List<String> getincludeDimensionValueName() {
+//        return includeDimensionValueName;
+//    }
+//
+//    public void setincludeDimensionValueName(List<String> includeLoadBalancerName) {
+//        this.includeDimensionValueName = includeLoadBalancerName;
+//    }
+//    public String getDimensionName() {
+//        return dimensionName;
+//    }
+//
+//    public void setDimensionName(String dimensionName) {
+//        this.dimensionName = dimensionName;
+//    }
 
     public Map getCustomDashboard() {
         return customDashboard;

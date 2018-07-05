@@ -81,28 +81,27 @@ public class ELBMonitor extends SingleNamespaceCloudwatchMonitor<ELBConfiguratio
         return LOGGER;
     }
 
-    @Override
-    protected Map onConfigReload(File file) {
-        super.onConfigReload(file);
+//    @Override
+//    protected Map onConfigReload(File file) {
+//        super.onConfigReload(file);
+//
+//        Yaml yaml = new Yaml();
+//        Map config = new HashMap();
+//        try {
+//
+//            config = yaml.loadAs(new FileInputStream(file), Map.class);
+//        } catch (FileNotFoundException e) {
+//            getLogger().error("Error wile reading the config file", e);
+//        }
+//
+//        return config;
+//    }
 
-        Yaml yaml = new Yaml();
-        Map config = new HashMap();
-        try {
-
-            config = yaml.loadAs(new FileInputStream(file), Map.class);
-        } catch (FileNotFoundException e) {
-            getLogger().error("Error wile reading the config file", e);
-        }
-
-        return config;
-    }
 
     private MetricsProcessor createMetricsProcessor(ELBConfiguration config) {
         return new ELBMetricsProcessor(
                 config.getMetricsConfig().getIncludeMetrics(),
-                config.getincludeDimensionValueName(),
-                config.getDimensionName(),
-                config.getCustomDashboard());
+                config.getDimensions());
     }
 
 
