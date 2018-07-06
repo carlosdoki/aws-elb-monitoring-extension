@@ -223,6 +223,9 @@ customDashboard:
     applicationName: "AppName"
     tierName: "tierName"
 
+    host:
+    port:
+
     # Custom Template for Dashboard
     # If not set, the default will be used
     #templateFile: monitors/DockerMonitor/template.xml
