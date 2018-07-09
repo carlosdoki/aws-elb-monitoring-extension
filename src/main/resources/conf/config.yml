@@ -228,4 +228,4 @@ customDashboard:
 
     # Custom Template for Dashboard
     # If not set, the default will be used
-    #templateFile: monitors/DockerMonitor/template.xml
+    #templateFile: monitors/AWSELBMonitor/dashboard.xml

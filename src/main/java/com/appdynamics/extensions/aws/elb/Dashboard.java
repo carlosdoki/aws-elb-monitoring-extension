@@ -9,7 +9,12 @@
 package com.appdynamics.extensions.aws.elb;
 
 import com.appdynamics.extensions.dashboard.CustomDashboardTask;
+import com.appdynamics.extensions.dashboard.CustomDashboardUploader;
+import com.appdynamics.extensions.xml.Xml;
+import org.apache.commons.io.FileUtils;
+import org.apache.log4j.Logger;
 
+import java.io.File;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -20,48 +25,26 @@ import java.util.Set;
 public class Dashboard {
 
     private Map config;
-    private CustomDashboardTask dashboardTask;
+    private CustomDashboardUploader dashboardUploader;
+    private static final Logger LOGGER = Logger.getLogger(Dashboard.class);
 
-    //TODO try to get metrics in the form of Collection or list, .keyset() usually works with a map
-    //TODO make a call to the run method with that list
-
-    //TODO implement the updateConfig section for the dashboard and add the onFileChange section for changes in config.yml
-    //TODO implement the postConfigReload method
 
 
     public Dashboard(Map config) {
         this.config = config;
     }
 
-    private void sendDashboard(){
-        dashboardTask = new CustomDashboardTask();
-    }
+    private void sendDashboard() {
+        try {
+            String pathToDashboard = "monitors/AWSELBMonitor/dashboard.xml";
+//            if(config.get(pathToDashboard))
 
-//    private void postConfigReload() {
-//        if (configuration != null && configuration.getConfigYml() != null) {
-//            Map<String, ?> config = configuration.getConfigYml();
-//            Set<String> instanceNames = getInstanceNames(config);
-//            String metricPrefix = configuration.getMetricPrefix();
-//            dashboardTask.updateConfig(instanceNames, metricPrefix, (Map) config.get("customDashboard"));
-//        }
-//    }
+            String content = FileUtils.readFileToString(new File(pathToDashboard));
+            dashboardUploader = new CustomDashboardUploader();
+            dashboardUploader.uploadDashboard("Custom Dashboard", Xml.fromString(content), config, false);
 
-
-    private static Set<String> getInstanceNames(Map<String, ?> config) {
-        Map instances = (Map) config.get("accounts");
-        Set<String> names = new HashSet<String>();
-        if (instances != null) {
-            String name = (String) instances.get("displayAccountName");
-            if (name != null) {
-                names.add(name);
-            } else {
-                names.add("");
-            }
+        }catch (Exception e){
+            LOGGER.debug("Unable to upload dashboard", e);
         }
-        return names;
-
     }
-
-
-
 }

@@ -13,6 +13,7 @@ import static com.appdynamics.extensions.aws.Constants.METRIC_PATH_SEPARATOR;
 import com.appdynamics.extensions.aws.SingleNamespaceCloudwatchMonitor;
 import com.appdynamics.extensions.aws.collectors.NamespaceMetricStatisticsCollector;
 import com.appdynamics.extensions.aws.metric.processors.MetricsProcessor;
+import com.appdynamics.extensions.xml.Xml;
 import com.singularity.ee.agent.systemagent.api.exception.TaskExecutionException;
 import org.apache.log4j.ConsoleAppender;
 import org.apache.log4j.Level;
@@ -36,6 +37,8 @@ public class ELBMonitor extends SingleNamespaceCloudwatchMonitor<ELBConfiguratio
 
     private static final String DEFAULT_METRIC_PREFIX = String.format("%s%s%s%s",
             "Custom Metrics", METRIC_PATH_SEPARATOR, "Amazon ELB", METRIC_PATH_SEPARATOR);
+
+    private Map customDashboard;
 
     public ELBMonitor() {
         super(ELBConfiguration.class);
@@ -66,6 +69,7 @@ public class ELBMonitor extends SingleNamespaceCloudwatchMonitor<ELBConfiguratio
     protected NamespaceMetricStatisticsCollector getNamespaceMetricsCollector(
             ELBConfiguration config) {
         MetricsProcessor metricsProcessor = createMetricsProcessor(config);
+        customDashboard = config.getCustomDashboard();
 
         return new NamespaceMetricStatisticsCollector
                 .Builder(config.getAccounts(),
@@ -76,6 +80,11 @@ public class ELBMonitor extends SingleNamespaceCloudwatchMonitor<ELBConfiguratio
                 .withCredentialsDecryptionConfig(config.getCredentialsDecryptionConfig())
                 .withProxyConfig(config.getProxyConfig())
                 .build();
+    }
+
+    @Override
+    protected void initializeMoreStuff(Map<String, String> args) {
+//        getContextConfiguration().setMetricXml(args.get("dashboard-file"), Xml.class);
     }
 
     @Override
@@ -109,15 +118,16 @@ public class ELBMonitor extends SingleNamespaceCloudwatchMonitor<ELBConfiguratio
 
         Map<String, String> taskArgs = new HashMap<String, String>();
         taskArgs.put("config-file", "/Users/bhuvnesh.kumar/repos/appdynamics/extensions/aws-elb-monitoring-extension/src/main/resources/conf/config.yml");
+        taskArgs.put("dashboard-file", "/Users/bhuvnesh.kumar/repos/appdynamics/extensions/aws-elb-monitoring-extension/src/main/resources/conf/dashboard.xml");
         monitor.execute(taskArgs, null);
 
     }
 
-//    @Override
-//    private void initializeMoreStuff(){
-//
-//    }
 
+    @Override
+    protected void onComplete(){
+        Dashboard dashboard = new Dashboard(customDashboard);
 
+    }
 
 }
