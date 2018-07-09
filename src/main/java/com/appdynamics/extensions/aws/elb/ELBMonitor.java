@@ -39,6 +39,7 @@ public class ELBMonitor extends SingleNamespaceCloudwatchMonitor<ELBConfiguratio
             "Custom Metrics", METRIC_PATH_SEPARATOR, "Amazon ELB", METRIC_PATH_SEPARATOR);
 
     private Map customDashboard;
+    private String dashboardXML;
 
     public ELBMonitor() {
         super(ELBConfiguration.class);
@@ -85,6 +86,8 @@ public class ELBMonitor extends SingleNamespaceCloudwatchMonitor<ELBConfiguratio
     @Override
     protected void initializeMoreStuff(Map<String, String> args) {
 //        getContextConfiguration().setMetricXml(args.get("dashboard-file"), Xml.class);
+        dashboardXML = args.get("dashboard-file");
+
     }
 
     @Override
@@ -126,7 +129,7 @@ public class ELBMonitor extends SingleNamespaceCloudwatchMonitor<ELBConfiguratio
 
     @Override
     protected void onComplete(){
-        Dashboard dashboard = new Dashboard(customDashboard);
+        Dashboard dashboard = new Dashboard(customDashboard, dashboardXML);
 
     }
 

@@ -27,21 +27,33 @@ public class Dashboard {
     private Map config;
     private CustomDashboardUploader dashboardUploader;
     private static final Logger LOGGER = Logger.getLogger(Dashboard.class);
+    private String dashboardXML;
 
 
-
-    public Dashboard(Map config) {
+    public Dashboard(Map config, String dashboardXML) {
         this.config = config;
+        this.dashboardXML = dashboardXML;
+        sendDashboard();
     }
 
     private void sendDashboard() {
         try {
-            String pathToDashboard = "monitors/AWSELBMonitor/dashboard.xml";
-//            if(config.get(pathToDashboard))
+//            String pathToDashboard = "monitors/AWSELBMonitor/dashboard.xml";
+//            String content = FileUtils.readFileToString(new File(pathToDashboard));
 
-            String content = FileUtils.readFileToString(new File(pathToDashboard));
+            LOGGER.debug("#######################");
+            LOGGER.debug("The following is the information under custom dashboard and values of dashboard.xml");
+            LOGGER.debug("Dashboard.xml =" );
+            LOGGER.debug(dashboardXML);
+            LOGGER.debug("#######################");
+            LOGGER.debug("The values of config");
+            LOGGER.debug("Host :" + config.get("host").toString() + "Port : " + config.get("port").toString());
+            LOGGER.debug("#######################");
+            LOGGER.debug("Application Name : " + config.get("applicationName").toString() + " Tier Name : "+ config.get("tierName").toString() +  "Node Name : " + config.get("nodeName").toString());
+            LOGGER.debug("#######################");
+
             dashboardUploader = new CustomDashboardUploader();
-            dashboardUploader.uploadDashboard("Custom Dashboard", Xml.fromString(content), config, false);
+            dashboardUploader.uploadDashboard("Custom Dashboard", Xml.fromString(dashboardXML), config, false);
 
         }catch (Exception e){
             LOGGER.debug("Unable to upload dashboard", e);
