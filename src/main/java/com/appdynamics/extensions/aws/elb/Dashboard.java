@@ -53,7 +53,7 @@ public class Dashboard {
             LOGGER.debug("#######################");
 
             dashboardUploader = new CustomDashboardUploader();
-            dashboardUploader.uploadDashboard("Custom Dashboard", Xml.fromString(dashboardXML), config, false);
+            dashboardUploader.uploadDashboard(config.get("namePrefix").toString(), Xml.fromString(dashboardXML), config, false);
 
         }catch (Exception e){
             LOGGER.debug("Unable to upload dashboard", e);
