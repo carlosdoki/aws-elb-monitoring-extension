@@ -31,9 +31,14 @@ public class Dashboard {
 
 
     public Dashboard(Map config, String dashboardXML) {
+        LOGGER.debug("Setting up DashboardClass");
+
         this.config = config;
         this.dashboardXML = dashboardXML;
         sendDashboard();
+
+        LOGGER.debug("leaving DashboardClass");
+
     }
 
     private void sendDashboard() {
@@ -53,6 +58,8 @@ public class Dashboard {
             LOGGER.debug("#######################");
 
             dashboardUploader = new CustomDashboardUploader();
+            LOGGER.debug("created CustomDashboardUploader");
+
             dashboardUploader.uploadDashboard(config.get("namePrefix").toString(), Xml.fromString(dashboardXML), config, false);
 
         }catch (Exception e){

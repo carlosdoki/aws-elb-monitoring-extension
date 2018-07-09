@@ -207,7 +207,7 @@ metricsConfig:
 # Generate a custom dashboard based on the provided template
 customDashboard:
     enabled: true
-    namePrefix: AWS ELB Monitor
+    namePrefix: "AWS ELB Monitor"
     uploadDashboard: true
     executionFrequencyMinutes: 5
     # To upload the dashboard, please create a user from Controller UI or

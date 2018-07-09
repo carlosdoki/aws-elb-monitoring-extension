@@ -86,7 +86,11 @@ public class ELBMonitor extends SingleNamespaceCloudwatchMonitor<ELBConfiguratio
     @Override
     protected void initializeMoreStuff(Map<String, String> args) {
 //        getContextConfiguration().setMetricXml(args.get("dashboard-file"), Xml.class);
+        LOGGER.debug("reached initializeMoreStuff");
+
         dashboardXML = args.get("dashboard-file");
+
+        LOGGER.debug("reached leaving");
 
     }
 
@@ -129,7 +133,9 @@ public class ELBMonitor extends SingleNamespaceCloudwatchMonitor<ELBConfiguratio
 
     @Override
     protected void onComplete(){
+        LOGGER.debug("reached onComplete");
         Dashboard dashboard = new Dashboard(customDashboard, dashboardXML);
+        LOGGER.debug("leaving onComplete");
 
     }
 

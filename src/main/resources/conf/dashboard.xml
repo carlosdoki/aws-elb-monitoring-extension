@@ -1,833 +1,116 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<custom-dashboard>
-    <associatedEntityTemplates null="true" />
-    <backgroundColor>15856629</backgroundColor>
-    <canvasType>CANVAS_TYPE_GRID</canvasType>
-    <color>15856629</color>
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  ~   Copyright 2018 . AppDynamics LLC and its affiliates.
+  ~   All Rights Reserved.
+  ~   This is unpublished proprietary source code of AppDynamics LLC and its affiliates.
+  ~   The copyright notice above does not evidence any actual or intended publication of such source code.
+  ~
+  -->
+
+<root>
+    <schemaVersion/>
     <dashboardFormatVersion>4.0</dashboardFormatVersion>
-    <description null="true" />
-    <endDate null="true" />
-    <height>768</height>
-    <layoutType />
-    <minutesBeforeAnchorTime>-1</minutesBeforeAnchorTime>
-    <name>testBhuv</name>
-    <properties null="true" />
-    <refreshInterval>120000</refreshInterval>
-    <schemaVersion null="true" />
-    <startDate null="true" />
-    <template>false</template>
+    <name>testBz</name>
+    <description/>
+    <properties/>
     <templateEntityType>APPLICATION_COMPONENT_NODE</templateEntityType>
-    <warRoom>false</warRoom>
-    <widgetTemplates>
-        <widget>
-            <backgroundAlpha>1</backgroundAlpha>
-            <backgroundColor>16777164</backgroundColor>
-            <backgroundColors null="true" />
-            <backgroundColorsStr>16777215,16777215</backgroundColorsStr>
-            <borderColor>14408667</borderColor>
-            <borderEnabled>false</borderEnabled>
-            <borderThickness>0</borderThickness>
-            <color>39168</color>
-            <compactMode>false</compactMode>
-            <dataSeriesTemplates>
-                <widget>
-                    <axisPosition null="true" />
-                    <colorPalette null="true" />
-                    <metricMatchCriteriaTemplate>
-                        <applicationName>Extensions</applicationName>
-                        <baselineName null="true" />
-                        <entityMatchCriteria>
-                            <agentTypes null="true" />
-                            <entityNames>
-                                <widget>
-                                    <applicationName>Extensions</applicationName>
-                                    <entityName>Dashboards</entityName>
-                                    <entityType>APPLICATION_COMPONENT</entityType>
-                                    <scopingEntityName null="true" />
-                                    <scopingEntityType null="true" />
-                                    <subtype null="true" />
-                                </widget>
-                            </entityNames>
-                            <entityType>APPLICATION_COMPONENT</entityType>
-                            <matchCriteriaType>SpecificEntities</matchCriteriaType>
-                            <summary>false</summary>
-                        </entityMatchCriteria>
-                        <evaluationScopeType null="true" />
-                        <expressionString />
-                        <maxResults>20</maxResults>
-                        <metricDisplayNameCustomFormat null="true" />
-                        <metricDisplayNameStyle>DISPLAY_STYLE_AUTO</metricDisplayNameStyle>
-                        <metricExpressionTemplate>
-                            <displayName null="true" />
-                            <functionType>VALUE</functionType>
-                            <inputMetricPath null="true" />
-                            <inputMetricText>false</inputMetricText>
-                            <metricExpressionType>Logical</metricExpressionType>
-                            <relativeMetricPath>Custom Metrics|Amazon ELB|*|AWS API Calls</relativeMetricPath>
-                        </metricExpressionTemplate>
-                        <rollupMetricData>true</rollupMetricData>
-                        <sortResultsAscending>false</sortResultsAscending>
-                        <useActiveBaseline>false</useActiveBaseline>
-                    </metricMatchCriteriaTemplate>
-                    <metricType>INFRASTRUCTURE</metricType>
-                    <name>Series 0</name>
-                    <seriesType>LINE</seriesType>
-                    <showRawMetricName>false</showRawMetricName>
-                </widget>
-            </dataSeriesTemplates>
-            <description null="true" />
-            <drillDownActionType null="true" />
-            <drillDownUrl null="true" />
-            <endTime null="true" />
-            <fontSize>12</fontSize>
-            <formatNumber>true</formatNumber>
-            <height>2</height>
-            <isGlobal>true</isGlobal>
-            <label null="true" />
-            <legendColumnCount null="true" />
-            <legendPosition null="true" />
-            <margin>15</margin>
-            <minHeight>0</minHeight>
-            <minWidth>0</minWidth>
-            <minutesBeforeAnchorTime>15</minutesBeforeAnchorTime>
-            <numDecimals>2</numDecimals>
-            <propertiesMap null="true" />
-            <removeZeros>true</removeZeros>
-            <renderIn3D>false</renderIn3D>
-            <showLabel>false</showLabel>
-            <showLegend null="true" />
-            <showTimeRange>true</showTimeRange>
-            <showValues>false</showValues>
-            <startTime null="true" />
-            <text null="true" />
-            <textAlign>CENTER</textAlign>
-            <title>Total Calls</title>
-            <useAutomaticFontSize>true</useAutomaticFontSize>
-            <useMetricBrowserAsDrillDown>true</useMetricBrowserAsDrillDown>
-            <widgetType>MetricLabelWidget</widgetType>
-            <width>4</width>
-            <x>0</x>
-            <y>0</y>
-        </widget>
-        <widget>
-            <backgroundAlpha>1</backgroundAlpha>
-            <backgroundColor>16777215</backgroundColor>
-            <backgroundColors null="true" />
-            <backgroundColorsStr>16777215,16777215</backgroundColorsStr>
-            <borderColor>14408667</borderColor>
-            <borderEnabled>false</borderEnabled>
-            <borderThickness>0</borderThickness>
-            <color>1646891</color>
-            <compactMode>false</compactMode>
-            <dataSeriesTemplates>
-                <widget>
-                    <axisPosition null="true" />
-                    <colorPalette null="true" />
-                    <metricMatchCriteriaTemplate>
-                        <applicationName>Extensions</applicationName>
-                        <baselineName null="true" />
-                        <entityMatchCriteria>
-                            <agentTypes null="true" />
-                            <entityType>APPLICATION_COMPONENT</entityType>
-                            <matchCriteriaType>AllEntities</matchCriteriaType>
-                            <summary>false</summary>
-                        </entityMatchCriteria>
-                        <evaluationScopeType null="true" />
-                        <expressionString />
-                        <maxResults>20</maxResults>
-                        <metricDisplayNameCustomFormat null="true" />
-                        <metricDisplayNameStyle>DISPLAY_STYLE_AUTO</metricDisplayNameStyle>
-                        <metricExpressionTemplate>
-                            <displayName null="true" />
-                            <functionType>VALUE</functionType>
-                            <inputMetricPath null="true" />
-                            <inputMetricText>false</inputMetricText>
-                            <metricExpressionType>Logical</metricExpressionType>
-                            <relativeMetricPath>Custom Metrics|Amazon ELB|try1|Application|us-east-1|Dimension Value|*|AvailabilityZone|*|Healthy Host Count</relativeMetricPath>
-                        </metricExpressionTemplate>
-                        <rollupMetricData>true</rollupMetricData>
-                        <sortResultsAscending>false</sortResultsAscending>
-                        <useActiveBaseline>false</useActiveBaseline>
-                    </metricMatchCriteriaTemplate>
-                    <metricType>INFRASTRUCTURE</metricType>
-                    <name>Series 1</name>
-                    <seriesType>LINE</seriesType>
-                    <showRawMetricName>false</showRawMetricName>
-                </widget>
-            </dataSeriesTemplates>
-            <description null="true" />
-            <drillDownActionType null="true" />
-            <drillDownUrl null="true" />
-            <endTime null="true" />
-            <fontSize>12</fontSize>
-            <formatNumber null="true" />
-            <height>4</height>
-            <isGlobal>true</isGlobal>
-            <label null="true" />
-            <legendColumnCount>1</legendColumnCount>
-            <legendPosition>POSITION_BOTTOM</legendPosition>
-            <minHeight>0</minHeight>
-            <minWidth>0</minWidth>
-            <minutesBeforeAnchorTime>15</minutesBeforeAnchorTime>
-            <numDecimals>0</numDecimals>
-            <propertiesMap null="true" />
-            <removeZeros null="true" />
-            <renderIn3D>false</renderIn3D>
-            <showLabels>true</showLabels>
-            <showLegend>true</showLegend>
-            <showPercentValues null="true" />
-            <showTimeRange>false</showTimeRange>
-            <showValues>true</showValues>
-            <startTime null="true" />
-            <title>Healthy Host Count</title>
-            <useAutomaticFontSize>false</useAutomaticFontSize>
-            <useMetricBrowserAsDrillDown>true</useMetricBrowserAsDrillDown>
-            <widgetType>PieWidget</widgetType>
-            <width>12</width>
-            <x>0</x>
-            <y>5</y>
-        </widget>
-        <widget>
-            <backgroundAlpha>1</backgroundAlpha>
-            <backgroundColor>16777215</backgroundColor>
-            <backgroundColors null="true" />
-            <backgroundColorsStr>16777215,16777215</backgroundColorsStr>
-            <borderColor>14408667</borderColor>
-            <borderEnabled>false</borderEnabled>
-            <borderThickness>0</borderThickness>
-            <color>1646891</color>
-            <compactMode>false</compactMode>
-            <dataSeriesTemplates>
-                <widget>
-                    <axisPosition null="true" />
-                    <colorPalette null="true" />
-                    <metricMatchCriteriaTemplate>
-                        <applicationName>Extensions</applicationName>
-                        <baselineName null="true" />
-                        <entityMatchCriteria>
-                            <agentTypes null="true" />
-                            <entityNames>
-                                <widget>
-                                    <applicationName>Extensions</applicationName>
-                                    <entityName>Dashboards</entityName>
-                                    <entityType>APPLICATION_COMPONENT</entityType>
-                                    <scopingEntityName null="true" />
-                                    <scopingEntityType null="true" />
-                                    <subtype null="true" />
-                                </widget>
-                            </entityNames>
-                            <entityType>APPLICATION_COMPONENT</entityType>
-                            <matchCriteriaType>SpecificEntities</matchCriteriaType>
-                            <summary>false</summary>
-                        </entityMatchCriteria>
-                        <evaluationScopeType null="true" />
-                        <expressionString />
-                        <maxResults>20</maxResults>
-                        <metricDisplayNameCustomFormat null="true" />
-                        <metricDisplayNameStyle>DISPLAY_STYLE_AUTO</metricDisplayNameStyle>
-                        <metricExpressionTemplate>
-                            <displayName null="true" />
-                            <functionType>VALUE</functionType>
-                            <inputMetricPath null="true" />
-                            <inputMetricText>false</inputMetricText>
-                            <metricExpressionType>Logical</metricExpressionType>
-                            <relativeMetricPath>Custom Metrics|Amazon ELB|*|Application|*|Dimension Value|*|AvailabilityZone|*|Latency</relativeMetricPath>
-                        </metricExpressionTemplate>
-                        <rollupMetricData>true</rollupMetricData>
-                        <sortResultsAscending>false</sortResultsAscending>
-                        <useActiveBaseline>false</useActiveBaseline>
-                    </metricMatchCriteriaTemplate>
-                    <metricType>INFRASTRUCTURE</metricType>
-                    <name>Series 0</name>
-                    <seriesType>LINE</seriesType>
-                    <showRawMetricName>false</showRawMetricName>
-                </widget>
-            </dataSeriesTemplates>
-            <description null="true" />
-            <drillDownActionType null="true" />
-            <drillDownUrl null="true" />
-            <endTime null="true" />
-            <fontSize>12</fontSize>
-            <formatNumber null="true" />
-            <height>2</height>
-            <invertColors>false</invertColors>
-            <isGlobal>true</isGlobal>
-            <label null="true" />
-            <legendColumnCount null="true" />
-            <legendPosition null="true" />
-            <maxValue>1000</maxValue>
-            <minHeight>0</minHeight>
-            <minValue>0</minValue>
-            <minWidth>0</minWidth>
-            <minutesBeforeAnchorTime>15</minutesBeforeAnchorTime>
-            <numDecimals>0</numDecimals>
-            <propertiesMap null="true" />
-            <removeZeros null="true" />
-            <renderIn3D>false</renderIn3D>
-            <showLabels>true</showLabels>
-            <showLegend null="true" />
-            <showPercentValues null="true" />
-            <showTimeRange>false</showTimeRange>
-            <showValues>true</showValues>
-            <startTime null="true" />
-            <title>Latency</title>
-            <useAutomaticFontSize>false</useAutomaticFontSize>
-            <useMetricBrowserAsDrillDown>true</useMetricBrowserAsDrillDown>
-            <useMinMaxValues>false</useMinMaxValues>
-            <widgetType>GaugeWidget</widgetType>
-            <width>4</width>
-            <x>4</x>
-            <y>0</y>
-        </widget>
-        <widget>
-            <axisType>LINEAR</axisType>
-            <backgroundAlpha>1</backgroundAlpha>
-            <backgroundColor>16777215</backgroundColor>
-            <backgroundColors null="true" />
-            <backgroundColorsStr>16777215,16777215</backgroundColorsStr>
-            <borderColor>14408667</borderColor>
-            <borderEnabled>false</borderEnabled>
-            <borderThickness>0</borderThickness>
-            <color>1646891</color>
-            <compactMode>false</compactMode>
-            <customVerticalAxisMax null="true" />
-            <customVerticalAxisMin null="true" />
-            <dataSeriesTemplates>
-                <widget>
-                    <axisPosition null="true" />
-                    <colorPalette null="true" />
-                    <metricMatchCriteriaTemplate>
-                        <applicationName>Extensions</applicationName>
-                        <baselineName null="true" />
-                        <entityMatchCriteria>
-                            <agentTypes null="true" />
-                            <entityType>APPLICATION_COMPONENT</entityType>
-                            <matchCriteriaType>AllEntities</matchCriteriaType>
-                            <summary>false</summary>
-                        </entityMatchCriteria>
-                        <evaluationScopeType null="true" />
-                        <expressionString />
-                        <maxResults>20</maxResults>
-                        <metricDisplayNameCustomFormat null="true" />
-                        <metricDisplayNameStyle>DISPLAY_STYLE_AUTO</metricDisplayNameStyle>
-                        <metricExpressionTemplate>
-                            <displayName null="true" />
-                            <functionType>VALUE</functionType>
-                            <inputMetricPath null="true" />
-                            <inputMetricText>false</inputMetricText>
-                            <metricExpressionType>Logical</metricExpressionType>
-                            <relativeMetricPath>Custom Metrics|Amazon ELB|try1|Application|*|Dimension Value|*|AvailabilityZone|*|HTTPCode_Backend_5XX</relativeMetricPath>
-                        </metricExpressionTemplate>
-                        <rollupMetricData>false</rollupMetricData>
-                        <sortResultsAscending>false</sortResultsAscending>
-                        <useActiveBaseline>false</useActiveBaseline>
-                    </metricMatchCriteriaTemplate>
-                    <metricType>INFRASTRUCTURE</metricType>
-                    <name>Series 4</name>
-                    <seriesType>LINE</seriesType>
-                    <showRawMetricName>false</showRawMetricName>
-                </widget>
-                <widget>
-                    <axisPosition>LEFT</axisPosition>
-                    <colorPalette null="true" />
-                    <metricMatchCriteriaTemplate>
-                        <applicationName>Extensions</applicationName>
-                        <baselineName null="true" />
-                        <entityMatchCriteria>
-                            <agentTypes null="true" />
-                            <entityType>APPLICATION_COMPONENT</entityType>
-                            <matchCriteriaType>AllEntities</matchCriteriaType>
-                            <summary>false</summary>
-                        </entityMatchCriteria>
-                        <evaluationScopeType null="true" />
-                        <expressionString />
-                        <maxResults>20</maxResults>
-                        <metricDisplayNameCustomFormat null="true" />
-                        <metricDisplayNameStyle>DISPLAY_STYLE_AUTO</metricDisplayNameStyle>
-                        <metricExpressionTemplate>
-                            <displayName null="true" />
-                            <functionType>VALUE</functionType>
-                            <inputMetricPath null="true" />
-                            <inputMetricText>false</inputMetricText>
-                            <metricExpressionType>Logical</metricExpressionType>
-                            <relativeMetricPath>Custom Metrics|Amazon ELB|try1|Application|*|Dimension Value|*|AvailabilityZone|*|HTTPCode_Backend_3XX</relativeMetricPath>
-                        </metricExpressionTemplate>
-                        <rollupMetricData>false</rollupMetricData>
-                        <sortResultsAscending>false</sortResultsAscending>
-                        <useActiveBaseline>false</useActiveBaseline>
-                    </metricMatchCriteriaTemplate>
-                    <metricType>INFRASTRUCTURE</metricType>
-                    <name>Series 1</name>
-                    <seriesType>COLUMN</seriesType>
-                    <showRawMetricName>false</showRawMetricName>
-                </widget>
-                <widget>
-                    <axisPosition null="true" />
-                    <colorPalette null="true" />
-                    <metricMatchCriteriaTemplate>
-                        <applicationName>Extensions</applicationName>
-                        <baselineName null="true" />
-                        <entityMatchCriteria>
-                            <agentTypes null="true" />
-                            <entityType>APPLICATION_COMPONENT</entityType>
-                            <matchCriteriaType>AllEntities</matchCriteriaType>
-                            <summary>false</summary>
-                        </entityMatchCriteria>
-                        <evaluationScopeType null="true" />
-                        <expressionString />
-                        <maxResults>20</maxResults>
-                        <metricDisplayNameCustomFormat null="true" />
-                        <metricDisplayNameStyle>DISPLAY_STYLE_AUTO</metricDisplayNameStyle>
-                        <metricExpressionTemplate>
-                            <displayName null="true" />
-                            <functionType>VALUE</functionType>
-                            <inputMetricPath null="true" />
-                            <inputMetricText>false</inputMetricText>
-                            <metricExpressionType>Logical</metricExpressionType>
-                            <relativeMetricPath>Custom Metrics|Amazon ELB|try1|Application|*|Dimension Value|*|AvailabilityZone|*|HTTPCode_Backend_4XX</relativeMetricPath>
-                        </metricExpressionTemplate>
-                        <rollupMetricData>false</rollupMetricData>
-                        <sortResultsAscending>false</sortResultsAscending>
-                        <useActiveBaseline>false</useActiveBaseline>
-                    </metricMatchCriteriaTemplate>
-                    <metricType>INFRASTRUCTURE</metricType>
-                    <name>Series 3</name>
-                    <seriesType>LINE</seriesType>
-                    <showRawMetricName>false</showRawMetricName>
-                </widget>
-                <widget>
-                    <axisPosition null="true" />
-                    <colorPalette null="true" />
-                    <metricMatchCriteriaTemplate>
-                        <applicationName>Extensions</applicationName>
-                        <baselineName null="true" />
-                        <entityMatchCriteria>
-                            <agentTypes null="true" />
-                            <entityType>APPLICATION_COMPONENT</entityType>
-                            <matchCriteriaType>AllEntities</matchCriteriaType>
-                            <summary>false</summary>
-                        </entityMatchCriteria>
-                        <evaluationScopeType null="true" />
-                        <expressionString />
-                        <maxResults>20</maxResults>
-                        <metricDisplayNameCustomFormat null="true" />
-                        <metricDisplayNameStyle>DISPLAY_STYLE_AUTO</metricDisplayNameStyle>
-                        <metricExpressionTemplate>
-                            <displayName null="true" />
-                            <functionType>VALUE</functionType>
-                            <inputMetricPath null="true" />
-                            <inputMetricText>false</inputMetricText>
-                            <metricExpressionType>Logical</metricExpressionType>
-                            <relativeMetricPath>Custom Metrics|Amazon ELB|try1|Application|*|Dimension Value|*|AvailabilityZone|*|HTTPCode_Backend_2XX</relativeMetricPath>
-                        </metricExpressionTemplate>
-                        <rollupMetricData>false</rollupMetricData>
-                        <sortResultsAscending>false</sortResultsAscending>
-                        <useActiveBaseline>false</useActiveBaseline>
-                    </metricMatchCriteriaTemplate>
-                    <metricType>INFRASTRUCTURE</metricType>
-                    <name>Series 2</name>
-                    <seriesType>COLUMN</seriesType>
-                    <showRawMetricName>false</showRawMetricName>
-                </widget>
-            </dataSeriesTemplates>
-            <description null="true" />
-            <drillDownActionType null="true" />
-            <drillDownUrl null="true" />
-            <endTime null="true" />
-            <eventFilterTemplate null="true" />
-            <fontSize>12</fontSize>
-            <formatNumber null="true" />
-            <height>3</height>
-            <hideHorizontalAxis null="true" />
-            <horizontalAxisLabel null="true" />
-            <interpolateDataGaps>false</interpolateDataGaps>
-            <isGlobal>true</isGlobal>
-            <label null="true" />
-            <legendColumnCount>1</legendColumnCount>
-            <legendPosition>POSITION_BOTTOM</legendPosition>
-            <minHeight>0</minHeight>
-            <minWidth>0</minWidth>
-            <minutesBeforeAnchorTime>15</minutesBeforeAnchorTime>
-            <multipleYAxis null="true" />
-            <numDecimals>0</numDecimals>
-            <propertiesMap null="true" />
-            <removeZeros null="true" />
-            <renderIn3D>false</renderIn3D>
-            <showAllTooltips null="true" />
-            <showEvents null="true" />
-            <showLegend>true</showLegend>
-            <showTimeRange>false</showTimeRange>
-            <showValues>false</showValues>
-            <stackMode null="true" />
-            <startTime null="true" />
-            <staticThresholdList />
-            <title>HTTP Backend Codes</title>
-            <useAutomaticFontSize>false</useAutomaticFontSize>
-            <useMetricBrowserAsDrillDown>true</useMetricBrowserAsDrillDown>
-            <verticalAxisLabel null="true" />
-            <widgetType>GraphWidget</widgetType>
-            <width>4</width>
-            <x>0</x>
-            <y>2</y>
-        </widget>
-        <widget>
-            <backgroundAlpha>1</backgroundAlpha>
-            <backgroundColor>16777215</backgroundColor>
-            <backgroundColors null="true" />
-            <backgroundColorsStr>16777215,16777215</backgroundColorsStr>
-            <borderColor>14408667</borderColor>
-            <borderEnabled>false</borderEnabled>
-            <borderThickness>0</borderThickness>
-            <color>1646891</color>
-            <compactMode>false</compactMode>
-            <dataSeriesTemplates>
-                <widget>
-                    <axisPosition null="true" />
-                    <colorPalette null="true" />
-                    <metricMatchCriteriaTemplate>
-                        <applicationName>Extensions</applicationName>
-                        <baselineName null="true" />
-                        <entityMatchCriteria>
-                            <agentTypes null="true" />
-                            <entityType>APPLICATION_COMPONENT</entityType>
-                            <matchCriteriaType>AllEntities</matchCriteriaType>
-                            <summary>false</summary>
-                        </entityMatchCriteria>
-                        <evaluationScopeType null="true" />
-                        <expressionString />
-                        <maxResults>20</maxResults>
-                        <metricDisplayNameCustomFormat null="true" />
-                        <metricDisplayNameStyle>DISPLAY_STYLE_AUTO</metricDisplayNameStyle>
-                        <metricExpressionTemplate>
-                            <displayName null="true" />
-                            <functionType>VALUE</functionType>
-                            <inputMetricPath null="true" />
-                            <inputMetricText>false</inputMetricText>
-                            <metricExpressionType>Logical</metricExpressionType>
-                            <relativeMetricPath>Custom Metrics|Amazon ELB|try1|Application|*|Dimension Value|*|AvailabilityZone|*|Request Count</relativeMetricPath>
-                        </metricExpressionTemplate>
-                        <rollupMetricData>true</rollupMetricData>
-                        <sortResultsAscending>false</sortResultsAscending>
-                        <useActiveBaseline>false</useActiveBaseline>
-                    </metricMatchCriteriaTemplate>
-                    <metricType>INFRASTRUCTURE</metricType>
-                    <name>Series 1</name>
-                    <seriesType>LINE</seriesType>
-                    <showRawMetricName>false</showRawMetricName>
-                </widget>
-            </dataSeriesTemplates>
-            <description null="true" />
-            <drillDownActionType null="true" />
-            <drillDownUrl null="true" />
-            <endTime null="true" />
-            <fontSize>12</fontSize>
-            <formatNumber null="true" />
-            <height>3</height>
-            <isGlobal>true</isGlobal>
-            <label null="true" />
-            <legendColumnCount>1</legendColumnCount>
-            <legendPosition>POSITION_BOTTOM</legendPosition>
-            <minHeight>0</minHeight>
-            <minWidth>0</minWidth>
-            <minutesBeforeAnchorTime>15</minutesBeforeAnchorTime>
-            <numDecimals>0</numDecimals>
-            <propertiesMap null="true" />
-            <removeZeros null="true" />
-            <renderIn3D>false</renderIn3D>
-            <showLabels>true</showLabels>
-            <showLegend>true</showLegend>
-            <showPercentValues null="true" />
-            <showTimeRange>false</showTimeRange>
-            <showValues>true</showValues>
-            <startTime null="true" />
-            <title>Request Count</title>
-            <useAutomaticFontSize>false</useAutomaticFontSize>
-            <useMetricBrowserAsDrillDown>true</useMetricBrowserAsDrillDown>
-            <widgetType>PieWidget</widgetType>
-            <width>4</width>
-            <x>8</x>
-            <y>2</y>
-        </widget>
-        <widget>
-            <axisType>LINEAR</axisType>
-            <backgroundAlpha>1</backgroundAlpha>
-            <backgroundColor>16777215</backgroundColor>
-            <backgroundColors null="true" />
-            <backgroundColorsStr>16777215,16777215</backgroundColorsStr>
-            <borderColor>14408667</borderColor>
-            <borderEnabled>false</borderEnabled>
-            <borderThickness>0</borderThickness>
-            <color>1646891</color>
-            <compactMode>false</compactMode>
-            <customVerticalAxisMax null="true" />
-            <customVerticalAxisMin null="true" />
-            <dataSeriesTemplates>
-                <widget>
-                    <axisPosition>LEFT</axisPosition>
-                    <colorPalette null="true" />
-                    <metricMatchCriteriaTemplate>
-                        <applicationName>Extensions</applicationName>
-                        <baselineName null="true" />
-                        <entityMatchCriteria>
-                            <agentTypes null="true" />
-                            <entityType>APPLICATION_COMPONENT</entityType>
-                            <matchCriteriaType>AllEntities</matchCriteriaType>
-                            <summary>false</summary>
-                        </entityMatchCriteria>
-                        <evaluationScopeType null="true" />
-                        <expressionString />
-                        <maxResults>20</maxResults>
-                        <metricDisplayNameCustomFormat null="true" />
-                        <metricDisplayNameStyle>DISPLAY_STYLE_AUTO</metricDisplayNameStyle>
-                        <metricExpressionTemplate>
-                            <displayName null="true" />
-                            <functionType>VALUE</functionType>
-                            <inputMetricPath null="true" />
-                            <inputMetricText>false</inputMetricText>
-                            <metricExpressionType>Logical</metricExpressionType>
-                            <relativeMetricPath>Custom Metrics|Amazon ELB|try1|Application|us-east-1|Dimension Value|*|AvailabilityZone|*|Healthy Host Count</relativeMetricPath>
-                        </metricExpressionTemplate>
-                        <rollupMetricData>false</rollupMetricData>
-                        <sortResultsAscending>false</sortResultsAscending>
-                        <useActiveBaseline>false</useActiveBaseline>
-                    </metricMatchCriteriaTemplate>
-                    <metricType>INFRASTRUCTURE</metricType>
-                    <name>Series 1</name>
-                    <seriesType>LINE</seriesType>
-                    <showRawMetricName>false</showRawMetricName>
-                </widget>
-            </dataSeriesTemplates>
-            <description null="true" />
-            <drillDownActionType null="true" />
-            <drillDownUrl null="true" />
-            <endTime null="true" />
-            <eventFilterTemplate null="true" />
-            <fontSize>12</fontSize>
-            <formatNumber null="true" />
-            <height>3</height>
-            <hideHorizontalAxis null="true" />
-            <horizontalAxisLabel null="true" />
-            <interpolateDataGaps>false</interpolateDataGaps>
-            <isGlobal>true</isGlobal>
-            <label null="true" />
-            <legendColumnCount>1</legendColumnCount>
-            <legendPosition>POSITION_BOTTOM</legendPosition>
-            <minHeight>0</minHeight>
-            <minWidth>0</minWidth>
-            <minutesBeforeAnchorTime>15</minutesBeforeAnchorTime>
-            <multipleYAxis null="true" />
-            <numDecimals>0</numDecimals>
-            <propertiesMap null="true" />
-            <removeZeros null="true" />
-            <renderIn3D>false</renderIn3D>
-            <showAllTooltips null="true" />
-            <showEvents null="true" />
-            <showLegend>true</showLegend>
-            <showTimeRange>false</showTimeRange>
-            <showValues>false</showValues>
-            <stackMode null="true" />
-            <startTime null="true" />
-            <staticThresholdList />
-            <title>Healthy Host Count</title>
-            <useAutomaticFontSize>false</useAutomaticFontSize>
-            <useMetricBrowserAsDrillDown>true</useMetricBrowserAsDrillDown>
-            <verticalAxisLabel null="true" />
-            <widgetType>GraphWidget</widgetType>
-            <width>4</width>
-            <x>4</x>
-            <y>2</y>
-        </widget>
-        <widget>
-            <axisType>LINEAR</axisType>
-            <backgroundAlpha>1</backgroundAlpha>
-            <backgroundColor>16777215</backgroundColor>
-            <backgroundColors null="true" />
-            <backgroundColorsStr>15073228,13434853</backgroundColorsStr>
-            <borderColor>14408667</borderColor>
-            <borderEnabled>false</borderEnabled>
-            <borderThickness>0</borderThickness>
-            <color>1646891</color>
-            <compactMode>false</compactMode>
-            <customVerticalAxisMax null="true" />
-            <customVerticalAxisMin null="true" />
-            <dataSeriesTemplates>
-                <widget>
-                    <axisPosition>LEFT</axisPosition>
-                    <colorPalette null="true" />
-                    <metricMatchCriteriaTemplate>
-                        <applicationName>Extensions</applicationName>
-                        <baselineName null="true" />
-                        <entityMatchCriteria>
-                            <agentTypes null="true" />
-                            <entityType>APPLICATION_COMPONENT</entityType>
-                            <matchCriteriaType>AllEntities</matchCriteriaType>
-                            <summary>false</summary>
-                        </entityMatchCriteria>
-                        <evaluationScopeType null="true" />
-                        <expressionString />
-                        <maxResults>20</maxResults>
-                        <metricDisplayNameCustomFormat null="true" />
-                        <metricDisplayNameStyle>DISPLAY_STYLE_AUTO</metricDisplayNameStyle>
-                        <metricExpressionTemplate>
-                            <displayName null="true" />
-                            <functionType>VALUE</functionType>
-                            <inputMetricPath null="true" />
-                            <inputMetricText>false</inputMetricText>
-                            <metricExpressionType>Logical</metricExpressionType>
-                            <relativeMetricPath>Custom Metrics|Amazon ELB|try1|Application|*|Dimension Value|*|AvailabilityZone|*|HTTPCode_ELB_5XX</relativeMetricPath>
-                        </metricExpressionTemplate>
-                        <rollupMetricData>false</rollupMetricData>
-                        <sortResultsAscending>false</sortResultsAscending>
-                        <useActiveBaseline>false</useActiveBaseline>
-                    </metricMatchCriteriaTemplate>
-                    <metricType>INFRASTRUCTURE</metricType>
-                    <name>Series 1</name>
-                    <seriesType>COLUMN</seriesType>
-                    <showRawMetricName>false</showRawMetricName>
-                </widget>
-                <widget>
-                    <axisPosition>LEFT</axisPosition>
-                    <colorPalette null="true" />
-                    <metricMatchCriteriaTemplate>
-                        <applicationName>Extensions</applicationName>
-                        <baselineName null="true" />
-                        <entityMatchCriteria>
-                            <agentTypes null="true" />
-                            <entityType>APPLICATION_COMPONENT</entityType>
-                            <matchCriteriaType>AllEntities</matchCriteriaType>
-                            <summary>false</summary>
-                        </entityMatchCriteria>
-                        <evaluationScopeType null="true" />
-                        <expressionString />
-                        <maxResults>20</maxResults>
-                        <metricDisplayNameCustomFormat null="true" />
-                        <metricDisplayNameStyle>DISPLAY_STYLE_AUTO</metricDisplayNameStyle>
-                        <metricExpressionTemplate>
-                            <displayName null="true" />
-                            <functionType>VALUE</functionType>
-                            <inputMetricPath null="true" />
-                            <inputMetricText>false</inputMetricText>
-                            <metricExpressionType>Logical</metricExpressionType>
-                            <relativeMetricPath>Custom Metrics|Amazon ELB|try1|Application|*|Dimension Value|*|AvailabilityZone|*|HTTPCode_Backend_5XX</relativeMetricPath>
-                        </metricExpressionTemplate>
-                        <rollupMetricData>false</rollupMetricData>
-                        <sortResultsAscending>false</sortResultsAscending>
-                        <useActiveBaseline>false</useActiveBaseline>
-                    </metricMatchCriteriaTemplate>
-                    <metricType>INFRASTRUCTURE</metricType>
-                    <name>Series 4</name>
-                    <seriesType>LINE</seriesType>
-                    <showRawMetricName>false</showRawMetricName>
-                </widget>
-                <widget>
-                    <axisPosition>RIGHT</axisPosition>
-                    <colorPalette null="true" />
-                    <metricMatchCriteriaTemplate>
-                        <applicationName>Extensions</applicationName>
-                        <baselineName null="true" />
-                        <entityMatchCriteria>
-                            <agentTypes null="true" />
-                            <entityType>APPLICATION_COMPONENT</entityType>
-                            <matchCriteriaType>AllEntities</matchCriteriaType>
-                            <summary>false</summary>
-                        </entityMatchCriteria>
-                        <evaluationScopeType null="true" />
-                        <expressionString />
-                        <maxResults>20</maxResults>
-                        <metricDisplayNameCustomFormat null="true" />
-                        <metricDisplayNameStyle>DISPLAY_STYLE_AUTO</metricDisplayNameStyle>
-                        <metricExpressionTemplate>
-                            <displayName null="true" />
-                            <functionType>VALUE</functionType>
-                            <inputMetricPath null="true" />
-                            <inputMetricText>false</inputMetricText>
-                            <metricExpressionType>Logical</metricExpressionType>
-                            <relativeMetricPath>Custom Metrics|Amazon ELB|try1|Application|*|Dimension Value|*|AvailabilityZone|*|HTTPCode_Backend_4XX</relativeMetricPath>
-                        </metricExpressionTemplate>
-                        <rollupMetricData>false</rollupMetricData>
-                        <sortResultsAscending>false</sortResultsAscending>
-                        <useActiveBaseline>false</useActiveBaseline>
-                    </metricMatchCriteriaTemplate>
-                    <metricType>INFRASTRUCTURE</metricType>
-                    <name>Series 3</name>
-                    <seriesType>LINE</seriesType>
-                    <showRawMetricName>false</showRawMetricName>
-                </widget>
-                <widget>
-                    <axisPosition>RIGHT</axisPosition>
-                    <colorPalette null="true" />
-                    <metricMatchCriteriaTemplate>
-                        <applicationName>Extensions</applicationName>
-                        <baselineName null="true" />
-                        <entityMatchCriteria>
-                            <agentTypes null="true" />
-                            <entityType>APPLICATION_COMPONENT</entityType>
-                            <matchCriteriaType>AllEntities</matchCriteriaType>
-                            <summary>false</summary>
-                        </entityMatchCriteria>
-                        <evaluationScopeType null="true" />
-                        <expressionString />
-                        <maxResults>20</maxResults>
-                        <metricDisplayNameCustomFormat null="true" />
-                        <metricDisplayNameStyle>DISPLAY_STYLE_AUTO</metricDisplayNameStyle>
-                        <metricExpressionTemplate>
-                            <displayName null="true" />
-                            <functionType>VALUE</functionType>
-                            <inputMetricPath null="true" />
-                            <inputMetricText>false</inputMetricText>
-                            <metricExpressionType>Logical</metricExpressionType>
-                            <relativeMetricPath>Custom Metrics|Amazon ELB|try1|Application|*|Dimension Value|*|AvailabilityZone|*|HTTPCode_ELB_4XX</relativeMetricPath>
-                        </metricExpressionTemplate>
-                        <rollupMetricData>false</rollupMetricData>
-                        <sortResultsAscending>false</sortResultsAscending>
-                        <useActiveBaseline>false</useActiveBaseline>
-                    </metricMatchCriteriaTemplate>
-                    <metricType>INFRASTRUCTURE</metricType>
-                    <name>Series 2</name>
-                    <seriesType>COLUMN</seriesType>
-                    <showRawMetricName>false</showRawMetricName>
-                </widget>
-            </dataSeriesTemplates>
-            <description null="true" />
-            <drillDownActionType null="true" />
-            <drillDownUrl null="true" />
-            <endTime null="true" />
-            <eventFilterTemplate null="true" />
-            <fontSize>12</fontSize>
-            <formatNumber null="true" />
-            <height>2</height>
-            <hideHorizontalAxis null="true" />
-            <horizontalAxisLabel null="true" />
-            <interpolateDataGaps>false</interpolateDataGaps>
-            <isGlobal>true</isGlobal>
-            <label null="true" />
-            <legendColumnCount>1</legendColumnCount>
-            <legendPosition>POSITION_BOTTOM</legendPosition>
-            <minHeight>0</minHeight>
-            <minWidth>0</minWidth>
-            <minutesBeforeAnchorTime>15</minutesBeforeAnchorTime>
-            <multipleYAxis>false</multipleYAxis>
-            <numDecimals>0</numDecimals>
-            <propertiesMap null="true" />
-            <removeZeros null="true" />
-            <renderIn3D>false</renderIn3D>
-            <showAllTooltips null="true" />
-            <showEvents null="true" />
-            <showLegend>true</showLegend>
-            <showTimeRange>false</showTimeRange>
-            <showValues>false</showValues>
-            <stackMode>true</stackMode>
-            <startTime null="true" />
-            <staticThresholdList />
-            <title>HTTP ELB Codes</title>
-            <useAutomaticFontSize>false</useAutomaticFontSize>
-            <useMetricBrowserAsDrillDown>true</useMetricBrowserAsDrillDown>
-            <verticalAxisLabel null="true" />
-            <widgetType>GraphWidget</widgetType>
-            <width>4</width>
-            <x>8</x>
-            <y>0</y>
-        </widget>
-    </widgetTemplates>
+    <associatedEntityTemplates/>
+    <minutesBeforeAnchorTime>-1</minutesBeforeAnchorTime>
+    <startDate/>
+    <endDate/>
+    <refreshInterval>120000</refreshInterval>
+    <backgroundColor>15395562</backgroundColor>
+    <color>15395562</color>
+    <height>768</height>
     <width>1024</width>
-</custom-dashboard>
+    <canvasType>CANVAS_TYPE_GRID</canvasType>
+    <layoutType></layoutType>
+    <widgetTemplates>
+        <widgetType>MetricLabelWidget</widgetType>
+        <title>API Calls</title>
+        <height>2</height>
+        <width>3</width>
+        <minHeight>0</minHeight>
+        <minWidth>0</minWidth>
+        <x>0</x>
+        <y>0</y>
+        <label/>
+        <description/>
+        <drillDownUrl/>
+        <useMetricBrowserAsDrillDown>true</useMetricBrowserAsDrillDown>
+        <drillDownActionType/>
+        <backgroundColor>16777215</backgroundColor>
+        <backgroundColors/>
+        <backgroundColorsStr>16777215,16777215</backgroundColorsStr>
+        <color>4210752</color>
+        <fontSize>12</fontSize>
+        <useAutomaticFontSize>true</useAutomaticFontSize>
+        <borderEnabled>false</borderEnabled>
+        <borderThickness>0</borderThickness>
+        <borderColor>14408667</borderColor>
+        <backgroundAlpha>1</backgroundAlpha>
+        <showValues>false</showValues>
+        <formatNumber>true</formatNumber>
+        <numDecimals>2</numDecimals>
+        <removeZeros>true</removeZeros>
+        <compactMode>false</compactMode>
+        <showTimeRange>false</showTimeRange>
+        <renderIn3D>false</renderIn3D>
+        <showLegend/>
+        <legendPosition/>
+        <legendColumnCount/>
+        <startTime/>
+        <endTime/>
+        <minutesBeforeAnchorTime>15</minutesBeforeAnchorTime>
+        <isGlobal>true</isGlobal>
+        <propertiesMap/>
+        <dataSeriesTemplates>
+            <seriesType>LINE</seriesType>
+            <metricType>INFRASTRUCTURE</metricType>
+            <showRawMetricName>false</showRawMetricName>
+            <colorPalette/>
+            <name>Series 0</name>
+            <metricMatchCriteriaTemplate>
+                <entityMatchCriteria>
+                    <matchCriteriaType>SpecificEntities</matchCriteriaType>
+                    <entityType>APPLICATION_COMPONENT</entityType>
+                    <agentTypes/>
+                    <entityNames>
+                        <applicationName>Extensions</applicationName>
+                        <entityType>APPLICATION_COMPONENT</entityType>
+                        <entityName>Dashboards</entityName>
+                        <scopingEntityType/>
+                        <scopingEntityName/>
+                        <subtype/>
+                    </entityNames>
+                    <summary>false</summary>
+                </entityMatchCriteria>
+                <metricExpressionTemplate>
+                    <metricExpressionType>Logical</metricExpressionType>
+                    <functionType>VALUE</functionType>
+                    <displayName>null</displayName>
+                    <inputMetricText>false</inputMetricText>
+                    <inputMetricPath/>
+                    <relativeMetricPath>Custom Metrics|Amazon ELB|*|AWS API Calls</relativeMetricPath>
+                </metricExpressionTemplate>
+                <rollupMetricData>true</rollupMetricData>
+                <expressionString></expressionString>
+                <useActiveBaseline>false</useActiveBaseline>
+                <sortResultsAscending>false</sortResultsAscending>
+                <maxResults>20</maxResults>
+                <evaluationScopeType/>
+                <baselineName/>
+                <applicationName>Extensions</applicationName>
+                <metricDisplayNameStyle>DISPLAY_STYLE_AUTO</metricDisplayNameStyle>
+                <metricDisplayNameCustomFormat/>
+            </metricMatchCriteriaTemplate>
+            <axisPosition/>
+        </dataSeriesTemplates>
+        <text/>
+        <textAlign>RIGHT</textAlign>
+        <margin>15</margin>
+        <showLabel>false</showLabel>
+    </widgetTemplates>
+    <template>false</template>
+    <warRoom>false</warRoom>
+</root>
