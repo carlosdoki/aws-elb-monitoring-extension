@@ -32,14 +32,13 @@ public class ELBMetricsProcessor implements MetricsProcessor {
     private List<IncludeMetric> includeMetrics;
     private List<Dimension> dimensions;
     private static final String NAMESPACE = "AWS/ELB";
+    private Dashboard dashboard;
 
 
-    private CustomDashboardTask dashboardTask = new CustomDashboardTask();
-    private Map customDashboard;
-
-    public ELBMetricsProcessor(List<IncludeMetric> includeMetrics, List<Dimension> dimensions) {
+    public ELBMetricsProcessor(List<IncludeMetric> includeMetrics, List<Dimension> dimensions, Dashboard dashboard) {
         this.includeMetrics = includeMetrics;
         this.dimensions = dimensions;
+        this.dashboard = dashboard;
     }
 
     public List<AWSMetric> getMetrics(AmazonCloudWatch awsCloudWatch, String accountName, LongAdder awsRequestsCounter) {
@@ -75,6 +74,7 @@ public class ELBMetricsProcessor implements MetricsProcessor {
             dimensionToMetricPathNameDictionary.put(dimension.getName(), dimension.getDisplayName());
         }
 
+//        dashboard.sendDashboard();
         return MetricsProcessorHelper.createMetricStatsMapForUpload(namespaceMetricStats,
                 dimensionToMetricPathNameDictionary, false);
     }

@@ -40,6 +40,7 @@ public class ELBMonitor extends SingleNamespaceCloudwatchMonitor<ELBConfiguratio
 
     private Map customDashboard;
     private String dashboardXML;
+    private Dashboard dashboard;
 
     public ELBMonitor() {
         super(ELBConfiguration.class);
@@ -86,11 +87,14 @@ public class ELBMonitor extends SingleNamespaceCloudwatchMonitor<ELBConfiguratio
     @Override
     protected void initializeMoreStuff(Map<String, String> args) {
 //        getContextConfiguration().setMetricXml(args.get("dashboard-file"), Xml.class);
-        LOGGER.debug("reached initializeMoreStuff");
+        LOGGER.debug("INTERNAL reached initializeMoreStuff");
 
         dashboardXML = args.get("dashboard-file");
 
-        LOGGER.debug("reached leaving");
+         dashboard = new Dashboard(customDashboard, dashboardXML);
+        LOGGER.debug("INTERNAL dashboard object created");
+
+        LOGGER.debug("INTERNAL reached leaving");
 
     }
 
@@ -102,7 +106,7 @@ public class ELBMonitor extends SingleNamespaceCloudwatchMonitor<ELBConfiguratio
     private MetricsProcessor createMetricsProcessor(ELBConfiguration config) {
         return new ELBMetricsProcessor(
                 config.getMetricsConfig().getIncludeMetrics(),
-                config.getDimensions());
+                config.getDimensions(), dashboard);
     }
 
 
@@ -131,12 +135,11 @@ public class ELBMonitor extends SingleNamespaceCloudwatchMonitor<ELBConfiguratio
     }
 
 
-    @Override
-    protected void onComplete(){
-        LOGGER.debug("reached onComplete");
-        Dashboard dashboard = new Dashboard(customDashboard, dashboardXML);
-        LOGGER.debug("leaving onComplete");
-
-    }
+//    @Override
+//    protected void onComplete(){
+//        LOGGER.debug("INTERNAL reached onComplete");
+//        Dashboard dashboard = new Dashboard(customDashboard, dashboardXML);
+//        LOGGER.debug("INTERNAL leaving onComplete");
+//    }
 
 }

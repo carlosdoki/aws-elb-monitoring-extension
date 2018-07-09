@@ -31,17 +31,16 @@ public class Dashboard {
 
 
     public Dashboard(Map config, String dashboardXML) {
-        LOGGER.debug("Setting up DashboardClass");
+        LOGGER.debug("INTERNAL Setting up DashboardClass");
 
         this.config = config;
         this.dashboardXML = dashboardXML;
-        sendDashboard();
 
-        LOGGER.debug("leaving DashboardClass");
+        LOGGER.debug("INTERNAL leaving DashboardClass");
 
     }
 
-    private void sendDashboard() {
+    protected void sendDashboard() {
         try {
 //            String pathToDashboard = "monitors/AWSELBMonitor/dashboard.xml";
 //            String content = FileUtils.readFileToString(new File(pathToDashboard));
