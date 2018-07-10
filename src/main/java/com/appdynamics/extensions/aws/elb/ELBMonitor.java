@@ -15,6 +15,7 @@ import com.appdynamics.extensions.aws.collectors.NamespaceMetricStatisticsCollec
 import com.appdynamics.extensions.aws.metric.processors.MetricsProcessor;
 import com.appdynamics.extensions.xml.Xml;
 import com.singularity.ee.agent.systemagent.api.exception.TaskExecutionException;
+import org.apache.commons.io.FileUtils;
 import org.apache.log4j.ConsoleAppender;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
@@ -70,8 +71,13 @@ public class ELBMonitor extends SingleNamespaceCloudwatchMonitor<ELBConfiguratio
     @Override
     protected NamespaceMetricStatisticsCollector getNamespaceMetricsCollector(
             ELBConfiguration config) {
-        MetricsProcessor metricsProcessor = createMetricsProcessor(config);
         customDashboard = config.getCustomDashboard();
+        dashboard = new Dashboard(customDashboard, dashboardXML);
+
+        MetricsProcessor metricsProcessor = createMetricsProcessor(config);
+
+
+        LOGGER.debug("INTERNAL dashboard object created");
 
         return new NamespaceMetricStatisticsCollector
                 .Builder(config.getAccounts(),
@@ -88,11 +94,11 @@ public class ELBMonitor extends SingleNamespaceCloudwatchMonitor<ELBConfiguratio
     protected void initializeMoreStuff(Map<String, String> args) {
 //        getContextConfiguration().setMetricXml(args.get("dashboard-file"), Xml.class);
         LOGGER.debug("INTERNAL reached initializeMoreStuff");
-
-        dashboardXML = args.get("dashboard-file");
-
-         dashboard = new Dashboard(customDashboard, dashboardXML);
-        LOGGER.debug("INTERNAL dashboard object created");
+        try {
+            dashboardXML = FileUtils.readFileToString(new File(args.get("dashboard-file")));
+        } catch (Exception e){
+            LOGGER.debug("Unable to get file for dashboard", e);
+        }
 
         LOGGER.debug("INTERNAL reached leaving");
 
@@ -128,8 +134,13 @@ public class ELBMonitor extends SingleNamespaceCloudwatchMonitor<ELBConfiguratio
 
 
         Map<String, String> taskArgs = new HashMap<String, String>();
-        taskArgs.put("config-file", "/Users/bhuvnesh.kumar/repos/appdynamics/extensions/aws-elb-monitoring-extension/src/main/resources/conf/config.yml");
+//        taskArgs.put("config-file", "/Users/bhuvnesh.kumar/repos/appdynamics/extensions/aws-elb-monitoring-extension/src/main/resources/conf/config.yml");
         taskArgs.put("dashboard-file", "/Users/bhuvnesh.kumar/repos/appdynamics/extensions/aws-elb-monitoring-extension/src/main/resources/conf/dashboard.xml");
+
+
+        taskArgs.put("config-file", "//Applications/AppDynamics/machineAgent/monitors/AWSELBMonitor/config.yml");
+
+
         monitor.execute(taskArgs, null);
 
     }
