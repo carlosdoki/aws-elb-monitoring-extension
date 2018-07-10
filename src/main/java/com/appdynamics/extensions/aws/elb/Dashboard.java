@@ -62,12 +62,14 @@ public class Dashboard {
 
             Map<String,? super Object> argsMap = new HashMap<>();
 
+            String user = config.get("username").toString() + "@" + config.get("account");
+
             List<Map<String, ?>> serverList = new ArrayList<>();
             Map<String, ? super Object> serverMap = new HashMap<>();
             serverMap.put(TaskInputArgs.HOST, config.get("host").toString());
             serverMap.put(TaskInputArgs.PORT, config.get("port").toString());
             serverMap.put(TaskInputArgs.USE_SSL, false);
-            serverMap.put(TaskInputArgs.USER, config.get("username").toString());
+            serverMap.put(TaskInputArgs.USER, user);
             serverMap.put(TaskInputArgs.PASSWORD, config.get("password").toString());
             serverList.add(serverMap);
             argsMap.put("servers", serverList);
