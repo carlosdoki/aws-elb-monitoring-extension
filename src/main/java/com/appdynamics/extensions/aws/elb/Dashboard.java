@@ -10,7 +10,6 @@ package com.appdynamics.extensions.aws.elb;
 
 import com.appdynamics.extensions.TaskInputArgs;
 import com.appdynamics.extensions.dashboard.CustomDashboardJsonUploader;
-import com.appdynamics.extensions.dashboard.CustomDashboardUploader;
 import org.apache.log4j.Logger;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -27,7 +26,7 @@ public class Dashboard {
 
     private Map config;
     private static final Logger LOGGER = Logger.getLogger(Dashboard.class);
-    private String dashboardXML;
+    private String dashboardString;
 
     private CustomDashboardJsonUploader customDashboardJsonUploader;
 
@@ -35,7 +34,7 @@ public class Dashboard {
         LOGGER.debug("INTERNAL Setting up DashboardClass");
 
         this.config = config;
-        this.dashboardXML = dashboardXML;
+        this.dashboardString = dashboardXML;
 
         LOGGER.debug("INTERNAL leaving DashboardClass");
 
@@ -70,10 +69,10 @@ public class Dashboard {
             argsMap.put("connection", connectionMap);
 
             LOGGER.debug("INTERNAL going to upload dashboard now");
-            ObjectMapper mapper = new ObjectMapper();
-            JsonNode dashboardJson = mapper.readTree(dashboardXML);
+//            ObjectMapper mapper = new ObjectMapper();
+//            JsonNode dashboardJson = mapper.readTree(dashboardString);
 
-            customDashboardJsonUploader.uploadDashboard(config.get("namePrefix").toString(), dashboardJson, argsMap, false);
+            customDashboardJsonUploader.uploadDashboard(config.get("namePrefix").toString(), dashboardString, argsMap, false);
 
             LOGGER.debug("INTERNAL back from upload dashboard now");
 

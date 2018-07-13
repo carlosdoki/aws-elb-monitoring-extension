@@ -139,7 +139,7 @@ public class ELBMonitor extends SingleNamespaceCloudwatchMonitor<ELBConfiguratio
 
 
         taskArgs.put("config-file", "//Applications/AppDynamics/ma43/monitors/AWSELBMonitor_dash/config.yml");
-        taskArgs.put("dashboard-file", "//Applications/AppDynamics/ma43/monitors/AWSELBMonitor_dash/dashboard.json");
+        taskArgs.put("dashboard-file", "/Users/bhuvnesh.kumar/repos/appdynamics/extensions/aws-elb-monitoring-extension/src/main/resources/conf/dashboard.json");
 
 
         monitor.execute(taskArgs, null);
