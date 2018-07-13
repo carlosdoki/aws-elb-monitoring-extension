@@ -9,14 +9,16 @@
 package com.appdynamics.extensions.aws.elb;
 
 import com.appdynamics.extensions.TaskInputArgs;
-import com.appdynamics.extensions.dashboard.CustomDashboardTask;
+import com.appdynamics.extensions.dashboard.CustomDashboardJsonUploader;
 import com.appdynamics.extensions.dashboard.CustomDashboardUploader;
-import com.appdynamics.extensions.xml.Xml;
-import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
+import org.codehaus.jackson.JsonNode;
+import org.codehaus.jackson.map.ObjectMapper;
 
-import java.io.File;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by bhuvnesh.kumar on 7/5/18.
@@ -24,10 +26,10 @@ import java.util.*;
 public class Dashboard {
 
     private Map config;
-    private CustomDashboardUploader dashboardUploader;
     private static final Logger LOGGER = Logger.getLogger(Dashboard.class);
     private String dashboardXML;
 
+    private CustomDashboardJsonUploader customDashboardJsonUploader;
 
     public Dashboard(Map config, String dashboardXML) {
         LOGGER.debug("INTERNAL Setting up DashboardClass");
@@ -41,26 +43,11 @@ public class Dashboard {
 
     protected void sendDashboard() {
         try {
-//            String pathToDashboard = "monitors/AWSELBMonitor/dashboard.xml";
-//            String content = FileUtils.readFileToString(new File(pathToDashboard));
 
-//            LOGGER.debug("#######################");
-//            LOGGER.debug("The following is the information under custom dashboard and values of dashboard.xml");
-//            LOGGER.debug("Dashboard.xml =" );
-//            LOGGER.debug(dashboardXML);
-//            LOGGER.debug("#######################");
-//            LOGGER.debug("The values of config");
-//            LOGGER.debug("Host :" + config.get("host").toString() + "Port : " + config.get("port").toString());
-//            LOGGER.debug("#######################");
-//            LOGGER.debug("Application Name : " + config.get("applicationName").toString() + " Tier Name : "+ config.get("tierName").toString() +  "Node Name : " + config.get("nodeName").toString());
-//            LOGGER.debug("#######################");
+            customDashboardJsonUploader = new CustomDashboardJsonUploader();
+            LOGGER.debug("INTERNAL created CustomDashboardUploader");
 
-
-
-            dashboardUploader = new CustomDashboardUploader();
-            LOGGER.debug("created CustomDashboardUploader");
-
-            Map<String,? super Object> argsMap = new HashMap<>();
+            Map<String, ? super Object> argsMap = new HashMap<>();
 
             String user = config.get("username").toString() + "@" + config.get("account");
 
@@ -82,14 +69,18 @@ public class Dashboard {
             connectionMap.put("socketTimeout", 15000);
             argsMap.put("connection", connectionMap);
 
+            LOGGER.debug("INTERNAL going to upload dashboard now");
+            ObjectMapper mapper = new ObjectMapper();
+            JsonNode dashboardJson = mapper.readTree(dashboardXML);
 
-//            Map servers = new HashMap();
-//            servers.put("servers", config);
+            customDashboardJsonUploader.uploadDashboard(config.get("namePrefix").toString(), dashboardJson, argsMap, false);
 
-            dashboardUploader.uploadDashboard(config.get("namePrefix").toString(), Xml.fromString(dashboardXML), argsMap, false);
+            LOGGER.debug("INTERNAL back from upload dashboard now");
 
-        }catch (Exception e){
+
+        } catch (Exception e) {
             LOGGER.debug("Unable to upload dashboard", e);
         }
     }
+
 }

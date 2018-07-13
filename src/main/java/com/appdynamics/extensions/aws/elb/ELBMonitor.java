@@ -135,10 +135,11 @@ public class ELBMonitor extends SingleNamespaceCloudwatchMonitor<ELBConfiguratio
 
         Map<String, String> taskArgs = new HashMap<String, String>();
 //        taskArgs.put("config-file", "/Users/bhuvnesh.kumar/repos/appdynamics/extensions/aws-elb-monitoring-extension/src/main/resources/conf/config.yml");
-        taskArgs.put("dashboard-file", "/Users/bhuvnesh.kumar/repos/appdynamics/extensions/aws-elb-monitoring-extension/src/main/resources/conf/dashboard.xml");
+//        taskArgs.put("dashboard-file", "/Users/bhuvnesh.kumar/repos/appdynamics/extensions/aws-elb-monitoring-extension/src/main/resources/conf/dashboard.xml");
 
 
-        taskArgs.put("config-file", "//Applications/AppDynamics/machineAgent/monitors/AWSELBMonitor/config.yml");
+        taskArgs.put("config-file", "//Applications/AppDynamics/ma43/monitors/AWSELBMonitor_dash/config.yml");
+        taskArgs.put("dashboard-file", "//Applications/AppDynamics/ma43/monitors/AWSELBMonitor_dash/dashboard.json");
 
 
         monitor.execute(taskArgs, null);

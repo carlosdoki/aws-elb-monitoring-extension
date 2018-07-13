@@ -74,7 +74,10 @@ public class ELBMetricsProcessor implements MetricsProcessor {
             dimensionToMetricPathNameDictionary.put(dimension.getName(), dimension.getDisplayName());
         }
 
+        LOGGER.debug("INTERNAL in Metric Processor -> send dashboard");
         dashboard.sendDashboard();
+        LOGGER.debug("INTERNAL in Metric Processor back <- send dashboard");
+
         return MetricsProcessorHelper.createMetricStatsMapForUpload(namespaceMetricStats,
                 dimensionToMetricPathNameDictionary, false);
     }
