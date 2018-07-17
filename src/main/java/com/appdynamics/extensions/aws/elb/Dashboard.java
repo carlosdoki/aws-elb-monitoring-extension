@@ -29,27 +29,30 @@ public class Dashboard {
     private CustomDashboardJsonUploader customDashboardJsonUploader;
 
     public Dashboard(Map config, String dashboardXML) {
-        LOGGER.debug("INTERNAL Setting up DashboardClass");
+        LOGGER.debug(" Setting up Dashboard Class");
 
         this.config = config;
         this.dashboardString = dashboardXML;
 
-        LOGGER.debug("INTERNAL leaving DashboardClass");
+        LOGGER.debug("Leaving Dashboard Class");
 
     }
 
     protected void sendDashboard() {
         try {
-
             customDashboardJsonUploader = new CustomDashboardJsonUploader();
+            LOGGER.debug("Created CustomDashboardUploader object");
 
-            LOGGER.debug("INTERNAL created CustomDashboardUploader");
             Map<String, ? super Object> argsMap = getControllerInfo();
-            uploadDashboard(argsMap);
+            if (config.get("uploadDashboard").toString().equals("true")) {
+                uploadDashboard(argsMap);
+            } else {
+                LOGGER.debug("Upload dashboard disabled, not uploading dashboard.");
+            }
 
 
         } catch (Exception e) {
-            LOGGER.debug("Unable to upload dashboard", e);
+            LOGGER.error("Unable to upload dashboard", e);
         }
     }
 
@@ -79,12 +82,12 @@ public class Dashboard {
     }
 
     private void uploadDashboard(Map<String, ? super Object> argsMap) {
-        LOGGER.debug("INTERNAL going to upload dashboard now");
+        LOGGER.debug("Attempting to upload dashboard.");
 
         replaceAppTierNode();
         customDashboardJsonUploader.uploadDashboard(config.get("namePrefix").toString(), dashboardString, argsMap, false);
 
-        LOGGER.debug("INTERNAL back from upload dashboard now");
+        LOGGER.debug("Dashboard Upload Successful");
     }
 
     private void replaceAppTierNode() {

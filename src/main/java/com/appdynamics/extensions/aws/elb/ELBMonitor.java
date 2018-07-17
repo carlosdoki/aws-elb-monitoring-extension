@@ -8,26 +8,23 @@
 
 package com.appdynamics.extensions.aws.elb;
 
-import static com.appdynamics.extensions.aws.Constants.METRIC_PATH_SEPARATOR;
-
 import com.appdynamics.extensions.aws.SingleNamespaceCloudwatchMonitor;
 import com.appdynamics.extensions.aws.collectors.NamespaceMetricStatisticsCollector;
+import com.appdynamics.extensions.aws.elb.config.ELBConfiguration;
 import com.appdynamics.extensions.aws.metric.processors.MetricsProcessor;
-import com.appdynamics.extensions.xml.Xml;
 import com.singularity.ee.agent.systemagent.api.exception.TaskExecutionException;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.ConsoleAppender;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PatternLayout;
-import com.appdynamics.extensions.aws.elb.config.ELBConfiguration;
-import org.yaml.snakeyaml.Yaml;
 
-import java.io.*;
+import java.io.File;
+import java.io.OutputStreamWriter;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
+
+import static com.appdynamics.extensions.aws.Constants.METRIC_PATH_SEPARATOR;
 
 /**
  * @author Satish Muddam
@@ -40,7 +37,7 @@ public class ELBMonitor extends SingleNamespaceCloudwatchMonitor<ELBConfiguratio
             "Custom Metrics", METRIC_PATH_SEPARATOR, "Amazon ELB", METRIC_PATH_SEPARATOR);
 
     private Map customDashboard;
-    private String dashboardXML;
+    private String dashboardJson;
     private Dashboard dashboard;
 
     public ELBMonitor() {
@@ -71,13 +68,13 @@ public class ELBMonitor extends SingleNamespaceCloudwatchMonitor<ELBConfiguratio
     @Override
     protected NamespaceMetricStatisticsCollector getNamespaceMetricsCollector(
             ELBConfiguration config) {
+
         customDashboard = config.getCustomDashboard();
-        dashboard = new Dashboard(customDashboard, dashboardXML);
+        dashboard = new Dashboard(customDashboard, dashboardJson);
+        LOGGER.debug("Dashboard.class object Successfully Created");
 
         MetricsProcessor metricsProcessor = createMetricsProcessor(config);
 
-
-        LOGGER.debug("INTERNAL dashboard object created");
 
         return new NamespaceMetricStatisticsCollector
                 .Builder(config.getAccounts(),
@@ -92,15 +89,14 @@ public class ELBMonitor extends SingleNamespaceCloudwatchMonitor<ELBConfiguratio
 
     @Override
     protected void initializeMoreStuff(Map<String, String> args) {
-//        getContextConfiguration().setMetricXml(args.get("dashboard-file"), Xml.class);
-        LOGGER.debug("INTERNAL reached initializeMoreStuff");
+        LOGGER.debug("Getting dashboard-file args in initializeMoreStuff");
         try {
-            dashboardXML = FileUtils.readFileToString(new File(args.get("dashboard-file")));
-        } catch (Exception e){
-            LOGGER.debug("Unable to get file for dashboard", e);
+            dashboardJson = FileUtils.readFileToString(new File(args.get("dashboard-file")));
+        } catch (Exception e) {
+            LOGGER.error("Unable to get file for dashboard", e);
         }
 
-        LOGGER.debug("INTERNAL reached leaving");
+        LOGGER.debug("Done with initializeMoreStuff");
 
     }
 
@@ -124,34 +120,22 @@ public class ELBMonitor extends SingleNamespaceCloudwatchMonitor<ELBConfiguratio
         ca.setThreshold(Level.DEBUG);
         LOGGER.getRootLogger().addAppender(ca);
 
-
-        /*FileAppender fa = new FileAppender(new PatternLayout("%-5p [%t]: %m%n"), "cache.log");
-        fa.setThreshold(Level.DEBUG);
-        LOGGER.getRootLogger().addAppender(fa);*/
-
-
         ELBMonitor monitor = new ELBMonitor();
 
 
         Map<String, String> taskArgs = new HashMap<String, String>();
+
 //        taskArgs.put("config-file", "/Users/bhuvnesh.kumar/repos/appdynamics/extensions/aws-elb-monitoring-extension/src/main/resources/conf/config.yml");
 //        taskArgs.put("dashboard-file", "/Users/bhuvnesh.kumar/repos/appdynamics/extensions/aws-elb-monitoring-extension/src/main/resources/conf/dashboard.xml");
 
 
         taskArgs.put("config-file", "//Applications/AppDynamics/ma43/monitors/AWSELBMonitor_dash/config.yml");
-        taskArgs.put("dashboard-file", "/Users/bhuvnesh.kumar/repos/appdynamics/extensions/aws-elb-monitoring-extension/src/main/resources/conf/dashboard.json");
+        taskArgs.put("dashboard-file", "//Applications/AppDynamics/ma43/monitors/AWSELBMonitor_dash/dashboard.json");
 
 
         monitor.execute(taskArgs, null);
 
     }
 
-
-//    @Override
-//    protected void onComplete(){
-//        LOGGER.debug("INTERNAL reached onComplete");
-//        Dashboard dashboard = new Dashboard(customDashboard, dashboardXML);
-//        LOGGER.debug("INTERNAL leaving onComplete");
-//    }
 
 }

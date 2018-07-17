@@ -18,7 +18,6 @@ import com.appdynamics.extensions.aws.metric.StatisticType;
 import com.appdynamics.extensions.aws.metric.processors.MetricsProcessor;
 import com.appdynamics.extensions.aws.metric.processors.MetricsProcessorHelper;
 import com.appdynamics.extensions.aws.predicate.MultiDimensionPredicate;
-import com.appdynamics.extensions.dashboard.CustomDashboardTask;
 import org.apache.log4j.Logger;
 
 import java.util.*;
@@ -74,9 +73,9 @@ public class ELBMetricsProcessor implements MetricsProcessor {
             dimensionToMetricPathNameDictionary.put(dimension.getName(), dimension.getDisplayName());
         }
 
-        LOGGER.debug("INTERNAL in Metric Processor -> send dashboard");
+        LOGGER.debug("In Metric Processor going to upload dashboard");
         dashboard.sendDashboard();
-        LOGGER.debug("INTERNAL in Metric Processor back <- send dashboard");
+        LOGGER.debug("Back to Metric Processor after uploading dashboard");
 
         return MetricsProcessorHelper.createMetricStatsMapForUpload(namespaceMetricStats,
                 dimensionToMetricPathNameDictionary, false);
@@ -87,20 +86,4 @@ public class ELBMetricsProcessor implements MetricsProcessor {
     }
 
 
-    private static Set<String> getInstanceNames(Map<String, ?> config) {
-        Map instances = (Map) config.get("accounts");
-        Set<String> names = new HashSet<String>();
-        if (instances != null) {
-            String name = (String) instances.get("displayAccountName");
-            if (name != null) {
-                names.add(name);
-            } else {
-                names.add("");
-            }
-        }
-
-        return names;
-
-    }
-
-    }
+}

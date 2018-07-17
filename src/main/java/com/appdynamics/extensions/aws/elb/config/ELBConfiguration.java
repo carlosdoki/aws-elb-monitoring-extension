@@ -10,9 +10,7 @@ package com.appdynamics.extensions.aws.elb.config;
 
 import com.appdynamics.extensions.aws.config.Configuration;
 
-import java.util.List;
 import java.util.Map;
-import com.appdynamics.extensions.aws.elb.config.customDashboard;
 
 public class ELBConfiguration extends Configuration {
 
