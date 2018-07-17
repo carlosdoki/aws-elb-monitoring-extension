@@ -8,35 +8,39 @@
 
 package com.appdynamics.extensions.aws.elb;
 
-import static org.junit.Assert.assertTrue;
-
 import com.google.common.collect.Maps;
 import com.singularity.ee.agent.systemagent.api.TaskOutput;
 import org.junit.Test;
 
 import java.util.Map;
 
+import static org.junit.Assert.assertTrue;
+
+
 public class ELBMonitorTest {
 
-	private ELBMonitor classUnderTest = new ELBMonitor();
+    private ELBMonitor classUnderTest = new ELBMonitor();
 
-//	@Test
-//	public void testMetricsCollectionCredentialsEncrypted() throws Exception {
-//		Map<String, String> args = Maps.newHashMap();
-//		args.put("config-file","src/test/resources/conf/itest-encrypted-config.yml");
-//
-//		TaskOutput result = classUnderTest.execute(args, null);
-//		assertTrue(result.getStatusMessage().contains("Monitor {} completes"));
-//	}
-//
-//	@Test
-//	public void testMetricsCoyllectionWithProxy() throws Exception {
-//		Map<String, String> args = Maps.newHashMap();
-//		args.put("config-file","src/test/resources/conf/itest-proxy-config.yml");
-//
-//		TaskOutput result = classUnderTest.execute(args, null);
-//		assertTrue(result.getStatusMessage().contains("Monitor {} completes"));
-//	}
+    @Test
+    public void testMetricsCollectionCredentialsEncrypted() throws Exception {
+        Map<String, String> args = Maps.newHashMap();
+        args.put("config-file", "src/test/resources/conf/itest-encrypted-config.yml");
+        args.put("dashboard-file", "src/test/resources/conf/dashboard.json");
+
+        TaskOutput result = classUnderTest.execute(args, null);
+        assertTrue(result.getStatusMessage().contains("Monitor ELBMonitor completes."));
+
+    }
+
+    @Test
+    public void testMetricsCoyllectionWithProxy() throws Exception {
+        Map<String, String> args = Maps.newHashMap();
+        args.put("config-file", "src/test/resources/conf/itest-proxy-config.yml");
+        args.put("dashboard-file", "src/test/resources/conf/dashboard.json");
+
+        TaskOutput result = classUnderTest.execute(args, null);
+        assertTrue(result.getStatusMessage().contains("Monitor ELBMonitor completes."));
+    }
 
 
 }

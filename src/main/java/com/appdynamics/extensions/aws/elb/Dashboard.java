@@ -44,7 +44,7 @@ public class Dashboard {
             LOGGER.debug("Created CustomDashboardUploader object");
 
             Map<String, ? super Object> argsMap = getControllerInfo();
-            if (config.get("uploadDashboard").toString().equals("true")) {
+            if (config.get("enabled").toString().equals("true")) {
                 uploadDashboard(argsMap);
             } else {
                 LOGGER.debug("Upload dashboard disabled, not uploading dashboard.");

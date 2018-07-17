@@ -198,3 +198,31 @@ metricsConfig:
     # (ex: 5xx error responses from a service) or throttling errors
     #
     maxErrorRetrySize: 0
+
+# Generate a custom dashboard based on the provided template
+customDashboard:
+    enabled: true
+    namePrefix: "AWS ELB Monitor"
+    uploadDashboard: true
+    executionFrequencyMinutes: 5
+    # To upload the dashboard, please create a user from Controller UI or
+    host: ""
+    port: ""
+    account: "customer1"
+    # add the credentials of an existing user.
+    username: "ControllerUI_user"
+    password: "PlainTextPassword"
+
+    #passwordEncrypted: "ControllerUI_password_encrypted"
+    #encryptionKey: "welcome"
+
+    # If the AppName and TierName controller-info.xml or in the startup system properties,
+    # Add them here
+    applicationName: "AppName"
+    tierName: "tierName"
+    nodeName: ""
+
+
+    # Custom Template for Dashboard
+    # If not set, the default will be used
+    #templateFile: monitors/AWS
