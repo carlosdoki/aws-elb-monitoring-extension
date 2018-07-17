@@ -139,7 +139,7 @@
 								<copy todir="${target.dir}">
 									<fileset dir="src/main/resources/conf" includes="monitor.xml" />
 									<fileset dir="src/main/resources/conf" includes="config.yml" />
-									<fileset dir="src/main/resources/conf" includes="dashboard.xml" />
+									<fileset dir="src/main/resources/conf" includes="dashboard.json" />
 									<fileset dir="${project.basedir}" includes="LICENSE.txt"/>
 									<fileset dir="${project.basedir}" includes="NOTICE.txt"/>
 								</copy>
