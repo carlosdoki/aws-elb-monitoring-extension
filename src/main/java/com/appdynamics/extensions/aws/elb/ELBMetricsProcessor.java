@@ -72,10 +72,19 @@ public class ELBMetricsProcessor implements MetricsProcessor {
         for (Dimension dimension : dimensions) {
             dimensionToMetricPathNameDictionary.put(dimension.getName(), dimension.getDisplayName());
         }
-
         LOGGER.debug("In Metric Processor going to upload dashboard");
-        dashboard.sendDashboard();
-        LOGGER.debug("Back to Metric Processor after uploading dashboard");
+
+        Thread dashboardThread = new Thread(new Runnable() {
+            public void run() {
+                LOGGER.debug("Creating a new thread to send the dashboard");
+                dashboard.sendDashboard();
+            }
+        });
+        dashboardThread.start();
+
+//        LOGGER.debug("In Metric Processor going to upload dashboard");
+//        dashboard.sendDashboard();
+//        LOGGER.debug("Back to Metric Processor after uploading dashboard");
 
         return MetricsProcessorHelper.createMetricStatsMapForUpload(namespaceMetricStats,
                 dimensionToMetricPathNameDictionary, false);
