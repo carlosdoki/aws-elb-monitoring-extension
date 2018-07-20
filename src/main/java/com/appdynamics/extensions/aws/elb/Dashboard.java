@@ -10,6 +10,7 @@ package com.appdynamics.extensions.aws.elb;
 
 import com.appdynamics.extensions.ABaseMonitor;
 import com.appdynamics.extensions.TaskInputArgs;
+import com.appdynamics.extensions.conf.ControllerInfo;
 import com.appdynamics.extensions.dashboard.CustomDashboardJsonUploader;
 import com.appdynamics.extensions.logging.ExtensionsLoggerFactory;
 import org.apache.log4j.Logger;
@@ -28,6 +29,7 @@ public class Dashboard {
 
     private Map config;
     private String dashboardString;
+    private ControllerInfo controllerInfo;
 
     private CustomDashboardJsonUploader customDashboardJsonUploader;
 
@@ -43,6 +45,7 @@ public class Dashboard {
 
     protected void sendDashboard() {
         try {
+            controllerInfo = new ControllerInfo().getControllerInfo();
             customDashboardJsonUploader = new CustomDashboardJsonUploader();
             LOGGER.debug("Created CustomDashboardUploader object");
 
@@ -63,15 +66,22 @@ public class Dashboard {
     private Map<String, ? super Object> getControllerInfo() {
         Map<String, ? super Object> argsMap = new HashMap<>();
 
-        String user = config.get("username").toString() + "@" + config.get("account");
+//        String user = config.get("username").toString() + "@" + config.get("account");
+        String user = controllerInfo.getUsername() + "@" + controllerInfo.getAccount();
 
         List<Map<String, ?>> serverList = new ArrayList<>();
         Map<String, ? super Object> serverMap = new HashMap<>();
-        serverMap.put(TaskInputArgs.HOST, config.get("host").toString());
-        serverMap.put(TaskInputArgs.PORT, config.get("port").toString());
+        serverMap.put(TaskInputArgs.HOST, controllerInfo.getControllerHost());
+        serverMap.put(TaskInputArgs.PORT, controllerInfo.getControllerPort());
         serverMap.put(TaskInputArgs.USE_SSL, false);
         serverMap.put(TaskInputArgs.USER, user);
-        serverMap.put(TaskInputArgs.PASSWORD, config.get("password").toString());
+        serverMap.put(TaskInputArgs.PASSWORD, controllerInfo.getPassword());
+
+//        serverMap.put(TaskInputArgs.HOST, config.get("host").toString());
+//        serverMap.put(TaskInputArgs.PORT, config.get("port").toString());
+//        serverMap.put(TaskInputArgs.USE_SSL, false);
+//        serverMap.put(TaskInputArgs.USER, user);
+//        serverMap.put(TaskInputArgs.PASSWORD, config.get("password").toString());
         serverList.add(serverMap);
         argsMap.put("servers", serverList);
 
@@ -97,10 +107,13 @@ public class Dashboard {
 //    TODO handle the sim enabled part as well
     private void replaceAppTierNode() {
 
-        dashboardString = dashboardString.replace("replaceApplicationName", config.get("applicationName").toString());
-        dashboardString = dashboardString.replace("replaceTierName", config.get("tierName").toString());
-        dashboardString = dashboardString.replace("replaceNodeName", config.get("nodeName").toString());
+        dashboardString = dashboardString.replace("replaceApplicationName", controllerInfo.getApplicationName());
+        dashboardString = dashboardString.replace("replaceTierName", controllerInfo.getTierName());
+        dashboardString = dashboardString.replace("replaceNodeName", controllerInfo.getNodeName());
         dashboardString = dashboardString.replace("replaceDashboardName", config.get("namePrefix").toString());
+//        dashboardString = dashboardString.replace("replaceApplicationName", config.get("applicationName").toString());
+//        dashboardString = dashboardString.replace("replaceTierName", config.get("tierName").toString());
+//        dashboardString = dashboardString.replace("replaceNodeName", config.get("nodeName").toString());
 
     }
 
