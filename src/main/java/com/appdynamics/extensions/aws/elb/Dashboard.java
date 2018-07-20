@@ -8,8 +8,10 @@
 
 package com.appdynamics.extensions.aws.elb;
 
+import com.appdynamics.extensions.ABaseMonitor;
 import com.appdynamics.extensions.TaskInputArgs;
 import com.appdynamics.extensions.dashboard.CustomDashboardJsonUploader;
+import com.appdynamics.extensions.logging.ExtensionsLoggerFactory;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
@@ -22,8 +24,9 @@ import java.util.Map;
  */
 public class Dashboard {
 
+    private static final org.slf4j.Logger LOGGER = ExtensionsLoggerFactory.getLogger(Dashboard.class);
+
     private Map config;
-    private static final Logger LOGGER = Logger.getLogger(Dashboard.class);
     private String dashboardString;
 
     private CustomDashboardJsonUploader customDashboardJsonUploader;
@@ -56,6 +59,7 @@ public class Dashboard {
         }
     }
 
+    // TODO get controller info from commons
     private Map<String, ? super Object> getControllerInfo() {
         Map<String, ? super Object> argsMap = new HashMap<>();
 
@@ -90,6 +94,7 @@ public class Dashboard {
         LOGGER.debug("Dashboard Upload Successful");
     }
 
+//    TODO handle the sim enabled part as well
     private void replaceAppTierNode() {
 
         dashboardString = dashboardString.replace("replaceApplicationName", config.get("applicationName").toString());

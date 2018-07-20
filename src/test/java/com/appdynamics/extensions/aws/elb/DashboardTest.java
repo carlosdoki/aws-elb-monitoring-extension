@@ -10,10 +10,10 @@ package com.appdynamics.extensions.aws.elb;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
+import org.junit.Assert;
 import org.junit.Test;
 import com.appdynamics.extensions.dashboard.CustomDashboardJsonUploader;
 import org.mockito.Mockito;
-import sun.print.CUPSPrinter;
 
 import java.io.File;
 import java.io.IOException;
@@ -63,6 +63,11 @@ public class DashboardTest {
         CustomDashboardJsonUploader customDashboardJsonUploader = new CustomDashboardJsonUploader();
         CustomDashboardJsonUploader customSpy = Mockito.spy(customDashboardJsonUploader);
         Mockito.doNothing().when(customSpy).uploadDashboard(config.get("namePrefix").toString(), dashboardJson, config, false);
-        dashboard.sendDashboard();
+        try {
+            dashboard.sendDashboard();
+        } catch (Exception e){
+            // error encountered
+            Assert.assertTrue(false);
+        }
     }
 }
