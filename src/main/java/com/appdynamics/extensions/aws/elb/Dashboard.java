@@ -14,6 +14,7 @@ import com.appdynamics.extensions.conf.ControllerInfo;
 import com.appdynamics.extensions.dashboard.CustomDashboardJsonUploader;
 import com.appdynamics.extensions.logging.ExtensionsLoggerFactory;
 import org.apache.log4j.Logger;
+import sun.rmi.runtime.Log;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -67,7 +68,18 @@ public class Dashboard {
         Map<String, ? super Object> argsMap = new HashMap<>();
 
 //        String user = config.get("username").toString() + "@" + config.get("account");
-        String user = controllerInfo.getUsername() + "@" + controllerInfo.getAccount();
+//        String user = controllerInfo.getUsername() + "@" + controllerInfo.getAccount();
+        String user = config.get("username").toString() + "@" + controllerInfo.getAccount();
+
+        LOGGER.debug("dashboard Controller Info given to extension: ");
+        LOGGER.debug("dashboard Host : " + controllerInfo.getControllerHost());
+        LOGGER.debug("dashboard Port : " + controllerInfo.getControllerPort());
+        LOGGER.debug("dashboard User : " + user);
+        LOGGER.debug("dashboard Password: " + config.get("password").toString());
+        LOGGER.debug("dashboard UseSSL: " + controllerInfo.getControllerSslEnabled());
+        LOGGER.debug("dashboard ApplicationName: {}", controllerInfo.getApplicationName());
+        LOGGER.debug("dashboard TierName: {}", controllerInfo.getTierName());
+        LOGGER.debug("dashboard NodeName: {}", controllerInfo.getNodeName());
 
         List<Map<String, ?>> serverList = new ArrayList<>();
         Map<String, ? super Object> serverMap = new HashMap<>();
@@ -75,13 +87,14 @@ public class Dashboard {
         serverMap.put(TaskInputArgs.PORT, controllerInfo.getControllerPort());
         serverMap.put(TaskInputArgs.USE_SSL, false);
         serverMap.put(TaskInputArgs.USER, user);
-        serverMap.put(TaskInputArgs.PASSWORD, controllerInfo.getPassword());
+        serverMap.put(TaskInputArgs.PASSWORD, config.get("password").toString());
 
 //        serverMap.put(TaskInputArgs.HOST, config.get("host").toString());
 //        serverMap.put(TaskInputArgs.PORT, config.get("port").toString());
 //        serverMap.put(TaskInputArgs.USE_SSL, false);
 //        serverMap.put(TaskInputArgs.USER, user);
 //        serverMap.put(TaskInputArgs.PASSWORD, config.get("password").toString());
+
         serverList.add(serverMap);
         argsMap.put("servers", serverList);
 

@@ -12,6 +12,7 @@ import com.appdynamics.extensions.aws.SingleNamespaceCloudwatchMonitor;
 import com.appdynamics.extensions.aws.collectors.NamespaceMetricStatisticsCollector;
 import com.appdynamics.extensions.aws.elb.config.ELBConfiguration;
 import com.appdynamics.extensions.aws.metric.processors.MetricsProcessor;
+import com.appdynamics.extensions.logging.ExtensionsLoggerFactory;
 import com.singularity.ee.agent.systemagent.api.exception.TaskExecutionException;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.ConsoleAppender;
@@ -31,7 +32,8 @@ import static com.appdynamics.extensions.aws.Constants.METRIC_PATH_SEPARATOR;
  */
 public class ELBMonitor extends SingleNamespaceCloudwatchMonitor<ELBConfiguration> {
 
-    private static final Logger LOGGER = Logger.getLogger(ELBMonitor.class);
+    private static final Logger logger = Logger.getLogger(ELBMonitor.class);
+    private static final org.slf4j.Logger LOGGER = ExtensionsLoggerFactory.getLogger(ELBMonitor.class);
 
     private static final String DEFAULT_METRIC_PREFIX = String.format("%s%s%s%s",
             "Custom Metrics", METRIC_PATH_SEPARATOR, "Amazon ELB", METRIC_PATH_SEPARATOR);
@@ -102,7 +104,7 @@ public class ELBMonitor extends SingleNamespaceCloudwatchMonitor<ELBConfiguratio
 
     @Override
     protected Logger getLogger() {
-        return LOGGER;
+        return  LOGGER;
     }
 
     private MetricsProcessor createMetricsProcessor(ELBConfiguration config) {
@@ -118,7 +120,9 @@ public class ELBMonitor extends SingleNamespaceCloudwatchMonitor<ELBConfiguratio
         ca.setWriter(new OutputStreamWriter(System.out));
         ca.setLayout(new PatternLayout("%-5p [%t]: %m%n"));
         ca.setThreshold(Level.DEBUG);
-        LOGGER.getRootLogger().addAppender(ca);
+
+
+        logger.getRootLogger().addAppender(ca);
 
         ELBMonitor monitor = new ELBMonitor();
 

@@ -18,6 +18,7 @@ import com.appdynamics.extensions.aws.metric.StatisticType;
 import com.appdynamics.extensions.aws.metric.processors.MetricsProcessor;
 import com.appdynamics.extensions.aws.metric.processors.MetricsProcessorHelper;
 import com.appdynamics.extensions.aws.predicate.MultiDimensionPredicate;
+import com.appdynamics.extensions.logging.ExtensionsLoggerFactory;
 import org.apache.log4j.Logger;
 
 import java.util.*;
@@ -25,7 +26,7 @@ import java.util.concurrent.atomic.LongAdder;
 
 public class ELBMetricsProcessor implements MetricsProcessor {
 
-    private static final Logger LOGGER = Logger.getLogger(ELBMetricsProcessor.class);
+    private static final org.slf4j.Logger LOGGER = ExtensionsLoggerFactory.getLogger(ELBMetricsProcessor.class);
 
 
     private List<IncludeMetric> includeMetrics;
