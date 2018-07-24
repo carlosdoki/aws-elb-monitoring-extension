@@ -13,9 +13,9 @@ import com.appdynamics.extensions.TaskInputArgs;
 import com.appdynamics.extensions.conf.ControllerInfo;
 import com.appdynamics.extensions.dashboard.CustomDashboardJsonUploader;
 import com.appdynamics.extensions.logging.ExtensionsLoggerFactory;
-import org.apache.log4j.Logger;
+//import org.apache.log4j.Logger;
 import sun.rmi.runtime.Log;
-
+import org.slf4j.Logger;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,7 +26,7 @@ import java.util.Map;
  */
 public class Dashboard {
 
-    private static final org.slf4j.Logger LOGGER = ExtensionsLoggerFactory.getLogger(Dashboard.class);
+    private static final Logger LOGGER = ExtensionsLoggerFactory.getLogger(Dashboard.class);
 
     private Map config;
     private String dashboardString;
@@ -80,11 +80,12 @@ public class Dashboard {
         LOGGER.debug("dashboard ApplicationName: {}", controllerInfo.getApplicationName());
         LOGGER.debug("dashboard TierName: {}", controllerInfo.getTierName());
         LOGGER.debug("dashboard NodeName: {}", controllerInfo.getNodeName());
+        LOGGER.debug("Sim Enabled: {}", controllerInfo.getSimEnabled());
 
         List<Map<String, ?>> serverList = new ArrayList<>();
         Map<String, ? super Object> serverMap = new HashMap<>();
         serverMap.put(TaskInputArgs.HOST, controllerInfo.getControllerHost());
-        serverMap.put(TaskInputArgs.PORT, controllerInfo.getControllerPort());
+        serverMap.put(TaskInputArgs.PORT, controllerInfo.getControllerPort().toString());
         serverMap.put(TaskInputArgs.USE_SSL, false);
         serverMap.put(TaskInputArgs.USER, user);
         serverMap.put(TaskInputArgs.PASSWORD, config.get("password").toString());
@@ -120,10 +121,50 @@ public class Dashboard {
 //    TODO handle the sim enabled part as well
     private void replaceAppTierNode() {
 
-        dashboardString = dashboardString.replace("replaceApplicationName", controllerInfo.getApplicationName());
-        dashboardString = dashboardString.replace("replaceTierName", controllerInfo.getTierName());
-        dashboardString = dashboardString.replace("replaceNodeName", controllerInfo.getNodeName());
-        dashboardString = dashboardString.replace("replaceDashboardName", config.get("namePrefix").toString());
+        if(dashboardString.contains("replaceApplicationName")){
+            LOGGER.debug("replaceApplicationName : {}", controllerInfo.getApplicationName());
+            if(controllerInfo.getApplicationName() != null){
+                dashboardString = dashboardString.replace("replaceApplicationName", controllerInfo.getApplicationName());
+
+            }
+        }
+        if(dashboardString.contains("replaceTierName")){
+            LOGGER.debug("replaceTierName: {}", controllerInfo.getTierName());
+
+            if(controllerInfo.getTierName() != null) {
+                dashboardString = dashboardString.replace("replaceTierName", controllerInfo.getTierName());
+            }
+        }
+        if(dashboardString.contains("replaceNodeName")){
+            LOGGER.debug("replaceNodeName: {}", controllerInfo.getNodeName());
+
+            if(controllerInfo.getNodeName() != null){
+            dashboardString = dashboardString.replace("replaceNodeName", controllerInfo.getNodeName());
+            }
+        }
+        if(dashboardString.contains("replaceDashboardName")){
+            LOGGER.debug("replaceDashboardName: {}", config.get("namePrefix").toString());
+
+            if(config.get("namePrefix") != null) {
+                dashboardString = dashboardString.replace("replaceDashboardName", config.get("namePrefix").toString());
+            }
+        }
+        if(dashboardString.contains("replaceSimApplicationName")){
+            LOGGER.debug("replaceSimApplicationName: {}", "Server & Infrastructure Monitoring");
+
+            dashboardString = dashboardString.replace("replaceSimApplicationName", "Server & Infrastructure Monitoring");
+        }
+        if(dashboardString.contains("replaceHostName")){
+            LOGGER.debug("replaceHostName: {}", controllerInfo.getControllerHost());
+
+            if(controllerInfo.getControllerHost() != null) {
+                dashboardString = dashboardString.replace("replaceHostName", controllerInfo.getControllerHost());
+            }
+        }
+
+
+
+
 //        dashboardString = dashboardString.replace("replaceApplicationName", config.get("applicationName").toString());
 //        dashboardString = dashboardString.replace("replaceTierName", config.get("tierName").toString());
 //        dashboardString = dashboardString.replace("replaceNodeName", config.get("nodeName").toString());
