@@ -22,7 +22,8 @@
         
 		<task-arguments>
 			<argument name="config-file" is-required="true" default-value="monitors/AWSELBMonitor/config.yml" />
-            <argument name="dashboard-file" is-required="true" default-value="monitors/AWSELBMonitor/dashboard.xml" />
+            <argument name="normalDashboard" is-required="true" default-value="monitors/AWSELBMonitor_dash/normalDashboard.json" />
+            <argument name="simDashboard" is-required="true" default-value="monitors/AWSELBMonitor_dash/simDashboard.json" />
         </task-arguments>
             
         <java-task>

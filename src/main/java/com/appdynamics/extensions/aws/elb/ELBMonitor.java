@@ -45,6 +45,7 @@ public class ELBMonitor extends SingleNamespaceCloudwatchMonitor<ELBConfiguratio
     private Map dashboardValueMap;
     private String dashboardJson;
     private Dashboard dashboard;
+    private Map dashboardJsons;
 
     public ELBMonitor() {
         super(ELBConfiguration.class);
@@ -76,7 +77,7 @@ public class ELBMonitor extends SingleNamespaceCloudwatchMonitor<ELBConfiguratio
             ELBConfiguration config) {
 
         dashboardValueMap = config.getCustomDashboard();
-        dashboard = new Dashboard(dashboardValueMap, dashboardJson);
+        dashboard = new Dashboard(dashboardValueMap, dashboardJson, dashboardJsons);
         LOGGER.debug("Dashboard.class object Successfully Created");
 
         MetricsProcessor metricsProcessor = createMetricsProcessor(config);
@@ -97,9 +98,13 @@ public class ELBMonitor extends SingleNamespaceCloudwatchMonitor<ELBConfiguratio
     protected void initializeMoreStuff(Map<String, String> args) {
         LOGGER.debug("Getting dashboard-file args in initializeMoreStuff");
         try {
-            dashboardJson = FileUtils.readFileToString(new File(args.get("dashboard-file")));
+//            dashboardJson = FileUtils.readFileToString(new File(args.get("dashboard-file")));
+            dashboardJsons = new HashMap();
+            dashboardJsons.put("normalDashboard", FileUtils.readFileToString(new File(args.get("normalDashboard"))));
+            dashboardJsons.put("simDashboard", FileUtils.readFileToString(new File(args.get("simDashboard"))));
+
         } catch (Exception e) {
-            LOGGER.error("Unable to get file for dashboard", e);
+            LOGGER.error("Unable to get files for dashboard", e);
         }
 
         LOGGER.debug("Done with initializeMoreStuff");
@@ -139,7 +144,8 @@ public class ELBMonitor extends SingleNamespaceCloudwatchMonitor<ELBConfiguratio
 
 
         taskArgs.put("config-file", "//Applications/AppDynamics/ma43/monitors/AWSELBMonitor_dash/config.yml");
-        taskArgs.put("dashboard-file", "//Applications/AppDynamics/ma43/monitors/AWSELBMonitor_dash/dashboard.json");
+        taskArgs.put("normalDashboard", "//Applications/AppDynamics/ma43/monitors/AWSELBMonitor_dash/normalDashboard.json");
+        taskArgs.put("simDashboard", "//Applications/AppDynamics/ma43/monitors/AWSELBMonitor_dash/simDashboard.json");
 
 
         monitor.execute(taskArgs, null);

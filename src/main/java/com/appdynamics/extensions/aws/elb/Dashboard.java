@@ -14,6 +14,7 @@ import com.appdynamics.extensions.conf.ControllerInfo;
 import com.appdynamics.extensions.dashboard.CustomDashboardJsonUploader;
 import com.appdynamics.extensions.logging.ExtensionsLoggerFactory;
 //import org.apache.log4j.Logger;
+import com.google.common.annotations.VisibleForTesting;
 import sun.rmi.runtime.Log;
 import org.slf4j.Logger;
 import java.util.ArrayList;
@@ -31,14 +32,15 @@ public class Dashboard {
     private Map config;
     private String dashboardString;
     private ControllerInfo controllerInfo;
-
+    private Map dashboardJsons;
     private CustomDashboardJsonUploader customDashboardJsonUploader;
 
-    public Dashboard(Map config, String dashboardXML) {
+    public Dashboard(Map config, String dashboardString, Map dashboardJsons) {
         LOGGER.debug(" Setting up Dashboard Class");
 
         this.config = config;
-        this.dashboardString = dashboardXML;
+        this.dashboardString = dashboardString;
+        this.dashboardJsons = dashboardJsons;
 
         LOGGER.debug("Leaving Dashboard Class");
 
@@ -57,18 +59,14 @@ public class Dashboard {
                 LOGGER.debug("Upload dashboard disabled, not uploading dashboard.");
             }
 
-
         } catch (Exception e) {
             LOGGER.error("Unable to upload dashboard", e);
         }
     }
 
-    // TODO get controller info from commons
     private Map<String, ? super Object> getControllerInfo() {
         Map<String, ? super Object> argsMap = new HashMap<>();
 
-//        String user = config.get("username").toString() + "@" + config.get("account");
-//        String user = controllerInfo.getUsername() + "@" + controllerInfo.getAccount();
         String user = config.get("username").toString() + "@" + controllerInfo.getAccount();
 
         LOGGER.debug("dashboard Controller Info given to extension: ");
@@ -90,12 +88,6 @@ public class Dashboard {
         serverMap.put(TaskInputArgs.USER, user);
         serverMap.put(TaskInputArgs.PASSWORD, config.get("password").toString());
 
-//        serverMap.put(TaskInputArgs.HOST, config.get("host").toString());
-//        serverMap.put(TaskInputArgs.PORT, config.get("port").toString());
-//        serverMap.put(TaskInputArgs.USE_SSL, false);
-//        serverMap.put(TaskInputArgs.USER, user);
-//        serverMap.put(TaskInputArgs.PASSWORD, config.get("password").toString());
-
         serverList.add(serverMap);
         argsMap.put("servers", serverList);
 
@@ -109,51 +101,37 @@ public class Dashboard {
         return argsMap;
     }
 
+    private void loadDashboardBasedOnSim(){
+        LOGGER.debug("Sim Enabled: {}", controllerInfo.getSimEnabled());
+
+        if(controllerInfo.getSimEnabled() == false){
+            dashboardString = dashboardJsons.get("normalDashboard").toString();
+        } else {
+            dashboardString = dashboardJsons.get("simDashboard").toString();
+        }
+    }
+
     private void uploadDashboard(Map<String, ? super Object> argsMap) {
         LOGGER.debug("Attempting to upload dashboard.");
 
-        replaceAppTierNode();
+        loadDashboardBasedOnSim();
+        replaceFields();
         customDashboardJsonUploader.uploadDashboard(config.get("namePrefix").toString(), dashboardString, argsMap, false);
 
         LOGGER.debug("Dashboard Upload Successful");
     }
 
-//    TODO handle the sim enabled part as well
-    private void replaceAppTierNode() {
+    private void replaceFields() {
 
-        if(dashboardString.contains("replaceApplicationName")){
-            LOGGER.debug("replaceApplicationName : {}", controllerInfo.getApplicationName());
-            if(controllerInfo.getApplicationName() != null){
-                dashboardString = dashboardString.replace("replaceApplicationName", controllerInfo.getApplicationName());
+        replaceApplicationName();
+        replaceTierName();
+        replaceNodeName();
+        replaceDashboardName();
+        replaceSimApplicationName();
+        replaceHostName();
+    }
 
-            }
-        }
-        if(dashboardString.contains("replaceTierName")){
-            LOGGER.debug("replaceTierName: {}", controllerInfo.getTierName());
-
-            if(controllerInfo.getTierName() != null) {
-                dashboardString = dashboardString.replace("replaceTierName", controllerInfo.getTierName());
-            }
-        }
-        if(dashboardString.contains("replaceNodeName")){
-            LOGGER.debug("replaceNodeName: {}", controllerInfo.getNodeName());
-
-            if(controllerInfo.getNodeName() != null){
-            dashboardString = dashboardString.replace("replaceNodeName", controllerInfo.getNodeName());
-            }
-        }
-        if(dashboardString.contains("replaceDashboardName")){
-            LOGGER.debug("replaceDashboardName: {}", config.get("namePrefix").toString());
-
-            if(config.get("namePrefix") != null) {
-                dashboardString = dashboardString.replace("replaceDashboardName", config.get("namePrefix").toString());
-            }
-        }
-        if(dashboardString.contains("replaceSimApplicationName")){
-            LOGGER.debug("replaceSimApplicationName: {}", "Server & Infrastructure Monitoring");
-
-            dashboardString = dashboardString.replace("replaceSimApplicationName", "Server & Infrastructure Monitoring");
-        }
+    private void replaceHostName() {
         if(dashboardString.contains("replaceHostName")){
             LOGGER.debug("replaceHostName: {}", controllerInfo.getControllerHost());
 
@@ -161,14 +139,53 @@ public class Dashboard {
                 dashboardString = dashboardString.replace("replaceHostName", controllerInfo.getControllerHost());
             }
         }
+    }
 
+    private void replaceSimApplicationName() {
+        if(dashboardString.contains("replaceSimApplicationName")){
+            LOGGER.debug("replaceSimApplicationName: {}", "Server & Infrastructure Monitoring");
 
+            dashboardString = dashboardString.replace("replaceSimApplicationName", "Server & Infrastructure Monitoring");
+        }
+    }
 
+    private void replaceDashboardName() {
+        if(dashboardString.contains("replaceDashboardName")){
+            LOGGER.debug("replaceDashboardName: {}", config.get("namePrefix").toString());
 
-//        dashboardString = dashboardString.replace("replaceApplicationName", config.get("applicationName").toString());
-//        dashboardString = dashboardString.replace("replaceTierName", config.get("tierName").toString());
-//        dashboardString = dashboardString.replace("replaceNodeName", config.get("nodeName").toString());
+            if(config.get("namePrefix") != null) {
+                dashboardString = dashboardString.replace("replaceDashboardName", config.get("namePrefix").toString());
+            }
+        }
+    }
 
+    private void replaceNodeName() {
+        if(dashboardString.contains("replaceNodeName")){
+            LOGGER.debug("replaceNodeName: {}", controllerInfo.getNodeName());
+
+            if(controllerInfo.getNodeName() != null){
+            dashboardString = dashboardString.replace("replaceNodeName", controllerInfo.getNodeName());
+            }
+        }
+    }
+
+    private void replaceTierName() {
+        if(dashboardString.contains("replaceTierName")){
+            LOGGER.debug("replaceTierName: {}", controllerInfo.getTierName());
+
+            if(controllerInfo.getTierName() != null) {
+                dashboardString = dashboardString.replace("replaceTierName", controllerInfo.getTierName());
+            }
+        }
+    }
+
+    private void replaceApplicationName() {
+        if(dashboardString.contains("replaceApplicationName")){
+            LOGGER.debug("replaceApplicationName : {}", controllerInfo.getApplicationName());
+            if(controllerInfo.getApplicationName() != null){
+                dashboardString = dashboardString.replace("replaceApplicationName", controllerInfo.getApplicationName());
+            }
+        }
     }
 
 }
