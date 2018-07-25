@@ -23,6 +23,8 @@ import org.apache.log4j.Logger;
 
 import java.util.*;
 import java.util.concurrent.atomic.LongAdder;
+import static com.appdynamics.extensions.aws.elb.Constants.*;
+
 
 public class ELBMetricsProcessor implements MetricsProcessor {
 
@@ -31,7 +33,7 @@ public class ELBMetricsProcessor implements MetricsProcessor {
 
     private List<IncludeMetric> includeMetrics;
     private List<Dimension> dimensions;
-    private static final String NAMESPACE = "AWS/ELB";
+    private static final String NAMESPACE = AWSELB;
     private Dashboard dashboard;
 
 
