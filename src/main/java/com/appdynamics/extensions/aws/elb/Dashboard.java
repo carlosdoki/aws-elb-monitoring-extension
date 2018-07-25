@@ -8,14 +8,11 @@
 
 package com.appdynamics.extensions.aws.elb;
 
-import com.appdynamics.extensions.ABaseMonitor;
 import com.appdynamics.extensions.TaskInputArgs;
 import com.appdynamics.extensions.conf.ControllerInfo;
 import com.appdynamics.extensions.dashboard.CustomDashboardJsonUploader;
 import com.appdynamics.extensions.logging.ExtensionsLoggerFactory;
 //import org.apache.log4j.Logger;
-import com.google.common.annotations.VisibleForTesting;
-import sun.rmi.runtime.Log;
 import org.slf4j.Logger;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -67,9 +64,9 @@ public class Dashboard {
     private Map<String, ? super Object> getControllerInfo() {
         Map<String, ? super Object> argsMap = new HashMap<>();
 
-        String user = "singularity-agent" + "@" + controllerInfo.getAccount();
-        String password = controllerInfo.getPassword().toString();
-//        String user = config.get(USERNAME).toString() + "@" + controllerInfo.getAccount();
+        String user = getUsername();
+        String password = getPassword();
+
 
         LOGGER.debug("dashboard Controller Info given to extension: ");
         LOGGER.debug("dashboard Host : " + controllerInfo.getControllerHost());
@@ -77,7 +74,6 @@ public class Dashboard {
         LOGGER.debug("dashboard User : " + user);
         LOGGER.debug("dashboard Password: " + password);
 
-//        LOGGER.debug("dashboard Password: " + config.get("password").toString());
         LOGGER.debug("dashboard UseSSL: " + controllerInfo.getControllerSslEnabled());
         LOGGER.debug("dashboard ApplicationName: {}", controllerInfo.getApplicationName());
         LOGGER.debug("dashboard TierName: {}", controllerInfo.getTierName());
@@ -104,6 +100,21 @@ public class Dashboard {
         connectionMap.put("socketTimeout", 15000);
         argsMap.put("connection", connectionMap);
         return argsMap;
+    }
+
+    private String getPassword() {
+        String password;
+        if(controllerInfo.getPassword() != null){
+            return controllerInfo.getPassword().toString();
+        }
+        return controllerInfo.getAccountAccessKey().toString();
+    }
+
+    private String getUsername() {
+        if(controllerInfo.getUsername() != null && controllerInfo.getAccount()!= null){
+            return controllerInfo.getUsername()+ "@" + controllerInfo.getAccount() ;
+        }
+        return "singularity-agent" + "@" + controllerInfo.getAccount();
     }
 
     private void loadDashboardBasedOnSim(){

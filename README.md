@@ -50,7 +50,7 @@ If you are running this extension inside an EC2 instance which has IAM profile c
 Configure "enableDecryption" of "credentialsDecryptionConfig" to true and provide the encryption key in "encryptionKey"
    For example,
    ```
-   #Encryption key for Encrypted password.
+   #Encryption key for Encrypted accountAccessKey.
    credentialsDecryptionConfig:
        enableDecryption: "true"
        encryptionKey: "XXXXXXXX"
@@ -135,7 +135,7 @@ proxyConfig:
     host:
     port:
     username:
-    password:   
+    accountAccessKey:   
     
 namespace: "AWS/ELB"
 dimensionName: "LoadBalancerName"
@@ -175,7 +175,7 @@ Typical metric path: **Application Infrastructure Performance|\<Tier\>|Custom Me
 - [ELB Metrics](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/elb-metricscollected.html)
 
 ## Credentials Encryption
-Please visit [this page](https://community.appdynamics.com/t5/Knowledge-Base/How-to-use-Password-Encryption-with-Extensions/ta-p/29397) to get detailed instructions on password encryption. The steps in this document will guide you through the whole process.
+Please visit [this page](https://community.appdynamics.com/t5/Knowledge-Base/How-to-use-Password-Encryption-with-Extensions/ta-p/29397) to get detailed instructions on accountAccessKey encryption. The steps in this document will guide you through the whole process.
 
 ## Extensions Workbench
 Workbench is an inbuilt feature provided with each extension in order to assist you to fine tune the extension setup before you actually deploy it on the controller. Please review the following document on [How to use the Extensions WorkBench](https://community.appdynamics.com/t5/Knowledge-Base/How-to-use-the-Extensions-WorkBench/ta-p/30130)

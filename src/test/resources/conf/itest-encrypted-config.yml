@@ -25,7 +25,7 @@ proxyConfig:
     host:
     port:
     username:
-    password:
+    accountAccessKey:
 
 dimensions:
    - name: "LoadBalancerName"
@@ -211,7 +211,7 @@ customDashboard:
     account: "customer1"
     # add the credentials of an existing user.
     username: "ControllerUI_user"
-    password: "PlainTextPassword"
+    accountAccessKey: "PlainTextPassword"
 
     #passwordEncrypted: "ControllerUI_password_encrypted"
     #encryptionKey: "welcome"

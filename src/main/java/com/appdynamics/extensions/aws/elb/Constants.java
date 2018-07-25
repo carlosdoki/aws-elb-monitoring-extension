@@ -24,6 +24,7 @@ public class Constants {
     public static final String NORMALDASHBOARD = "normalDashboard";
     public static final String SERVERS = "servers";
     public static final String PASSWORD = "password";
+    public static final String ACCOUNTACCESSKEY = "accountAccessKey";
     public static final String USERNAME = "username";
     public static final String ENALBED = "enabled";
     public static final String TRUE = "true";

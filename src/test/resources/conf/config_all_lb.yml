@@ -28,7 +28,7 @@ proxyConfig:
     host:
     port:
     username:
-    password:
+    accountAccessKey:
 
 # ELB has three different types of Load Balancers and all of them have their own Namespaces
 # Each namespace has different Dimensions and each dimension can have different values

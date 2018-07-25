@@ -28,7 +28,7 @@ proxyConfig:
     host:
     port:
     username:
-    password:
+    accountAccessKey:
 
 # Classic (namespace : "AWS/ELB")
 # Dimensions : AvailabilityZone, LoadBalancerName
@@ -214,7 +214,7 @@ customDashboard:
     # To upload the dashboard, please create a user from Controller UI or
     # add the credentials of an existing user.
     username: "ControllerUI_user"
-    password: "PlainTextPassword"
+    accountAccessKey: "PlainTextPassword"
 
     #passwordEncrypted: "ControllerUI_password_encrypted"
     #encryptionKey: "welcome"

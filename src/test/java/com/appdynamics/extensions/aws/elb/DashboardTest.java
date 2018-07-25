@@ -41,7 +41,7 @@ public class DashboardTest {
         config.put("port","8090");
         config.put("account","customer");
         config.put("username","user");
-        config.put("password","pass");
+        config.put("accountAccessKey","pass");
         config.put("applicationName","app");
         config.put("tierName","tier");
         config.put("nodeName","node");
