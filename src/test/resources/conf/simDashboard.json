@@ -74,7 +74,7 @@
                                     "entityType": "APPLICATION_COMPONENT_NODE",
                                     "entityName": "replaceHostName",
                                     "scopingEntityType": "APPLICATION_COMPONENT",
-                                    "scopingEntityName": "Root",
+                                    "scopingEntityName": "replaceMachinePath",
                                     "subtype": null
                                 }
                             ],

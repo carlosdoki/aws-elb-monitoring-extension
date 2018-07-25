@@ -60,7 +60,7 @@ public class DashboardTest {
     public void testDashboard(){
         valueMap();
         getJsonAsString();
-        Dashboard dashboard = new Dashboard(config, dashboardJson, dashboardMap);
+        Dashboard dashboard = new Dashboard(config, dashboardMap);
         CustomDashboardJsonUploader customDashboardJsonUploader = new CustomDashboardJsonUploader();
         CustomDashboardJsonUploader customSpy = Mockito.spy(customDashboardJsonUploader);
         Mockito.doNothing().when(customSpy).uploadDashboard(config.get("namePrefix").toString(), dashboardJson, config, false);

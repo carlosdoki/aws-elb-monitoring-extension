@@ -35,11 +35,10 @@ public class Dashboard {
     private Map dashboardJsons;
     private CustomDashboardJsonUploader customDashboardJsonUploader;
 
-    public Dashboard(Map config, String dashboardString, Map dashboardJsons) {
+    public Dashboard(Map config,  Map dashboardJsons) {
         LOGGER.debug(" Setting up Dashboard Class");
 
         this.config = config;
-        this.dashboardString = dashboardString;
         this.dashboardJsons = dashboardJsons;
 
         LOGGER.debug("Leaving Dashboard Class");
@@ -78,7 +77,8 @@ public class Dashboard {
         LOGGER.debug("dashboard ApplicationName: {}", controllerInfo.getApplicationName());
         LOGGER.debug("dashboard TierName: {}", controllerInfo.getTierName());
         LOGGER.debug("dashboard NodeName: {}", controllerInfo.getNodeName());
-        LOGGER.debug("Sim Enabled: {}", controllerInfo.getSimEnabled());
+        LOGGER.debug("dashboard Sim Enabled: {}", controllerInfo.getSimEnabled());
+        LOGGER.debug("dashboard Machine Path: {}", controllerInfo.getMachinePath());
 
         List<Map<String, ?>> serverList = new ArrayList<>();
         Map<String, ? super Object> serverMap = new HashMap<>();
@@ -129,6 +129,7 @@ public class Dashboard {
         replaceDashboardName();
         replaceSimApplicationName();
         replaceHostName();
+        replaceMachinePath();
     }
 
     private void replaceHostName() {
@@ -187,6 +188,20 @@ public class Dashboard {
             }
         }
     }
+
+    private void replaceMachinePath() {
+        if(dashboardString.contains("replaceMachinePath")){
+            LOGGER.debug("replaceMachinePath: {}", controllerInfo.getMachinePath());
+
+            if(controllerInfo.getNodeName() != null){
+                dashboardString = dashboardString.replace("replaceMachinePath", controllerInfo.getMachinePath());
+            } else {
+                dashboardString = dashboardString.replace("replaceMachinePath", "Root");
+
+            }
+        }
+    }
+
 
 }
 

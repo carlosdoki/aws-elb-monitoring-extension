@@ -43,7 +43,6 @@ public class ELBMonitor extends SingleNamespaceCloudwatchMonitor<ELBConfiguratio
             "Custom Metrics", METRIC_PATH_SEPARATOR, "Amazon ELB", METRIC_PATH_SEPARATOR);
 
     private Map dashboardValueMap;
-    private String dashboardJson;
     private Dashboard dashboard;
     private Map dashboardJsons;
 
@@ -77,7 +76,7 @@ public class ELBMonitor extends SingleNamespaceCloudwatchMonitor<ELBConfiguratio
             ELBConfiguration config) {
 
         dashboardValueMap = config.getCustomDashboard();
-        dashboard = new Dashboard(dashboardValueMap, dashboardJson, dashboardJsons);
+        dashboard = new Dashboard(dashboardValueMap, dashboardJsons);
         LOGGER.debug("Dashboard.class object Successfully Created");
 
         MetricsProcessor metricsProcessor = createMetricsProcessor(config);
