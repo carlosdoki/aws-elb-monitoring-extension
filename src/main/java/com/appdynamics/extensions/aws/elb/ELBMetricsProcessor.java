@@ -83,9 +83,8 @@ public class ELBMetricsProcessor implements MetricsProcessor {
         });
         dashboardThread.start();
 
-//        LOGGER.debug("In Metric Processor going to upload dashboard");
-//        dashboard.sendDashboard();
-//        LOGGER.debug("Back to Metric Processor after uploading dashboard");
+        LOGGER.debug("Created Thread for Dashboard Upload");
+
 
         return MetricsProcessorHelper.createMetricStatsMapForUpload(namespaceMetricStats,
                 dimensionToMetricPathNameDictionary, false);

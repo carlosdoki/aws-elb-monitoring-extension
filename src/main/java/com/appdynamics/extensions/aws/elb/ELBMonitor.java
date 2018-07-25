@@ -95,9 +95,8 @@ public class ELBMonitor extends SingleNamespaceCloudwatchMonitor<ELBConfiguratio
 
     @Override
     protected void initializeMoreStuff(Map<String, String> args) {
-        LOGGER.debug("Getting dashboard-file args in initializeMoreStuff");
+        LOGGER.debug("Getting dashboard args in initializeMoreStuff");
         try {
-//            dashboardJson = FileUtils.readFileToString(new File(args.get("dashboard-file")));
             dashboardJsons = new HashMap();
             dashboardJsons.put("normalDashboard", FileUtils.readFileToString(new File(args.get("normalDashboard"))));
             dashboardJsons.put("simDashboard", FileUtils.readFileToString(new File(args.get("simDashboard"))));
@@ -137,10 +136,6 @@ public class ELBMonitor extends SingleNamespaceCloudwatchMonitor<ELBConfiguratio
 
 
         Map<String, String> taskArgs = new HashMap<String, String>();
-
-//        taskArgs.put("config-file", "/Users/bhuvnesh.kumar/repos/appdynamics/extensions/aws-elb-monitoring-extension/src/main/resources/conf/config.yml");
-//        taskArgs.put("dashboard-file", "/Users/bhuvnesh.kumar/repos/appdynamics/extensions/aws-elb-monitoring-extension/src/main/resources/conf/dashboard.xml");
-
 
         taskArgs.put("config-file", "//Applications/AppDynamics/ma43/monitors/AWSELBMonitor_dash/config.yml");
         taskArgs.put("normalDashboard", "//Applications/AppDynamics/ma43/monitors/AWSELBMonitor_dash/normalDashboard.json");
