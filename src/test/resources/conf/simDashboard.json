@@ -86,7 +86,7 @@
                             "displayName": "null",
                             "inputMetricText": false,
                             "inputMetricPath": null,
-                            "relativeMetricPath": "Custom Metrics|Amazon ELB|try1|AWS API Calls"
+                            "relativeMetricPath": "Custom Metrics|Amazon ELB|*|AWS API Calls"
                         },
                         "rollupMetricData": true,
                         "expressionString": null,

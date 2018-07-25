@@ -67,13 +67,17 @@ public class Dashboard {
     private Map<String, ? super Object> getControllerInfo() {
         Map<String, ? super Object> argsMap = new HashMap<>();
 
-        String user = config.get(USERNAME).toString() + "@" + controllerInfo.getAccount();
+        String user = "singularity-agent" + "@" + controllerInfo.getAccount();
+        String password = controllerInfo.getPassword().toString();
+//        String user = config.get(USERNAME).toString() + "@" + controllerInfo.getAccount();
 
         LOGGER.debug("dashboard Controller Info given to extension: ");
         LOGGER.debug("dashboard Host : " + controllerInfo.getControllerHost());
         LOGGER.debug("dashboard Port : " + controllerInfo.getControllerPort());
         LOGGER.debug("dashboard User : " + user);
-        LOGGER.debug("dashboard Password: " + config.get("password").toString());
+        LOGGER.debug("dashboard Password: " + password);
+
+//        LOGGER.debug("dashboard Password: " + config.get("password").toString());
         LOGGER.debug("dashboard UseSSL: " + controllerInfo.getControllerSslEnabled());
         LOGGER.debug("dashboard ApplicationName: {}", controllerInfo.getApplicationName());
         LOGGER.debug("dashboard TierName: {}", controllerInfo.getTierName());
@@ -87,7 +91,7 @@ public class Dashboard {
         serverMap.put(TaskInputArgs.PORT, controllerInfo.getControllerPort().toString());
         serverMap.put(TaskInputArgs.USE_SSL, false);
         serverMap.put(TaskInputArgs.USER, user);
-        serverMap.put(TaskInputArgs.PASSWORD, config.get(PASSWORD).toString());
+        serverMap.put(TaskInputArgs.PASSWORD, password);
 
         serverList.add(serverMap);
         argsMap.put(SERVERS, serverList);
