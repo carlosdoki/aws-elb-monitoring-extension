@@ -10,6 +10,7 @@ package com.appdynamics.extensions.aws.elb;
 
 import com.appdynamics.extensions.TaskInputArgs;
 import com.appdynamics.extensions.conf.ControllerInfo;
+import com.appdynamics.extensions.crypto.CryptoUtil;
 import com.appdynamics.extensions.dashboard.CustomDashboardJsonUploader;
 import com.appdynamics.extensions.logging.ExtensionsLoggerFactory;
 //import org.apache.log4j.Logger;
@@ -103,9 +104,15 @@ public class Dashboard {
     }
 
     private String getPassword() {
-        String password;
-        if(controllerInfo.getPassword() != null){
-            return controllerInfo.getPassword().toString();
+
+        Map<String, String> taskArgs = new HashMap<>();
+        taskArgs.put(PASSWORD,controllerInfo.getPassword().toString() );
+        taskArgs.put(ENCRYPTED_PASSWORD,controllerInfo.getEncryptedPassword());
+        taskArgs.put(ENCRYPTION_KEY, controllerInfo.getEncryptedKey());
+
+        String password = CryptoUtil.getPassword(taskArgs);
+        if(password != null){
+            return password;
         }
         return controllerInfo.getAccountAccessKey().toString();
     }

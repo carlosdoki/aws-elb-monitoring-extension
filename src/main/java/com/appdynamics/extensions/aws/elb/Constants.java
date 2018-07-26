@@ -35,5 +35,8 @@ public class Constants {
     public static final String AMAZONELB = "Amazon ELB";
     public static final String AWSELB = "AWS/ELB";
     public static final String SIMAPPLICATIONNAME = "Server & Infrastructure Monitoring";
+    public static final String ENCRYPTED_PASSWORD = "encryptedPassword";
+    public static final String ENCRYPTION_KEY = "encryptionKey";
+
 
 }
