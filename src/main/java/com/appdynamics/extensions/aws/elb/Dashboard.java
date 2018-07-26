@@ -134,7 +134,7 @@ public class Dashboard {
         replaceFields();
         customDashboardJsonUploader.uploadDashboard(config.get(NAMEPREFIX).toString(), dashboardString, argsMap, false);
 
-        LOGGER.debug("Dashboard Upload Successful");
+        LOGGER.debug("done with uploadDashboard");
     }
 
     private void replaceFields() {
@@ -207,9 +207,12 @@ public class Dashboard {
     private void replaceMachinePath() {
         if(dashboardString.contains(REPLACEMACHINEPATH)){
 
-            if(controllerInfo.getNodeName() != null){
-                dashboardString = dashboardString.replace(REPLACEMACHINEPATH, controllerInfo.getMachinePath());
-                LOGGER.debug("replacing MachinePath: {}", controllerInfo.getMachinePath());
+            if(controllerInfo.getMachinePath() != null){
+                String machinePath = ROOT + METRICSEPARATOR + controllerInfo.getMachinePath();
+                machinePath = machinePath.substring(0,machinePath.lastIndexOf(METRICSEPARATOR));
+
+                dashboardString = dashboardString.replace(REPLACEMACHINEPATH, machinePath);
+                LOGGER.debug("replacing MachinePath: {}", machinePath);
 
             } else {
                 dashboardString = dashboardString.replace(REPLACEMACHINEPATH, ROOT);
