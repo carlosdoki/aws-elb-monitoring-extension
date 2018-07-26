@@ -8,7 +8,6 @@
 
 package com.appdynamics.extensions.aws.elb;
 
-import com.appdynamics.extensions.logging.ExtensionsLoggerFactory;
 import com.appdynamics.extensions.aws.SingleNamespaceCloudwatchMonitor;
 import com.appdynamics.extensions.aws.collectors.NamespaceMetricStatisticsCollector;
 import com.appdynamics.extensions.aws.elb.config.ELBConfiguration;
@@ -25,7 +24,6 @@ import java.io.OutputStreamWriter;
 import java.util.HashMap;
 import java.util.Map;
 //import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import static com.appdynamics.extensions.aws.Constants.METRIC_PATH_SEPARATOR;
 import static com.appdynamics.extensions.aws.elb.Constants.*;
@@ -40,7 +38,7 @@ public class ELBMonitor extends SingleNamespaceCloudwatchMonitor<ELBConfiguratio
 //    private static final org.slf4j.Logger LOGGER = ExtensionsLoggerFactory.getLogger(ELBMonitor.class);
 
     private static final String DEFAULT_METRIC_PREFIX = String.format("%s%s%s%s",
-            CUSTOMMETRICS, METRIC_PATH_SEPARATOR, AMAZONELB, METRIC_PATH_SEPARATOR);
+            CUSTOM_METRICS, METRIC_PATH_SEPARATOR, AMAZON_SERVICE, METRIC_PATH_SEPARATOR);
 
     private Map dashboardValueMap;
     private Dashboard dashboard;
@@ -57,7 +55,7 @@ public class ELBMonitor extends SingleNamespaceCloudwatchMonitor<ELBConfiguratio
 
     @Override
     public String getMonitorName() {
-        return ELBMONITOR;
+        return MONITOR_NAME;
     }
 
     @Override
@@ -98,8 +96,8 @@ public class ELBMonitor extends SingleNamespaceCloudwatchMonitor<ELBConfiguratio
         LOGGER.debug("Getting dashboard args in initializeMoreStuff");
         try {
             dashboardJsons = new HashMap();
-            dashboardJsons.put(NORMALDASHBOARD, FileUtils.readFileToString(new File(args.get(NORMALDASHBOARD))));
-            dashboardJsons.put(SIMDASHBOARD, FileUtils.readFileToString(new File(args.get(SIMDASHBOARD))));
+            dashboardJsons.put(NORMAL_DASHBOARD, FileUtils.readFileToString(new File(args.get(NORMAL_DASHBOARD))));
+            dashboardJsons.put(SIM_DASHBOARD, FileUtils.readFileToString(new File(args.get(SIM_DASHBOARD))));
 
         } catch (Exception e) {
             LOGGER.error("Unable to get files for dashboard", e);

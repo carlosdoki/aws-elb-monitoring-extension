@@ -19,7 +19,6 @@ import com.appdynamics.extensions.aws.metric.processors.MetricsProcessor;
 import com.appdynamics.extensions.aws.metric.processors.MetricsProcessorHelper;
 import com.appdynamics.extensions.aws.predicate.MultiDimensionPredicate;
 import com.appdynamics.extensions.logging.ExtensionsLoggerFactory;
-import org.apache.log4j.Logger;
 
 import java.util.*;
 import java.util.concurrent.atomic.LongAdder;
@@ -33,7 +32,7 @@ public class ELBMetricsProcessor implements MetricsProcessor {
 
     private List<IncludeMetric> includeMetrics;
     private List<Dimension> dimensions;
-    private static final String NAMESPACE = AWSELB;
+    private static final String NAMESPACE = AWS_NAMESPACE;
     private Dashboard dashboard;
 
 
