@@ -25,10 +25,10 @@ import java.util.HashMap;
 import java.util.Map;
 //import org.slf4j.Logger;
 
-import static com.appdynamics.extensions.aws.Constants.METRIC_PATH_SEPARATOR;
 import static com.appdynamics.extensions.aws.elb.Constants.*;
+
 /**
- * @author Satish Muddam
+ * @author Bhuvnesh Kumar
  */
 public class ELBMonitor extends SingleNamespaceCloudwatchMonitor<ELBConfiguration> {
 
@@ -38,7 +38,7 @@ public class ELBMonitor extends SingleNamespaceCloudwatchMonitor<ELBConfiguratio
 //    private static final org.slf4j.Logger LOGGER = ExtensionsLoggerFactory.getLogger(ELBMonitor.class);
 
     private static final String DEFAULT_METRIC_PREFIX = String.format("%s%s%s%s",
-            CUSTOM_METRICS, METRIC_PATH_SEPARATOR, AMAZON_SERVICE, METRIC_PATH_SEPARATOR);
+            CUSTOM_METRICS, METRICS_SEPARATOR, AMAZON_SERVICE, METRICS_SEPARATOR);
 
     private Map dashboardValueMap;
     private Dashboard dashboard;

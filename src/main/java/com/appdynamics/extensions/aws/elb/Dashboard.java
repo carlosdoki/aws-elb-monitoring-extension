@@ -13,13 +13,16 @@ import com.appdynamics.extensions.conf.ControllerInfo;
 import com.appdynamics.extensions.crypto.CryptoUtil;
 import com.appdynamics.extensions.dashboard.CustomDashboardJsonUploader;
 import com.appdynamics.extensions.logging.ExtensionsLoggerFactory;
-//import org.apache.log4j.Logger;
 import org.slf4j.Logger;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import static com.appdynamics.extensions.aws.elb.Constants.*;
+
+//import org.apache.log4j.Logger;
 
 /**
  * Created by bhuvnesh.kumar on 7/5/18.
@@ -34,7 +37,7 @@ public class Dashboard {
     private Map dashboardJsons;
     private CustomDashboardJsonUploader customDashboardJsonUploader;
 
-    public Dashboard(Map config,  Map dashboardJsons) {
+    public Dashboard(Map config, Map dashboardJsons) {
         LOGGER.debug(" Setting up Dashboard Class");
 
         this.config = config;
@@ -68,66 +71,78 @@ public class Dashboard {
         String user = getUsername();
         String password = getPassword();
 
+        logDashboardProperties(user, password);
 
+        Map<String, ? super Object> serverMap = getServerMap(user, password);
+
+        List<Map<String, ?>> serverList = new ArrayList<>();
+        serverList.add(serverMap);
+        argsMap.put(SERVERS, serverList);
+
+        Map<String, ? super Object> connectionMap = getConnectionMap();
+        argsMap.put(CONNECTION, connectionMap);
+        return argsMap;
+    }
+
+    private void logDashboardProperties(String user, String password) {
         LOGGER.debug("dashboard Controller Info given to extension: ");
         LOGGER.debug("dashboard Host : " + controllerInfo.getControllerHost());
         LOGGER.debug("dashboard Port : " + controllerInfo.getControllerPort());
         LOGGER.debug("dashboard User : " + user);
         LOGGER.debug("dashboard Password: " + password);
-
         LOGGER.debug("dashboard UseSSL: " + controllerInfo.getControllerSslEnabled());
         LOGGER.debug("dashboard ApplicationName: {}", controllerInfo.getApplicationName());
         LOGGER.debug("dashboard TierName: {}", controllerInfo.getTierName());
         LOGGER.debug("dashboard NodeName: {}", controllerInfo.getNodeName());
         LOGGER.debug("dashboard Sim Enabled: {}", controllerInfo.getSimEnabled());
         LOGGER.debug("dashboard Machine Path: {}", controllerInfo.getMachinePath());
+    }
 
-        List<Map<String, ?>> serverList = new ArrayList<>();
+    private Map<String, ? super Object> getServerMap(String user, String password) {
         Map<String, ? super Object> serverMap = new HashMap<>();
         serverMap.put(TaskInputArgs.HOST, controllerInfo.getControllerHost());
         serverMap.put(TaskInputArgs.PORT, controllerInfo.getControllerPort().toString());
         serverMap.put(TaskInputArgs.USE_SSL, false);
         serverMap.put(TaskInputArgs.USER, user);
         serverMap.put(TaskInputArgs.PASSWORD, password);
+        return serverMap;
+    }
 
-        serverList.add(serverMap);
-        argsMap.put(SERVERS, serverList);
-
+    private Map<String, ? super Object> getConnectionMap() {
         Map<String, ? super Object> connectionMap = new HashMap<>();
-        String[] sslProtocols = {"TLSv1.2"};
+        String[] sslProtocols = {TLSV_12};
         connectionMap.put(TaskInputArgs.SSL_PROTOCOL, sslProtocols);
-        connectionMap.put("sslCertCheckEnabled", false);
-        connectionMap.put("connectTimeout", 10000);
-        connectionMap.put("socketTimeout", 15000);
-        argsMap.put("connection", connectionMap);
-        return argsMap;
+        connectionMap.put(SSL_CERT_CHECK_ENABLED, false);
+        connectionMap.put(CONNECT_TIMEOUT, 10000);
+        connectionMap.put(SOCKET_TIMEOUT, 15000);
+        return connectionMap;
     }
 
     private String getPassword() {
 
         Map<String, String> taskArgs = new HashMap<>();
-        taskArgs.put(PASSWORD,controllerInfo.getPassword().toString() );
-        taskArgs.put(ENCRYPTED_PASSWORD,controllerInfo.getEncryptedPassword());
+        taskArgs.put(PASSWORD, controllerInfo.getPassword().toString());
+        taskArgs.put(ENCRYPTED_PASSWORD, controllerInfo.getEncryptedPassword());
         taskArgs.put(ENCRYPTION_KEY, controllerInfo.getEncryptedKey());
 
         String password = CryptoUtil.getPassword(taskArgs);
-        if(password != null){
+        if (password != null) {
             return password;
         }
         return controllerInfo.getAccountAccessKey().toString();
     }
 
     private String getUsername() {
-        if(controllerInfo.getUsername() != null && controllerInfo.getAccount()!= null){
-            return controllerInfo.getUsername()+ "@" + controllerInfo.getAccount() ;
+        if (controllerInfo.getUsername() != null && controllerInfo.getAccount() != null) {
+            return controllerInfo.getUsername() + AT + controllerInfo.getAccount();
         }
-        return "singularity-agent" + "@" + controllerInfo.getAccount();
+        return SINGULARITY_AGENT + AT + controllerInfo.getAccount();
     }
 
-    private void loadDashboardBasedOnSim(){
+    private void loadDashboardBasedOnSim() {
         LOGGER.debug("Sim Enabled: {}", controllerInfo.getSimEnabled());
 
-        if(controllerInfo.getSimEnabled() == false){
+        if (controllerInfo.getSimEnabled() == false) {
             dashboardString = dashboardJsons.get(NORMAL_DASHBOARD).toString();
         } else {
             dashboardString = dashboardJsons.get(SIM_DASHBOARD).toString();
@@ -141,7 +156,7 @@ public class Dashboard {
         replaceFields();
         customDashboardJsonUploader.uploadDashboard(config.get(NAME_PREFIX).toString(), dashboardString, argsMap, false);
 
-        LOGGER.debug("done with uploadDashboard");
+        LOGGER.debug("done with uploadDashboard()");
     }
 
     private void replaceFields() {
@@ -156,8 +171,8 @@ public class Dashboard {
     }
 
     private void replaceHostName() {
-        if(dashboardString.contains(REPLACE_HOST_NAME)){
-            if(controllerInfo.getControllerHost() != null) {
+        if (dashboardString.contains(REPLACE_HOST_NAME)) {
+            if (controllerInfo.getControllerHost() != null) {
                 LOGGER.debug("replacing Host Name: {}", controllerInfo.getControllerHost());
                 dashboardString = dashboardString.replace(REPLACE_HOST_NAME, controllerInfo.getControllerHost());
             }
@@ -165,15 +180,15 @@ public class Dashboard {
     }
 
     private void replaceSimApplicationName() {
-        if(dashboardString.contains(REPLACE_SIM_APPLICATION_NAME)){
+        if (dashboardString.contains(REPLACE_SIM_APPLICATION_NAME)) {
             LOGGER.debug("replacing SimApplicationName: {}", SIM_APPLICATION_NAME);
             dashboardString = dashboardString.replace(REPLACE_SIM_APPLICATION_NAME, SIM_APPLICATION_NAME);
         }
     }
 
     private void replaceDashboardName() {
-        if(dashboardString.contains(REPLACE_DASHBOARD_NAME)){
-            if(config.get("namePrefix") != null) {
+        if (dashboardString.contains(REPLACE_DASHBOARD_NAME)) {
+            if (config.get("namePrefix") != null) {
                 LOGGER.debug("replacing DashboardName: {}", config.get(NAME_PREFIX).toString());
                 dashboardString = dashboardString.replace(REPLACE_DASHBOARD_NAME, config.get(NAME_PREFIX).toString());
             }
@@ -181,18 +196,18 @@ public class Dashboard {
     }
 
     private void replaceNodeName() {
-        if(dashboardString.contains(REPLACE_NODE_NAME)){
-            if(controllerInfo.getNodeName() != null){
-            dashboardString = dashboardString.replace(REPLACE_NODE_NAME, controllerInfo.getNodeName());
-            LOGGER.debug("replacing NodeName: {}", controllerInfo.getNodeName());
+        if (dashboardString.contains(REPLACE_NODE_NAME)) {
+            if (controllerInfo.getNodeName() != null) {
+                dashboardString = dashboardString.replace(REPLACE_NODE_NAME, controllerInfo.getNodeName());
+                LOGGER.debug("replacing NodeName: {}", controllerInfo.getNodeName());
 
             }
         }
     }
 
     private void replaceTierName() {
-        if(dashboardString.contains(REPLACE_TIER_NAME)){
-            if(controllerInfo.getTierName() != null) {
+        if (dashboardString.contains(REPLACE_TIER_NAME)) {
+            if (controllerInfo.getTierName() != null) {
                 dashboardString = dashboardString.replace(REPLACE_TIER_NAME, controllerInfo.getTierName());
                 LOGGER.debug("replacing TierName: {}", controllerInfo.getTierName());
 
@@ -201,8 +216,8 @@ public class Dashboard {
     }
 
     private void replaceApplicationName() {
-        if(dashboardString.contains(REPLACE_APPLICATION_NAME)){
-            if(controllerInfo.getApplicationName() != null){
+        if (dashboardString.contains(REPLACE_APPLICATION_NAME)) {
+            if (controllerInfo.getApplicationName() != null) {
 
                 dashboardString = dashboardString.replace(REPLACE_APPLICATION_NAME, controllerInfo.getApplicationName());
                 LOGGER.debug("replacing ApplicationName : {}", controllerInfo.getApplicationName());
@@ -212,11 +227,11 @@ public class Dashboard {
     }
 
     private void replaceMachinePath() {
-        if(dashboardString.contains(REPLACE_MACHINE_PATH)){
+        if (dashboardString.contains(REPLACE_MACHINE_PATH)) {
 
-            if(controllerInfo.getMachinePath() != null){
+            if (controllerInfo.getMachinePath() != null) {
                 String machinePath = ROOT + METRICS_SEPARATOR + controllerInfo.getMachinePath();
-                machinePath = machinePath.substring(0,machinePath.lastIndexOf(METRICS_SEPARATOR));
+                machinePath = machinePath.substring(0, machinePath.lastIndexOf(METRICS_SEPARATOR));
 
                 dashboardString = dashboardString.replace(REPLACE_MACHINE_PATH, machinePath);
                 LOGGER.debug("replacing MachinePath: {}", machinePath);
@@ -229,8 +244,6 @@ public class Dashboard {
             }
         }
     }
-
-
 }
 
 

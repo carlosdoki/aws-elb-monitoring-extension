@@ -29,6 +29,7 @@ public class Constants {
     public static final String USERNAME = "username";
     public static final String ENALBED = "enabled";
     public static final String TRUE = "true";
+    public static final String FALSE = "false";
     public static final String ROOT = "Root";
     public static final String MONITOR_NAME = "ELBMonitor";
     public static final String CUSTOM_METRICS = "Custom Metrics";
@@ -37,6 +38,11 @@ public class Constants {
     public static final String SIM_APPLICATION_NAME = "Server & Infrastructure Monitoring";
     public static final String ENCRYPTED_PASSWORD = "encryptedPassword";
     public static final String ENCRYPTION_KEY = "encryptionKey";
-
-
+    public static final String SINGULARITY_AGENT = "singularity-agent";
+    public static final String AT = "@";
+    public static final String SSL_CERT_CHECK_ENABLED = "sslCertCheckEnabled";
+    public static final String CONNECT_TIMEOUT = "connectTimeout";
+    public static final String SOCKET_TIMEOUT = "socketTimeout";
+    public static final String CONNECTION = "connection";
+    public static final String TLSV_12 = "TLSv1.2";
 }
