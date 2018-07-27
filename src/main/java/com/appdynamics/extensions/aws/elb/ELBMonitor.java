@@ -12,6 +12,7 @@ import com.appdynamics.extensions.aws.SingleNamespaceCloudwatchMonitor;
 import com.appdynamics.extensions.aws.collectors.NamespaceMetricStatisticsCollector;
 import com.appdynamics.extensions.aws.elb.config.ELBConfiguration;
 import com.appdynamics.extensions.aws.metric.processors.MetricsProcessor;
+import com.appdynamics.extensions.dashboard.CustomDashboardJsonUploader;
 import com.singularity.ee.agent.systemagent.api.exception.TaskExecutionException;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.ConsoleAppender;
@@ -23,9 +24,10 @@ import java.io.File;
 import java.io.OutputStreamWriter;
 import java.util.HashMap;
 import java.util.Map;
-//import org.slf4j.Logger;
 
 import static com.appdynamics.extensions.aws.elb.Constants.*;
+
+//import org.slf4j.Logger;
 
 /**
  * @author Bhuvnesh Kumar
@@ -74,7 +76,7 @@ public class ELBMonitor extends SingleNamespaceCloudwatchMonitor<ELBConfiguratio
             ELBConfiguration config) {
 
         dashboardValueMap = config.getCustomDashboard();
-        dashboard = new Dashboard(dashboardValueMap, dashboardJsons);
+        dashboard = new Dashboard(dashboardValueMap, dashboardJsons, new CustomDashboardJsonUploader());
         LOGGER.debug("Dashboard.class object Successfully Created");
 
         MetricsProcessor metricsProcessor = createMetricsProcessor(config);

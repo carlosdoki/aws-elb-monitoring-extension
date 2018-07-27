@@ -8,11 +8,13 @@
 
 package com.appdynamics.extensions.aws.elb;
 
+import com.appdynamics.extensions.conf.ControllerInfo;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Test;
 import com.appdynamics.extensions.dashboard.CustomDashboardJsonUploader;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import java.io.File;
@@ -56,19 +58,43 @@ public class DashboardTest {
         }
     }
 
-//    @Test
-//    public void testDashboard(){
-//        valueMap();
-//        getJsonAsString();
-//        Dashboard dashboard = new Dashboard(config, dashboardMap);
-//        CustomDashboardJsonUploader customDashboardJsonUploader = new CustomDashboardJsonUploader();
+    private ControllerInfo setUpControllerInfoForTest(){
+        ControllerInfo controllerInfo = new ControllerInfo();
+        controllerInfo.setUsername("admin");
+        controllerInfo.setPassword("root");
+        controllerInfo.setAccountAccessKey("keyisthisthing");
+        controllerInfo.setAccount("customer1");
+        controllerInfo.setControllerHost("Host");
+        controllerInfo.setControllerPort(8090);
+        controllerInfo.setControllerSslEnabled(false);
+        controllerInfo.setMachinePath("MachinePath|Something");
+        controllerInfo.setSimEnabled(false);
+        controllerInfo.setApplicationName("App");
+        controllerInfo.setTierName("Tier");
+        controllerInfo.setNodeName("Node");
+
+        return controllerInfo;
+    }
+
+
+    @Test
+    public void testDashboard(){
+        valueMap();
+        getJsonAsString();
+//        ControllerInfo controllerInfo = setUpControllerInfoForTest();
+        CustomDashboardJsonUploader customDashboardJsonUploader = Mockito.mock(CustomDashboardJsonUploader.class);
+        Mockito.doNothing().when(customDashboardJsonUploader).uploadDashboard(config.get("namePrefix").toString(), dashboardJson, config, false);
+        Dashboard dashboard = new Dashboard(config, dashboardMap, customDashboardJsonUploader);
+        ControllerInfo controllerInfo = new ControllerInfo();
+        ControllerInfo spyControllerInfo = Mockito.spy(controllerInfo);
+        Mockito.when(spyControllerInfo.getControllerInfo()).thenReturn(setUpControllerInfoForTest());
 //        CustomDashboardJsonUploader customSpy = Mockito.spy(customDashboardJsonUploader);
 //        Mockito.doNothing().when(customSpy).uploadDashboard(config.get("namePrefix").toString(), dashboardJson, config, false);
-//        try {
-//            dashboard.sendDashboard();
-//        } catch (Exception e){
-//            // error encountered
-//            Assert.assertTrue(false);
-//        }
-//    }
+        try {
+            dashboard.sendDashboard();
+        } catch (Exception e){
+            // error encountered
+            Assert.assertTrue(false);
+        }
+    }
 }

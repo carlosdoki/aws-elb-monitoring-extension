@@ -33,15 +33,21 @@ public class Dashboard {
 
     private Map config;
     private String dashboardString;
+
+//    public void setControllerInfo(ControllerInfo controllerInfo) {
+//        this.controllerInfo = controllerInfo;
+//    }
+
     private ControllerInfo controllerInfo;
     private Map dashboardJsons;
     private CustomDashboardJsonUploader customDashboardJsonUploader;
 
-    public Dashboard(Map config, Map dashboardJsons) {
+    public Dashboard(Map config, Map dashboardJsons,CustomDashboardJsonUploader customDashboardJsonUploader ) {
         LOGGER.debug(" Setting up Dashboard Class");
 
         this.config = config;
         this.dashboardJsons = dashboardJsons;
+        this.customDashboardJsonUploader = customDashboardJsonUploader;
 
         LOGGER.debug("Leaving Dashboard Class");
 
@@ -50,10 +56,12 @@ public class Dashboard {
     protected void sendDashboard() {
         try {
             controllerInfo = new ControllerInfo().getControllerInfo();
-            customDashboardJsonUploader = new CustomDashboardJsonUploader();
+
+//            controllerInfo = controllerInfo.getControllerInfo();
+//            customDashboardJsonUploader = new CustomDashboardJsonUploader();
             LOGGER.debug("Created CustomDashboardUploader object");
 
-            Map<String, ? super Object> argsMap = getControllerInfo();
+            Map<String, ? super Object> argsMap = getArgumentMap();
             if (config.get(ENALBED).toString().equals(TRUE)) {
                 uploadDashboard(argsMap);
             } else {
@@ -65,7 +73,7 @@ public class Dashboard {
         }
     }
 
-    private Map<String, ? super Object> getControllerInfo() {
+    private Map<String, ? super Object> getArgumentMap() {
         Map<String, ? super Object> argsMap = new HashMap<>();
 
         String user = getUsername();
@@ -120,22 +128,40 @@ public class Dashboard {
 
     private String getPassword() {
 
+        // Password from startup script
         Map<String, String> taskArgs = new HashMap<>();
-        taskArgs.put(PASSWORD, controllerInfo.getPassword().toString());
-        taskArgs.put(ENCRYPTED_PASSWORD, controllerInfo.getEncryptedPassword());
-        taskArgs.put(ENCRYPTION_KEY, controllerInfo.getEncryptedKey());
+        if (controllerInfo.getPassword() != null) {
+            taskArgs.put(PASSWORD, controllerInfo.getPassword().toString());
+        }
+        if (controllerInfo.getEncryptedPassword() != null) {
+            taskArgs.put(ENCRYPTED_PASSWORD, controllerInfo.getEncryptedPassword());
+        }
+        if (controllerInfo.getEncryptedKey() != null) {
+            taskArgs.put(ENCRYPTION_KEY, controllerInfo.getEncryptedKey());
+        }
 
         String password = CryptoUtil.getPassword(taskArgs);
+
+        // password in the extension config
         if (password != null) {
             return password;
+        } else if (config.get(PASSWORD) != null) {
+            return config.get(PASSWORD).toString();
         }
+
+        // singularity user key
         return controllerInfo.getAccountAccessKey().toString();
     }
 
     private String getUsername() {
+        // username from startup script
         if (controllerInfo.getUsername() != null && controllerInfo.getAccount() != null) {
             return controllerInfo.getUsername() + AT + controllerInfo.getAccount();
+        } else if (config.get(USERNAME) != null) {
+            // username from extension config
+            return config.get(USERNAME).toString();
         }
+        // singularity user
         return SINGULARITY_AGENT + AT + controllerInfo.getAccount();
     }
 
@@ -239,7 +265,6 @@ public class Dashboard {
             } else {
                 dashboardString = dashboardString.replace(REPLACE_MACHINE_PATH, ROOT);
                 LOGGER.debug("replacing MachinePath: to default Root");
-
 
             }
         }
