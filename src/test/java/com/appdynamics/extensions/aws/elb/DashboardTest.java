@@ -51,7 +51,7 @@ public class DashboardTest {
         }
     }
 
-    private Map valueMap(Map config){
+    private Map valueMapWithoutSim(Map config){
         config.put("enabled","true");
         config.put("namePrefix","Prefix");
         config.put("uploadDashboard","true");
@@ -65,6 +65,20 @@ public class DashboardTest {
         config.put("applicationName","app");
         config.put("tierName","tier");
         config.put("nodeName","node");
+        return config;
+    }
+
+    private Map valueMapWithSim(Map config){
+        config.put("enabled","true");
+        config.put("namePrefix","Prefix");
+        config.put("uploadDashboard","true");
+        config.put("executionFrequencyMinutes","5");
+        config.put("host","localhost");
+        config.put("port","8090");
+        config.put("account","customer");
+        config.put("password","root");
+        config.put("username","user");
+        config.put("accountAccessKey","pass");
         return config;
     }
 
@@ -109,13 +123,13 @@ public class DashboardTest {
 
 
     @Test
-    public void testDashboard(){
+    public void testDashboardUploadWithoutSim(){
 
         ControllerInfo controllerInformation = new ControllerInfo();
         controllerInformation = setUpControllerInfoWithoutSim(controllerInformation);
 
         Map config = new HashMap();
-        config = valueMap(config);
+        config = valueMapWithoutSim(config);
         getJsonAsString();
         creatDashboardMap();
 
@@ -132,7 +146,25 @@ public class DashboardTest {
     }
 
     @Test
-    public void testSimAndNotSim(){
+    public void testDashboardUploadWithSim(){
+        ControllerInfo controllerInformation = new ControllerInfo();
+        controllerInformation = setUpControllerInfoWithSim(controllerInformation);
+
+        Map config = new HashMap();
+        config = valueMapWithSim(config);
+        getJsonAsString();
+        creatDashboardMap();
+
+        CustomDashboardJsonUploader customDashboardJsonUploader = Mockito.mock(CustomDashboardJsonUploader.class);
+        Mockito.doNothing().when(customDashboardJsonUploader).uploadDashboard(config.get("namePrefix").toString(), dashboardJson, config, false);
+        Mockito.when(controllerInfo.getControllerInfo()).thenReturn(controllerInformation);
+        try{
+            Dashboard dashboard = new Dashboard(config, dashboardMap, customDashboardJsonUploader, controllerInfo);
+            dashboard.sendDashboard();
+        }
+        catch (Exception e){
+            Assert.fail();
+        }
 
     }
 

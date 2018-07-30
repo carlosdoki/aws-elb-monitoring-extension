@@ -19,7 +19,7 @@ proxyConfig:
     host: 54.72.204.154
     port: 8081
     username:
-    accountAccessKey:
+
 dimensions:
    - name: "LoadBalancerName"
      displayName: "LoadBalancer Name"

@@ -25,7 +25,6 @@ proxyConfig:
     host:
     port:
     username:
-    accountAccessKey:
 
 dimensions:
    - name: "LoadBalancerName"

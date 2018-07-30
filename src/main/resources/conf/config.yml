@@ -28,7 +28,6 @@ proxyConfig:
     host:
     port:
     username:
-    accountAccessKey:
 
 # Classic (namespace : "AWS/ELB")
 # Dimensions : AvailabilityZone, LoadBalancerName
