@@ -18,6 +18,7 @@ import com.appdynamics.extensions.aws.metric.StatisticType;
 import com.appdynamics.extensions.aws.metric.processors.MetricsProcessor;
 import com.appdynamics.extensions.aws.metric.processors.MetricsProcessorHelper;
 import com.appdynamics.extensions.aws.predicate.MultiDimensionPredicate;
+import com.appdynamics.extensions.conf.ControllerInfo;
 import com.appdynamics.extensions.logging.ExtensionsLoggerFactory;
 
 import java.util.*;
@@ -79,7 +80,9 @@ public class ELBMetricsProcessor implements MetricsProcessor {
         Thread dashboardThread = new Thread(new Runnable() {
             public void run() {
                 LOGGER.debug("Creating a new thread to send the dashboard");
-                dashboard.sendDashboard();
+                ControllerInfo controllerInfo = new ControllerInfo();
+                controllerInfo.getControllerInfo();
+                dashboard.sendDashboard(controllerInfo);
             }
         });
         dashboardThread.start();

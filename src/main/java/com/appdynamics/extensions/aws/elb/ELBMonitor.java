@@ -12,6 +12,7 @@ import com.appdynamics.extensions.aws.SingleNamespaceCloudwatchMonitor;
 import com.appdynamics.extensions.aws.collectors.NamespaceMetricStatisticsCollector;
 import com.appdynamics.extensions.aws.elb.config.ELBConfiguration;
 import com.appdynamics.extensions.aws.metric.processors.MetricsProcessor;
+import com.appdynamics.extensions.conf.ControllerInfo;
 import com.appdynamics.extensions.dashboard.CustomDashboardJsonUploader;
 import com.singularity.ee.agent.systemagent.api.exception.TaskExecutionException;
 import org.apache.commons.io.FileUtils;
@@ -76,7 +77,9 @@ public class ELBMonitor extends SingleNamespaceCloudwatchMonitor<ELBConfiguratio
             ELBConfiguration config) {
 
         dashboardValueMap = config.getCustomDashboard();
-        dashboard = new Dashboard(dashboardValueMap, dashboardJsons, new CustomDashboardJsonUploader());
+        ControllerInfo controllerInfo = new ControllerInfo();
+//        controllerInfo.getControllerInfo();
+        dashboard = new Dashboard(dashboardValueMap, dashboardJsons, new CustomDashboardJsonUploader(), controllerInfo);
         LOGGER.debug("Dashboard.class object Successfully Created");
 
         MetricsProcessor metricsProcessor = createMetricsProcessor(config);

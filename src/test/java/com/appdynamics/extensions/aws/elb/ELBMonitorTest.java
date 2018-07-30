@@ -24,7 +24,9 @@ public class ELBMonitorTest {
 //    @Test
 //    public void testMetricsCollectionCredentialsEncrypted() throws Exception {
 //        Map<String, String> args = Maps.newHashMap();
-//        args.put("config-file", "src/test/resources/conf/itest-encrypted-config.yml");
+//        args.put("config-file", "src/main/resources/conf/config.yml");
+//
+////        args.put("config-file", "src/test/resources/conf/itest-encrypted-config.yml");
 //        args.put("simDashboard", "src/test/resources/conf/simDashboard.json");
 //        args.put("normalDashboard", "src/test/resources/conf/normalDashboard.json");
 //
@@ -32,7 +34,7 @@ public class ELBMonitorTest {
 //        assertTrue(result.getStatusMessage().contains("Monitor ELBMonitor completes."));
 //
 //    }
-//
+
 //    @Test
 //    public void testMetricsCoyllectionWithProxy() throws Exception {
 //        Map<String, String> args = Maps.newHashMap();

@@ -14,24 +14,45 @@ import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Test;
 import com.appdynamics.extensions.dashboard.CustomDashboardJsonUploader;
+import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
+import javax.security.auth.login.LoginContext;
 import java.io.File;
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+
+import static com.appdynamics.extensions.aws.elb.Constants.NORMAL_DASHBOARD;
+import static com.appdynamics.extensions.aws.elb.Constants.SIM_DASHBOARD;
+import static org.mockito.Matchers.anyString;
 
 /**
  * Created by bhuvnesh.kumar on 7/17/18.
  */
+//@RunWith(PowerMockRunner.class)
+//@PrepareForTest(Dashboard.class)
 public class DashboardTest {
 
     private static final Logger logger = Logger.getLogger(DashboardTest.class);
 
     private Map config;
     private String dashboardJson ;
-    private Map dashboardMap;
+    private Map dashboardMap = new HashMap();
+
+    private void creatDashboardMap(){
+        try {
+            dashboardMap.put(NORMAL_DASHBOARD, FileUtils.readFileToString(new File("/Users/bhuvnesh.kumar/repos/appdynamics/extensions/aws-elb-monitoring-extension/src/test/resources/conf/normalDashboard.json")));
+            dashboardMap.put(SIM_DASHBOARD, FileUtils.readFileToString(new File("/Users/bhuvnesh.kumar/repos/appdynamics/extensions/aws-elb-monitoring-extension/src/test/resources/conf/simDashboard.json")));
+        } catch (Exception e){
+            Assert.fail();
+        }
+    }
 
     private void valueMap(){
         config = new HashMap();
@@ -58,8 +79,8 @@ public class DashboardTest {
         }
     }
 
-    private ControllerInfo setUpControllerInfoForTest(){
-        ControllerInfo controllerInfo = new ControllerInfo();
+    private ControllerInfo setUpControllerInfoForTest(ControllerInfo controllerInfo){
+//        ControllerInfo controllerInfo = new ControllerInfo();
         controllerInfo.setUsername("admin");
         controllerInfo.setPassword("root");
         controllerInfo.setAccountAccessKey("keyisthisthing");
@@ -76,25 +97,24 @@ public class DashboardTest {
         return controllerInfo;
     }
 
-
     @Test
     public void testDashboard(){
+
+        ControllerInfo controllerInfo = new ControllerInfo();
+        controllerInfo = setUpControllerInfoForTest(controllerInfo);
         valueMap();
         getJsonAsString();
-//        ControllerInfo controllerInfo = setUpControllerInfoForTest();
+        creatDashboardMap();
         CustomDashboardJsonUploader customDashboardJsonUploader = Mockito.mock(CustomDashboardJsonUploader.class);
         Mockito.doNothing().when(customDashboardJsonUploader).uploadDashboard(config.get("namePrefix").toString(), dashboardJson, config, false);
-        Dashboard dashboard = new Dashboard(config, dashboardMap, customDashboardJsonUploader);
-        ControllerInfo controllerInfo = new ControllerInfo();
-        ControllerInfo spyControllerInfo = Mockito.spy(controllerInfo);
-        Mockito.when(spyControllerInfo.getControllerInfo()).thenReturn(setUpControllerInfoForTest());
-//        CustomDashboardJsonUploader customSpy = Mockito.spy(customDashboardJsonUploader);
-//        Mockito.doNothing().when(customSpy).uploadDashboard(config.get("namePrefix").toString(), dashboardJson, config, false);
-        try {
-            dashboard.sendDashboard();
-        } catch (Exception e){
-            // error encountered
-            Assert.assertTrue(false);
+
+        try{
+            Dashboard dashboard = new Dashboard(config, dashboardMap, customDashboardJsonUploader, controllerInfo);
+            dashboard.sendDashboard(controllerInfo);
+        }
+        catch (Exception e){
+            Assert.fail();
         }
     }
+
 }

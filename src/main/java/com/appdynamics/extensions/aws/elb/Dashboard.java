@@ -42,23 +42,24 @@ public class Dashboard {
     private Map dashboardJsons;
     private CustomDashboardJsonUploader customDashboardJsonUploader;
 
-    public Dashboard(Map config, Map dashboardJsons,CustomDashboardJsonUploader customDashboardJsonUploader ) {
+    public Dashboard(Map config, Map dashboardJsons,CustomDashboardJsonUploader customDashboardJsonUploader, ControllerInfo controllerInfo) {
         LOGGER.debug(" Setting up Dashboard Class");
 
         this.config = config;
         this.dashboardJsons = dashboardJsons;
         this.customDashboardJsonUploader = customDashboardJsonUploader;
-
+//        this.controllerInfo = controllerInfo;
         LOGGER.debug("Leaving Dashboard Class");
 
     }
 
-    protected void sendDashboard() {
+    protected void sendDashboard(ControllerInfo controllerInformation) {
         try {
             controllerInfo = new ControllerInfo().getControllerInfo();
-
-//            controllerInfo = controllerInfo.getControllerInfo();
+            controllerInfo = controllerInfo.getControllerInfo();
 //            customDashboardJsonUploader = new CustomDashboardJsonUploader();
+
+//            this.controllerInfo = controllerInformation;
             LOGGER.debug("Created CustomDashboardUploader object");
 
             Map<String, ? super Object> argsMap = getArgumentMap();
@@ -131,19 +132,21 @@ public class Dashboard {
         // Password from startup script
         Map<String, String> taskArgs = new HashMap<>();
         if (controllerInfo.getPassword() != null) {
-            taskArgs.put(PASSWORD, controllerInfo.getPassword().toString());
+            taskArgs.put(ACCOUNT_ACCESS_KEY, controllerInfo.getPassword().toString());
+
         }
         if (controllerInfo.getEncryptedPassword() != null) {
-            taskArgs.put(ENCRYPTED_PASSWORD, controllerInfo.getEncryptedPassword());
+            taskArgs.put(ENCRYPTED_PASSWORD, controllerInfo.getEncryptedPassword().toString());
+
         }
         if (controllerInfo.getEncryptedKey() != null) {
-            taskArgs.put(ENCRYPTION_KEY, controllerInfo.getEncryptedKey());
+            taskArgs.put(ENCRYPTION_KEY, controllerInfo.getEncryptedKey().toString());
         }
 
         String password = CryptoUtil.getPassword(taskArgs);
 
         // password in the extension config
-        if (password != null) {
+        if (password != "") {
             return password;
         } else if (config.get(PASSWORD) != null) {
             return config.get(PASSWORD).toString();
@@ -157,9 +160,9 @@ public class Dashboard {
         // username from startup script
         if (controllerInfo.getUsername() != null && controllerInfo.getAccount() != null) {
             return controllerInfo.getUsername() + AT + controllerInfo.getAccount();
-        } else if (config.get(USERNAME) != null) {
+        } else if (config.get(USERNAME) != null && controllerInfo.getAccount() != null) {
             // username from extension config
-            return config.get(USERNAME).toString();
+            return config.get(USERNAME).toString() + AT + controllerInfo.getAccount();
         }
         // singularity user
         return SINGULARITY_AGENT + AT + controllerInfo.getAccount();
