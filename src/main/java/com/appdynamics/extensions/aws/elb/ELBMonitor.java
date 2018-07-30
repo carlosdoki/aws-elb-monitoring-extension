@@ -78,7 +78,6 @@ public class ELBMonitor extends SingleNamespaceCloudwatchMonitor<ELBConfiguratio
 
         dashboardValueMap = config.getCustomDashboard();
         ControllerInfo controllerInfo = new ControllerInfo();
-//        controllerInfo.getControllerInfo();
         dashboard = new Dashboard(dashboardValueMap, dashboardJsons, new CustomDashboardJsonUploader(), controllerInfo);
         LOGGER.debug("Dashboard.class object Successfully Created");
 

@@ -34,15 +34,11 @@ public class Dashboard {
     private Map config;
     private String dashboardString;
 
-//    public void setControllerInfo(ControllerInfo controllerInfo) {
-//        this.controllerInfo = controllerInfo;
-//    }
-
     private ControllerInfo controllerInfo;
     private Map dashboardJsons;
     private CustomDashboardJsonUploader customDashboardJsonUploader;
 
-    public Dashboard(Map config, Map dashboardJsons,CustomDashboardJsonUploader customDashboardJsonUploader, ControllerInfo controllerInfo) {
+    public Dashboard(Map config, Map dashboardJsons, CustomDashboardJsonUploader customDashboardJsonUploader, ControllerInfo controllerInfo) {
         LOGGER.debug(" Setting up Dashboard Class");
 
         this.config = config;
@@ -55,13 +51,7 @@ public class Dashboard {
 
     protected void sendDashboard() {
         try {
-//            controllerInfo = new ControllerInfo().getControllerInfo();
             controllerInfo = controllerInfo.getControllerInfo();
-//            customDashboardJsonUploader = new CustomDashboardJsonUploader();
-
-//            this.controllerInfo = controllerInformation;
-            LOGGER.debug("Created CustomDashboardUploader object");
-
             Map<String, ? super Object> argsMap = getArgumentMap();
             if (config.get(ENALBED).toString().equals(TRUE)) {
                 uploadDashboard(argsMap);
@@ -110,7 +100,7 @@ public class Dashboard {
     private Map<String, ? super Object> getServerMap(String user, String password) {
         Map<String, ? super Object> serverMap = new HashMap<>();
         serverMap.put(TaskInputArgs.HOST, controllerInfo.getControllerHost());
-        serverMap.put(TaskInputArgs.PORT, controllerInfo.getControllerPort());
+        serverMap.put(TaskInputArgs.PORT, controllerInfo.getControllerPort().toString());
         serverMap.put(TaskInputArgs.USE_SSL, false);
         serverMap.put(TaskInputArgs.USER, user);
         serverMap.put(TaskInputArgs.PASSWORD, password);
