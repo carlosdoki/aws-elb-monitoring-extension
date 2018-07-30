@@ -48,14 +48,14 @@ public class Dashboard {
         this.config = config;
         this.dashboardJsons = dashboardJsons;
         this.customDashboardJsonUploader = customDashboardJsonUploader;
-//        this.controllerInfo = controllerInfo;
+        this.controllerInfo = controllerInfo;
         LOGGER.debug("Leaving Dashboard Class");
 
     }
 
-    protected void sendDashboard(ControllerInfo controllerInformation) {
+    protected void sendDashboard() {
         try {
-            controllerInfo = new ControllerInfo().getControllerInfo();
+//            controllerInfo = new ControllerInfo().getControllerInfo();
             controllerInfo = controllerInfo.getControllerInfo();
 //            customDashboardJsonUploader = new CustomDashboardJsonUploader();
 
@@ -110,7 +110,7 @@ public class Dashboard {
     private Map<String, ? super Object> getServerMap(String user, String password) {
         Map<String, ? super Object> serverMap = new HashMap<>();
         serverMap.put(TaskInputArgs.HOST, controllerInfo.getControllerHost());
-        serverMap.put(TaskInputArgs.PORT, controllerInfo.getControllerPort().toString());
+        serverMap.put(TaskInputArgs.PORT, controllerInfo.getControllerPort());
         serverMap.put(TaskInputArgs.USE_SSL, false);
         serverMap.put(TaskInputArgs.USER, user);
         serverMap.put(TaskInputArgs.PASSWORD, password);

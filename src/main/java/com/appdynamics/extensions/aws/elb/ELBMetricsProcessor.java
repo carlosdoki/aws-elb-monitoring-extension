@@ -80,9 +80,7 @@ public class ELBMetricsProcessor implements MetricsProcessor {
         Thread dashboardThread = new Thread(new Runnable() {
             public void run() {
                 LOGGER.debug("Creating a new thread to send the dashboard");
-                ControllerInfo controllerInfo = new ControllerInfo();
-                controllerInfo.getControllerInfo();
-                dashboard.sendDashboard(controllerInfo);
+                dashboard.sendDashboard();
             }
         });
         dashboardThread.start();
