@@ -84,7 +84,7 @@ public class DashboardTest {
 
     private void getJsonAsString() {
         try {
-            dashboardJson = FileUtils.readFileToString(new File("src/test/resources/conf/dashboard.json"));
+            dashboardJson = FileUtils.readFileToString(new File("src/test/resources/conf/simDashboard.json"));
 
         } catch (Exception e) {
             logger.error("Error in file reading");
@@ -141,7 +141,7 @@ public class DashboardTest {
 
         Map config = new HashMap();
         config = valueMapWithoutSim(config);
-        getJsonAsString();
+//        getJsonAsString();
         creatDashboardMap();
 
         CustomDashboardJsonUploader customDashboardJsonUploader = Mockito.mock(CustomDashboardJsonUploader.class);
@@ -162,7 +162,7 @@ public class DashboardTest {
 
         Map config = new HashMap();
         config = valueMapWithSim(config);
-        getJsonAsString();
+//        getJsonAsString();
         creatDashboardMap();
 
         CustomDashboardJsonUploader customDashboardJsonUploader = Mockito.mock(CustomDashboardJsonUploader.class);
@@ -183,7 +183,7 @@ public class DashboardTest {
 
         Map config = new HashMap();
         config = valueMapWithSim(config);
-        getJsonAsString();
+//        getJsonAsString();
         creatDashboardMap();
 
         CustomDashboardJsonUploader customDashboardJsonUploader = Mockito.mock(CustomDashboardJsonUploader.class);

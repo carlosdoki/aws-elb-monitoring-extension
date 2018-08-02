@@ -59,22 +59,22 @@
             "dataSeriesTemplates": [
                 {
                     "seriesType": "LINE",
-                    "metricType": null,
+                    "metricType": "INFRASTRUCTURE",
                     "showRawMetricName": false,
                     "colorPalette": null,
                     "name": "Series 0",
                     "metricMatchCriteriaTemplate": {
                         "entityMatchCriteria": {
                             "matchCriteriaType": "SpecificEntities",
-                            "entityType": "APPLICATION_COMPONENT_NODE",
+                            "entityType": "APPLICATION_COMPONENT",
                             "agentTypes": null,
                             "entityNames": [
                                 {
-                                    "applicationName": "replaceSimApplicationName",
-                                    "entityType": "APPLICATION_COMPONENT_NODE",
-                                    "entityName": "replaceHostName",
-                                    "scopingEntityType": "APPLICATION_COMPONENT",
-                                    "scopingEntityName": "replaceMachinePath",
+                                    "applicationName": "replaceApplicationName",
+                                    "entityType": "APPLICATION_COMPONENT",
+                                    "entityName": "replaceTierName",
+                                    "scopingEntityType": null,
+                                    "scopingEntityName": null,
                                     "subtype": null
                                 }
                             ],
@@ -89,13 +89,13 @@
                             "relativeMetricPath": "Custom Metrics|Amazon ELB|AWS API Calls"
                         },
                         "rollupMetricData": true,
-                        "expressionString": null,
+                        "expressionString": "",
                         "useActiveBaseline": false,
                         "sortResultsAscending": false,
                         "maxResults": 20,
                         "evaluationScopeType": null,
                         "baselineName": null,
-                        "applicationName": "replaceSimApplicationName",
+                        "applicationName": "replaceApplicationName",
                         "metricDisplayNameStyle": "DISPLAY_STYLE_AUTO",
                         "metricDisplayNameCustomFormat": null
                     },
@@ -149,14 +149,14 @@
             "dataSeriesTemplates": [
                 {
                     "seriesType": "LINE",
-                    "metricType": null,
+                    "metricType": "INFRASTRUCTURE",
                     "showRawMetricName": false,
                     "colorPalette": null,
                     "name": "Series 1",
                     "metricMatchCriteriaTemplate": {
                         "entityMatchCriteria": {
                             "matchCriteriaType": "AllEntities",
-                            "entityType": "APPLICATION_COMPONENT_NODE",
+                            "entityType": "APPLICATION_COMPONENT",
                             "agentTypes": null,
                             "summary": false
                         },
@@ -169,13 +169,13 @@
                             "relativeMetricPath": "Custom Metrics|Amazon ELB|*|*|LoadBalancer Name|*|Availability Zone|*|Healthy Host Count"
                         },
                         "rollupMetricData": true,
-                        "expressionString": null,
+                        "expressionString": "",
                         "useActiveBaseline": false,
                         "sortResultsAscending": false,
                         "maxResults": 20,
                         "evaluationScopeType": null,
                         "baselineName": null,
-                        "applicationName": "replaceSimApplicationName",
+                        "applicationName": "replaceApplicationName",
                         "metricDisplayNameStyle": "DISPLAY_STYLE_AUTO",
                         "metricDisplayNameCustomFormat": null
                     },
@@ -227,14 +227,14 @@
             "dataSeriesTemplates": [
                 {
                     "seriesType": "COLUMN",
-                    "metricType": null,
+                    "metricType": "INFRASTRUCTURE",
                     "showRawMetricName": false,
                     "colorPalette": null,
                     "name": "Series 2",
                     "metricMatchCriteriaTemplate": {
                         "entityMatchCriteria": {
                             "matchCriteriaType": "AllEntities",
-                            "entityType": "APPLICATION_COMPONENT_NODE",
+                            "entityType": "APPLICATION_COMPONENT",
                             "agentTypes": null,
                             "summary": false
                         },
@@ -247,13 +247,13 @@
                             "relativeMetricPath": "Custom Metrics|Amazon ELB|*|*|LoadBalancer Name|*|Availability Zone|*|Request Count"
                         },
                         "rollupMetricData": false,
-                        "expressionString": null,
+                        "expressionString": "",
                         "useActiveBaseline": false,
                         "sortResultsAscending": false,
                         "maxResults": 20,
                         "evaluationScopeType": null,
                         "baselineName": null,
-                        "applicationName": "replaceSimApplicationName",
+                        "applicationName": "replaceApplicationName",
                         "metricDisplayNameStyle": "DISPLAY_STYLE_AUTO",
                         "metricDisplayNameCustomFormat": null
                     },
@@ -299,9 +299,9 @@
             "borderColor": 14408667,
             "backgroundAlpha": 1,
             "showValues": false,
-            "formatNumber": null,
+            "formatNumber": true,
             "numDecimals": 0,
-            "removeZeros": null,
+            "removeZeros": true,
             "compactMode": false,
             "showTimeRange": false,
             "renderIn3D": false,
@@ -316,14 +316,14 @@
             "dataSeriesTemplates": [
                 {
                     "seriesType": "AREA",
-                    "metricType": null,
+                    "metricType": "INFRASTRUCTURE",
                     "showRawMetricName": false,
                     "colorPalette": null,
                     "name": "Series 4",
                     "metricMatchCriteriaTemplate": {
                         "entityMatchCriteria": {
                             "matchCriteriaType": "AllEntities",
-                            "entityType": "APPLICATION_COMPONENT_NODE",
+                            "entityType": "APPLICATION_COMPONENT",
                             "agentTypes": null,
                             "summary": false
                         },
@@ -336,13 +336,13 @@
                             "relativeMetricPath": "Custom Metrics|Amazon ELB|*|*|LoadBalancer Name|*|Availability Zone|*|HTTPCode_Backend_4XX"
                         },
                         "rollupMetricData": false,
-                        "expressionString": null,
+                        "expressionString": "",
                         "useActiveBaseline": false,
                         "sortResultsAscending": false,
                         "maxResults": 20,
                         "evaluationScopeType": null,
                         "baselineName": null,
-                        "applicationName": "replaceSimApplicationName",
+                        "applicationName": "replaceApplicationName",
                         "metricDisplayNameStyle": "DISPLAY_STYLE_AUTO",
                         "metricDisplayNameCustomFormat": null
                     },
@@ -359,7 +359,7 @@
             "customVerticalAxisMax": null,
             "showEvents": null,
             "interpolateDataGaps": false,
-            "showAllTooltips": null,
+            "showAllTooltips": false,
             "staticThresholdList": [],
             "eventFilterTemplate": null
         },
@@ -388,9 +388,9 @@
             "borderColor": 14408667,
             "backgroundAlpha": 1,
             "showValues": false,
-            "formatNumber": null,
+            "formatNumber": true,
             "numDecimals": 0,
-            "removeZeros": null,
+            "removeZeros": true,
             "compactMode": false,
             "showTimeRange": false,
             "renderIn3D": false,
@@ -405,14 +405,14 @@
             "dataSeriesTemplates": [
                 {
                     "seriesType": "AREA",
-                    "metricType": null,
+                    "metricType": "INFRASTRUCTURE",
                     "showRawMetricName": false,
                     "colorPalette": null,
                     "name": "Series 1",
                     "metricMatchCriteriaTemplate": {
                         "entityMatchCriteria": {
                             "matchCriteriaType": "AllEntities",
-                            "entityType": "APPLICATION_COMPONENT_NODE",
+                            "entityType": "APPLICATION_COMPONENT",
                             "agentTypes": null,
                             "summary": false
                         },
@@ -422,16 +422,16 @@
                             "displayName": "null",
                             "inputMetricText": false,
                             "inputMetricPath": null,
-                            "relativeMetricPath": "Custom Metrics|Amazon ELB|*|*|LoadBalancer Name|*|Availability Zone|*|Request Count"
+                            "relativeMetricPath": "Custom Metrics|Amazon ELB|*|*|LoadBalancer Name|*|Availability Zone|*|Latency"
                         },
                         "rollupMetricData": false,
-                        "expressionString": null,
+                        "expressionString": "",
                         "useActiveBaseline": false,
                         "sortResultsAscending": false,
                         "maxResults": 20,
                         "evaluationScopeType": null,
                         "baselineName": null,
-                        "applicationName": "replaceSimApplicationName",
+                        "applicationName": "replaceApplicationName",
                         "metricDisplayNameStyle": "DISPLAY_STYLE_AUTO",
                         "metricDisplayNameCustomFormat": null
                     },
@@ -448,7 +448,7 @@
             "customVerticalAxisMax": null,
             "showEvents": null,
             "interpolateDataGaps": false,
-            "showAllTooltips": null,
+            "showAllTooltips": false,
             "staticThresholdList": [],
             "eventFilterTemplate": null
         },
@@ -477,9 +477,9 @@
             "borderColor": 14408667,
             "backgroundAlpha": 1,
             "showValues": false,
-            "formatNumber": null,
+            "formatNumber": true,
             "numDecimals": 0,
-            "removeZeros": null,
+            "removeZeros": true,
             "compactMode": false,
             "showTimeRange": false,
             "renderIn3D": false,
@@ -494,14 +494,14 @@
             "dataSeriesTemplates": [
                 {
                     "seriesType": "AREA",
-                    "metricType": null,
+                    "metricType": "INFRASTRUCTURE",
                     "showRawMetricName": false,
                     "colorPalette": null,
                     "name": "Series 1",
                     "metricMatchCriteriaTemplate": {
                         "entityMatchCriteria": {
                             "matchCriteriaType": "AllEntities",
-                            "entityType": "APPLICATION_COMPONENT_NODE",
+                            "entityType": "APPLICATION_COMPONENT",
                             "agentTypes": null,
                             "summary": false
                         },
@@ -514,13 +514,13 @@
                             "relativeMetricPath": "Custom Metrics|Amazon ELB|*|*|LoadBalancer Name|*|Availability Zone|*|HTTPCode_Backend_2XX"
                         },
                         "rollupMetricData": false,
-                        "expressionString": null,
+                        "expressionString": "",
                         "useActiveBaseline": false,
                         "sortResultsAscending": false,
                         "maxResults": 20,
                         "evaluationScopeType": null,
                         "baselineName": null,
-                        "applicationName": "replaceSimApplicationName",
+                        "applicationName": "replaceApplicationName",
                         "metricDisplayNameStyle": "DISPLAY_STYLE_AUTO",
                         "metricDisplayNameCustomFormat": null
                     },
@@ -537,13 +537,13 @@
             "customVerticalAxisMax": null,
             "showEvents": null,
             "interpolateDataGaps": false,
-            "showAllTooltips": null,
+            "showAllTooltips": false,
             "staticThresholdList": [],
             "eventFilterTemplate": null
         },
         {
             "widgetType": "GraphWidget",
-            "title": "HTTP Backend Code 3xx",
+            "title": "HTTP Backend Code 3XX",
             "height": 2,
             "width": 4,
             "minHeight": 0,
@@ -566,9 +566,9 @@
             "borderColor": 14408667,
             "backgroundAlpha": 1,
             "showValues": false,
-            "formatNumber": null,
+            "formatNumber": true,
             "numDecimals": 0,
-            "removeZeros": null,
+            "removeZeros": true,
             "compactMode": false,
             "showTimeRange": false,
             "renderIn3D": false,
@@ -583,14 +583,14 @@
             "dataSeriesTemplates": [
                 {
                     "seriesType": "AREA",
-                    "metricType": null,
+                    "metricType": "INFRASTRUCTURE",
                     "showRawMetricName": false,
                     "colorPalette": null,
                     "name": "Series 2",
                     "metricMatchCriteriaTemplate": {
                         "entityMatchCriteria": {
                             "matchCriteriaType": "AllEntities",
-                            "entityType": "APPLICATION_COMPONENT_NODE",
+                            "entityType": "APPLICATION_COMPONENT",
                             "agentTypes": null,
                             "summary": false
                         },
@@ -603,13 +603,13 @@
                             "relativeMetricPath": "Custom Metrics|Amazon ELB|*|*|LoadBalancer Name|*|Availability Zone|*|HTTPCode_Backend_3XX"
                         },
                         "rollupMetricData": false,
-                        "expressionString": null,
+                        "expressionString": "",
                         "useActiveBaseline": false,
                         "sortResultsAscending": false,
                         "maxResults": 20,
                         "evaluationScopeType": null,
                         "baselineName": null,
-                        "applicationName": "replaceSimApplicationName",
+                        "applicationName": "replaceApplicationName",
                         "metricDisplayNameStyle": "DISPLAY_STYLE_AUTO",
                         "metricDisplayNameCustomFormat": null
                     },
@@ -626,7 +626,7 @@
             "customVerticalAxisMax": null,
             "showEvents": null,
             "interpolateDataGaps": false,
-            "showAllTooltips": null,
+            "showAllTooltips": false,
             "staticThresholdList": [],
             "eventFilterTemplate": null
         }
