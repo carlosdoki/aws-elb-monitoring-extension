@@ -206,7 +206,7 @@ metricsConfig:
 # Generate a custom dashboard based on the provided template
 customDashboard:
     enabled: true
-    namePrefix: "AWS ELB Monitor"
+    dashboardName: "AWS ELB Monitor"
     uploadDashboard: true
     executionFrequencyMinutes: 5
 

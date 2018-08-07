@@ -11,6 +11,7 @@ package com.appdynamics.extensions.aws.elb;
 import com.appdynamics.extensions.aws.SingleNamespaceCloudwatchMonitor;
 import com.appdynamics.extensions.aws.collectors.NamespaceMetricStatisticsCollector;
 import com.appdynamics.extensions.aws.elb.config.ELBConfiguration;
+import com.appdynamics.extensions.aws.elb.dashboard.Dashboard;
 import com.appdynamics.extensions.aws.metric.processors.MetricsProcessor;
 import com.appdynamics.extensions.conf.ControllerInfo;
 import com.appdynamics.extensions.dashboard.CustomDashboardJsonUploader;
@@ -82,8 +83,10 @@ public class ELBMonitor extends SingleNamespaceCloudwatchMonitor<ELBConfiguratio
         // TODO send to commons library
         dashboardValueMap = config.getCustomDashboard();
         ControllerInfo controllerInfo = new ControllerInfo();
-        org.slf4j.Logger dashboardLogger = ExtensionsLoggerFactory.getLogger(Dashboard.class);
-        dashboard = new Dashboard(dashboardValueMap, dashboardJsons, new CustomDashboardJsonUploader(), controllerInfo, dashboardLogger);
+//        org.slf4j.Logger dashboardLogger = ExtensionsLoggerFactory.getLogger(Dashboard.class);
+//        dashboard = new Dashboard(dashboardValueMap, dashboardJsons, new CustomDashboardJsonUploader(), controllerInfo, dashboardLogger);
+        dashboard = new Dashboard(dashboardValueMap, dashboardJsons, new CustomDashboardJsonUploader(), controllerInfo);
+
         LOGGER.debug("Dashboard.class object Successfully Created");
 
         MetricsProcessor metricsProcessor = createMetricsProcessor(config);

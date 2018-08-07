@@ -13,12 +13,12 @@ import com.amazonaws.services.cloudwatch.model.DimensionFilter;
 import com.appdynamics.extensions.aws.config.Dimension;
 import com.appdynamics.extensions.aws.config.IncludeMetric;
 import com.appdynamics.extensions.aws.dto.AWSMetric;
+import com.appdynamics.extensions.aws.elb.dashboard.Dashboard;
 import com.appdynamics.extensions.aws.metric.NamespaceMetricStatistics;
 import com.appdynamics.extensions.aws.metric.StatisticType;
 import com.appdynamics.extensions.aws.metric.processors.MetricsProcessor;
 import com.appdynamics.extensions.aws.metric.processors.MetricsProcessorHelper;
 import com.appdynamics.extensions.aws.predicate.MultiDimensionPredicate;
-import com.appdynamics.extensions.conf.ControllerInfo;
 import com.appdynamics.extensions.logging.ExtensionsLoggerFactory;
 
 import java.util.*;
