@@ -13,8 +13,9 @@ import com.appdynamics.extensions.logging.ExtensionsLoggerFactory;
 import org.slf4j.Logger;
 
 import java.util.Map;
+import static com.appdynamics.extensions.aws.elb.dashboard.DashboardConstants.*;
 
-import static com.appdynamics.extensions.aws.elb.Constants.*;
+//import static com.appdynamics.extensions.aws.elb.Constants.*;
 
 /**
  * Created by bhuvnesh.kumar on 8/7/18.
@@ -59,8 +60,8 @@ public class ReplaceDefaultInfo {
     private static String replaceDashboardName(String dashboardString, ControllerInfo controllerInfo, Map config) {
         if (dashboardString.contains(REPLACE_DASHBOARD_NAME)) {
             if (config.get("dashboardName") != null) {
-                LOGGER.debug("replacing DashboardName: {}", config.get(NAME_PREFIX).toString());
-                dashboardString = dashboardString.replace(REPLACE_DASHBOARD_NAME, config.get(NAME_PREFIX).toString());
+                LOGGER.debug("replacing DashboardName: {}", config.get(DASHBOARD_NAME).toString());
+                dashboardString = dashboardString.replace(REPLACE_DASHBOARD_NAME, config.get(DASHBOARD_NAME).toString());
             }
         }
         return dashboardString;

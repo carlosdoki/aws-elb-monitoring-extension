@@ -8,20 +8,15 @@
 
 package com.appdynamics.extensions.aws.elb.dashboard;
 
-import com.appdynamics.extensions.TaskInputArgs;
 import com.appdynamics.extensions.conf.ControllerInfo;
-import com.appdynamics.extensions.crypto.CryptoUtil;
 import com.appdynamics.extensions.dashboard.CustomDashboardJsonUploader;
 import com.appdynamics.extensions.logging.ExtensionsLoggerFactory;
-import com.appdynamics.extensions.aws.elb.dashboard.ReplaceDefaultInfo;
 import org.slf4j.Logger;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import static com.appdynamics.extensions.aws.elb.Constants.*;
+//import static com.appdynamics.extensions.aws.elb.Constants.*;
+import static com.appdynamics.extensions.aws.elb.dashboard.DashboardConstants.*;
 
 //import org.apache.log4j.Logger;
 
@@ -42,7 +37,6 @@ public class Dashboard {
 
     public Dashboard(Map config, Map dashboardJsons, CustomDashboardJsonUploader customDashboardJsonUploader, ControllerInfo controllerInfo) {
 
-//        this.LOGGER = logger;
         this.config = config;
         this.dashboardJsons = dashboardJsons;
         this.customDashboardJsonUploader = customDashboardJsonUploader;
@@ -84,7 +78,7 @@ public class Dashboard {
         dashboardString = ReplaceDefaultInfo.replaceFields(dashboardString, controllerInfo,config);
 //        replaceFields();
         // TODO use the threads that we have in our commons library, figure it out. should not be directly runnable but amonitorrunnable
-        customDashboardJsonUploader.uploadDashboard(config.get(NAME_PREFIX).toString(), dashboardString, argsMap, false);
+        customDashboardJsonUploader.uploadDashboard(config.get(DASHBOARD_NAME).toString(), dashboardString, argsMap, false);
 
         LOGGER.debug("done with uploadDashboard()");
     }
@@ -215,8 +209,8 @@ public class Dashboard {
 //    private void replaceDashboardName() {
 //        if (dashboardString.contains(REPLACE_DASHBOARD_NAME)) {
 //            if (config.get("dashboardName") != null) {
-//                LOGGER.debug("replacing DashboardName: {}", config.get(NAME_PREFIX).toString());
-//                dashboardString = dashboardString.replace(REPLACE_DASHBOARD_NAME, config.get(NAME_PREFIX).toString());
+//                LOGGER.debug("replacing DashboardName: {}", config.get(DASHBOARD_NAME).toString());
+//                dashboardString = dashboardString.replace(REPLACE_DASHBOARD_NAME, config.get(DASHBOARD_NAME).toString());
 //            }
 //        }
 //    }

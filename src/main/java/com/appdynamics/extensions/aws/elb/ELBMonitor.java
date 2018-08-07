@@ -28,6 +28,7 @@ import java.io.OutputStreamWriter;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.appdynamics.extensions.aws.elb.dashboard.DashboardConstants.*;
 import static com.appdynamics.extensions.aws.elb.Constants.*;
 
 //import org.slf4j.Logger;

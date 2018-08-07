@@ -26,8 +26,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.appdynamics.extensions.aws.elb.Constants.NORMAL_DASHBOARD;
-import static com.appdynamics.extensions.aws.elb.Constants.SIM_DASHBOARD;
+import static com.appdynamics.extensions.aws.elb.dashboard.DashboardConstants.*;
 
 /**
  * Created by bhuvnesh.kumar on 7/17/18.

@@ -19,7 +19,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.appdynamics.extensions.aws.elb.Constants.*;
+//import static com.appdynamics.extensions.aws.elb.Constants.*;
+import static com.appdynamics.extensions.aws.elb.dashboard.DashboardConstants.*;
 
 /**
  * Created by bhuvnesh.kumar on 8/7/18.
