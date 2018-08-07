@@ -14,6 +14,7 @@ import com.appdynamics.extensions.aws.elb.config.ELBConfiguration;
 import com.appdynamics.extensions.aws.metric.processors.MetricsProcessor;
 import com.appdynamics.extensions.conf.ControllerInfo;
 import com.appdynamics.extensions.dashboard.CustomDashboardJsonUploader;
+import com.appdynamics.extensions.logging.ExtensionsLoggerFactory;
 import com.singularity.ee.agent.systemagent.api.exception.TaskExecutionException;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.ConsoleAppender;
@@ -43,7 +44,9 @@ public class ELBMonitor extends SingleNamespaceCloudwatchMonitor<ELBConfiguratio
     private static final String DEFAULT_METRIC_PREFIX = String.format("%s%s%s%s",
             CUSTOM_METRICS, METRICS_SEPARATOR, AMAZON_SERVICE, METRICS_SEPARATOR);
 
+    //#Todo change the name
     private Map dashboardValueMap;
+
     private Dashboard dashboard;
     private Map dashboardJsons;
 
@@ -76,9 +79,11 @@ public class ELBMonitor extends SingleNamespaceCloudwatchMonitor<ELBConfiguratio
     protected NamespaceMetricStatisticsCollector getNamespaceMetricsCollector(
             ELBConfiguration config) {
 
+        // TODO send to commons library
         dashboardValueMap = config.getCustomDashboard();
         ControllerInfo controllerInfo = new ControllerInfo();
-        dashboard = new Dashboard(dashboardValueMap, dashboardJsons, new CustomDashboardJsonUploader(), controllerInfo);
+        org.slf4j.Logger dashboardLogger = ExtensionsLoggerFactory.getLogger(Dashboard.class);
+        dashboard = new Dashboard(dashboardValueMap, dashboardJsons, new CustomDashboardJsonUploader(), controllerInfo, dashboardLogger);
         LOGGER.debug("Dashboard.class object Successfully Created");
 
         MetricsProcessor metricsProcessor = createMetricsProcessor(config);
@@ -99,6 +104,7 @@ public class ELBMonitor extends SingleNamespaceCloudwatchMonitor<ELBConfiguratio
     protected void initializeMoreStuff(Map<String, String> args) {
         LOGGER.debug("Getting dashboard args in initializeMoreStuff");
         try {
+            // TODO get path from Config and read, to be moved to commons
             dashboardJsons = new HashMap();
             dashboardJsons.put(NORMAL_DASHBOARD, FileUtils.readFileToString(new File(args.get(NORMAL_DASHBOARD))));
             dashboardJsons.put(SIM_DASHBOARD, FileUtils.readFileToString(new File(args.get(SIM_DASHBOARD))));

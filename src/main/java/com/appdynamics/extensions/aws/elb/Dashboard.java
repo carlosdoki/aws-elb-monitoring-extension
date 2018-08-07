@@ -29,7 +29,8 @@ import static com.appdynamics.extensions.aws.elb.Constants.*;
  */
 public class Dashboard {
 
-    private static final Logger LOGGER = ExtensionsLoggerFactory.getLogger(Dashboard.class);
+//    private static final Logger LOGGER = ExtensionsLoggerFactory.getLogger(Dashboard.class);
+    public Logger LOGGER ;
 
     private Map config;
     private String dashboardString;
@@ -38,9 +39,9 @@ public class Dashboard {
     private Map dashboardJsons;
     private CustomDashboardJsonUploader customDashboardJsonUploader;
 
-    public Dashboard(Map config, Map dashboardJsons, CustomDashboardJsonUploader customDashboardJsonUploader, ControllerInfo controllerInfo) {
-        LOGGER.debug(" Setting up Dashboard Class");
+    public Dashboard(Map config, Map dashboardJsons, CustomDashboardJsonUploader customDashboardJsonUploader, ControllerInfo controllerInfo, Logger logger) {
 
+        this.LOGGER = logger;
         this.config = config;
         this.dashboardJsons = dashboardJsons;
         this.customDashboardJsonUploader = customDashboardJsonUploader;
@@ -173,6 +174,8 @@ public class Dashboard {
 
         loadDashboardBasedOnSim();
         replaceFields();
+        // TODO use the threads that we have in our commons library, figure it out. should not be directly runnable but amonitorrunnable
+        // TODO design thinking
         customDashboardJsonUploader.uploadDashboard(config.get(NAME_PREFIX).toString(), dashboardString, argsMap, false);
 
         LOGGER.debug("done with uploadDashboard()");

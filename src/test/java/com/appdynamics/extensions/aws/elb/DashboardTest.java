@@ -8,6 +8,7 @@
 
 package com.appdynamics.extensions.aws.elb;
 
+import com.appdynamics.extensions.checks.AppTierNodeCheck;
 import com.appdynamics.extensions.conf.ControllerInfo;
 import com.appdynamics.extensions.dashboard.CustomDashboardJsonUploader;
 import org.apache.commons.io.FileUtils;
@@ -15,6 +16,7 @@ import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
@@ -22,6 +24,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static com.appdynamics.extensions.aws.elb.Constants.NORMAL_DASHBOARD;
@@ -34,7 +37,8 @@ import static com.appdynamics.extensions.aws.elb.Constants.SIM_DASHBOARD;
 @PrepareForTest(Dashboard.class)
 public class DashboardTest {
 
-    private static final Logger logger = Logger.getLogger(DashboardTest.class);
+//    private static final Logger logger = Logger.getLogger(DashboardTest.class);
+    private org.slf4j.Logger logger = Mockito.mock(org.slf4j.Logger.class);
 
     private String dashboardJson;
     private Map dashboardMap = new HashMap();
@@ -148,7 +152,7 @@ public class DashboardTest {
         Mockito.doNothing().when(customDashboardJsonUploader).uploadDashboard(config.get("namePrefix").toString(), dashboardJson, config, false);
         Mockito.when(controllerInfo.getControllerInfo()).thenReturn(controllerInformation);
         try {
-            Dashboard dashboard = new Dashboard(config, dashboardMap, customDashboardJsonUploader, controllerInfo);
+            Dashboard dashboard = new Dashboard(config, dashboardMap, customDashboardJsonUploader, controllerInfo, logger);
             dashboard.sendDashboard();
         } catch (Exception e) {
             Assert.fail();
@@ -169,7 +173,7 @@ public class DashboardTest {
         Mockito.doNothing().when(customDashboardJsonUploader).uploadDashboard(config.get("namePrefix").toString(), dashboardJson, config, false);
         Mockito.when(controllerInfo.getControllerInfo()).thenReturn(controllerInformation);
         try {
-            Dashboard dashboard = new Dashboard(config, dashboardMap, customDashboardJsonUploader, controllerInfo);
+            Dashboard dashboard = new Dashboard(config, dashboardMap, customDashboardJsonUploader, controllerInfo, logger);
             dashboard.sendDashboard();
         } catch (Exception e) {
             Assert.fail();
@@ -183,19 +187,55 @@ public class DashboardTest {
 
         Map config = new HashMap();
         config = valueMapWithSim(config);
-//        getJsonAsString();
         creatDashboardMap();
 
         CustomDashboardJsonUploader customDashboardJsonUploader = Mockito.mock(CustomDashboardJsonUploader.class);
         Mockito.doNothing().when(customDashboardJsonUploader).uploadDashboard(config.get("namePrefix").toString(), dashboardJson, config, false);
         Mockito.when(controllerInfo.getControllerInfo()).thenReturn(controllerInformation);
         try {
-            Dashboard dashboard = new Dashboard(config, dashboardMap, customDashboardJsonUploader, controllerInfo);
+            Dashboard dashboard = new Dashboard(config, dashboardMap, customDashboardJsonUploader, controllerInfo, logger);
+            dashboard.sendDashboard();
+        } catch (Exception e) {
+            Assert.fail();
+        }
+    }
+
+
+    @Test
+    public void testAppTierNodeNotConfiguredSIMNotEnabled() {
+        ArgumentCaptor<String> logCaptor = ArgumentCaptor.forClass(String.class);
+
+//        ControllerInfo controllerInfo = Mockito.mock(ControllerInfo.class);
+//
+//        Mockito.when(controllerInfo.getSimEnabled()).thenReturn(false);
+
+        ControllerInfo controllerInformation = new ControllerInfo();
+        controllerInformation = setUpControllerInfoWithoutUsernameAndPassword(controllerInformation);
+
+        Map config = new HashMap();
+        config = valueMapWithSim(config);
+        creatDashboardMap();
+
+        CustomDashboardJsonUploader customDashboardJsonUploader = Mockito.mock(CustomDashboardJsonUploader.class);
+        Mockito.doNothing().when(customDashboardJsonUploader).uploadDashboard(config.get("namePrefix").toString(), dashboardJson, config, false);
+        Mockito.when(controllerInfo.getControllerInfo()).thenReturn(controllerInformation);
+        try {
+            Dashboard dashboard = new Dashboard(config, dashboardMap, customDashboardJsonUploader, controllerInfo, logger);
             dashboard.sendDashboard();
         } catch (Exception e) {
             Assert.fail();
         }
 
+
+//        Mockito.verify(logger, Mockito.times(2)).info(simLogArgsCaptor.capture(), simLogArgsCaptor.capture());
+
+        Mockito.verify(logger, Mockito.times(10)).debug(logCaptor.capture(), logCaptor.capture());
+
+        List<String> allValues1 = logCaptor.getAllValues();
+
+        String value = logCaptor.getValue();
+        Assert.assertTrue(value.contains("SIM is not enabled and Application name, Tier name or node name not configured."));
     }
+
 
 }
