@@ -85,31 +85,46 @@ public class ConnectionProperties {
 
     private static String getPassword(ControllerInfo controllerInfo, Map config) {
 
+        String password = getPasswordFromStartupArguments(controllerInfo);
+
+        if(password == ""){
+            password = getPasswordFromConfig(controllerInfo, config);
+        }
+
+        return password;
+    }
+
+    private static String getPasswordFromStartupArguments(ControllerInfo controllerInfo)
+    {
         // Password from startup script
         Map<String, String> taskArgs = new HashMap<>();
         if (controllerInfo.getPassword() != null) {
-            taskArgs.put(ACCOUNT_ACCESS_KEY, controllerInfo.getPassword().toString());
-
+            taskArgs.put(PASSWORD, controllerInfo.getPassword().toString());
         }
-        if (controllerInfo.getEncryptedPassword() != null) {
+        if (controllerInfo.getEncryptedPassword() != null && controllerInfo.getEncryptedKey() != null) {
             taskArgs.put(ENCRYPTED_PASSWORD, controllerInfo.getEncryptedPassword().toString());
-
-        }
-        if (controllerInfo.getEncryptedKey() != null) {
             taskArgs.put(ENCRYPTION_KEY, controllerInfo.getEncryptedKey().toString());
+
         }
 
-        String password = CryptoUtil.getPassword(taskArgs);
+        return CryptoUtil.getPassword(taskArgs);
 
-        // password in the extension config
-        if (password != "") {
-            return password;
-        } else if (config.get(PASSWORD) != null) {
+    }
+
+    private static String getPasswordFromConfig(ControllerInfo controllerInfo, Map config){
+        if (config.get(PASSWORD) != null) {
             return config.get(PASSWORD).toString();
+        } else if(config.get(ENCRYPTED_PASSWORD) != null && config.get(ENCRYPTION_KEY) != null){
+            Map<String, String> taskArgs = new HashMap<>();
+            taskArgs.put(ENCRYPTED_PASSWORD, config.get(ENCRYPTED_PASSWORD).toString());
+            taskArgs.put(ENCRYPTION_KEY, config.get(ENCRYPTION_KEY).toString());
+
+            return CryptoUtil.getPassword(taskArgs);
         }
 
         // singularity user key
         return controllerInfo.getAccountAccessKey().toString();
+
     }
 
     private static String getUsername( ControllerInfo controllerInfo, Map config) {

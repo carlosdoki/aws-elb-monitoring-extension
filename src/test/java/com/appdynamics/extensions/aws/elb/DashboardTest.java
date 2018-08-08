@@ -67,6 +67,7 @@ public class DashboardTest {
         config.put("applicationName", "app");
         config.put("tierName", "tier");
         config.put("nodeName", "node");
+        config.put("pathToNormalDashboard", "src/test/resources/json/normalDashboard.json");
         return config;
     }
 
@@ -81,6 +82,8 @@ public class DashboardTest {
         config.put("password", "root");
         config.put("username", "user");
         config.put("accountAccessKey", "pass");
+        config.put("pathToSIMDashboard", "src/test/resources/json/simDashboard.json");
+
         return config;
     }
 
@@ -150,7 +153,7 @@ public class DashboardTest {
         Mockito.doNothing().when(customDashboardJsonUploader).uploadDashboard(config.get("namePrefix").toString(), dashboardJson, config, false);
         Mockito.when(controllerInfo.getControllerInfo()).thenReturn(controllerInformation);
         try {
-            Dashboard dashboard = new Dashboard(config, dashboardMap, customDashboardJsonUploader, controllerInfo);
+            Dashboard dashboard = new Dashboard(config, customDashboardJsonUploader, controllerInfo);
             dashboard.sendDashboard();
         } catch (Exception e) {
             Assert.fail();
@@ -171,7 +174,7 @@ public class DashboardTest {
         Mockito.doNothing().when(customDashboardJsonUploader).uploadDashboard(config.get("namePrefix").toString(), dashboardJson, config, false);
         Mockito.when(controllerInfo.getControllerInfo()).thenReturn(controllerInformation);
         try {
-            Dashboard dashboard = new Dashboard(config, dashboardMap, customDashboardJsonUploader, controllerInfo);
+            Dashboard dashboard = new Dashboard(config, customDashboardJsonUploader, controllerInfo);
             dashboard.sendDashboard();
         } catch (Exception e) {
             Assert.fail();
@@ -191,7 +194,7 @@ public class DashboardTest {
         Mockito.doNothing().when(customDashboardJsonUploader).uploadDashboard(config.get("namePrefix").toString(), dashboardJson, config, false);
         Mockito.when(controllerInfo.getControllerInfo()).thenReturn(controllerInformation);
         try {
-            Dashboard dashboard = new Dashboard(config, dashboardMap, customDashboardJsonUploader, controllerInfo);
+            Dashboard dashboard = new Dashboard(config, customDashboardJsonUploader, controllerInfo);
             dashboard.sendDashboard();
         } catch (Exception e) {
             Assert.fail();

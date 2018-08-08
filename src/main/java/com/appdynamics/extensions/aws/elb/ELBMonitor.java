@@ -15,15 +15,12 @@ import com.appdynamics.extensions.aws.elb.dashboard.Dashboard;
 import com.appdynamics.extensions.aws.metric.processors.MetricsProcessor;
 import com.appdynamics.extensions.conf.ControllerInfo;
 import com.appdynamics.extensions.dashboard.CustomDashboardJsonUploader;
-import com.appdynamics.extensions.logging.ExtensionsLoggerFactory;
 import com.singularity.ee.agent.systemagent.api.exception.TaskExecutionException;
-import org.apache.commons.io.FileUtils;
 import org.apache.log4j.ConsoleAppender;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PatternLayout;
 
-import java.io.File;
 import java.io.OutputStreamWriter;
 import java.util.HashMap;
 import java.util.Map;
@@ -47,7 +44,7 @@ public class ELBMonitor extends SingleNamespaceCloudwatchMonitor<ELBConfiguratio
             CUSTOM_METRICS, METRICS_SEPARATOR, AMAZON_SERVICE, METRICS_SEPARATOR);
 
     //#Todo change the name
-    private Map dashboardValueMap;
+    private Map dashboardValuesFromConfig;
 
     private Dashboard dashboard;
     private Map dashboardJsons;
@@ -82,11 +79,11 @@ public class ELBMonitor extends SingleNamespaceCloudwatchMonitor<ELBConfiguratio
             ELBConfiguration config) {
 
         // TODO send to commons library
-        dashboardValueMap = config.getCustomDashboard();
+        dashboardValuesFromConfig = config.getCustomDashboard();
         ControllerInfo controllerInfo = new ControllerInfo();
 //        org.slf4j.Logger dashboardLogger = ExtensionsLoggerFactory.getLogger(Dashboard.class);
-//        dashboard = new Dashboard(dashboardValueMap, dashboardJsons, new CustomDashboardJsonUploader(), controllerInfo, dashboardLogger);
-        dashboard = new Dashboard(dashboardValueMap, dashboardJsons, new CustomDashboardJsonUploader(), controllerInfo);
+//        dashboard = new Dashboard(dashboardValuesFromConfig, dashboardJsons, new CustomDashboardJsonUploader(), controllerInfo, dashboardLogger);
+        dashboard = new Dashboard(dashboardValuesFromConfig, new CustomDashboardJsonUploader(), controllerInfo);
 
         LOGGER.debug("Dashboard.class object Successfully Created");
 
@@ -106,18 +103,6 @@ public class ELBMonitor extends SingleNamespaceCloudwatchMonitor<ELBConfiguratio
 
     @Override
     protected void initializeMoreStuff(Map<String, String> args) {
-        LOGGER.debug("Getting dashboard args in initializeMoreStuff");
-        try {
-            // TODO get path from Config and read, to be moved to commons
-            dashboardJsons = new HashMap();
-            dashboardJsons.put(NORMAL_DASHBOARD, FileUtils.readFileToString(new File(args.get(NORMAL_DASHBOARD))));
-            dashboardJsons.put(SIM_DASHBOARD, FileUtils.readFileToString(new File(args.get(SIM_DASHBOARD))));
-
-        } catch (Exception e) {
-            LOGGER.error("Unable to get files for dashboard", e);
-        }
-
-        LOGGER.debug("Done with initializeMoreStuff");
 
     }
 
@@ -150,8 +135,8 @@ public class ELBMonitor extends SingleNamespaceCloudwatchMonitor<ELBConfiguratio
         Map<String, String> taskArgs = new HashMap<String, String>();
 
         taskArgs.put("config-file", "//Applications/AppDynamics/ma43/monitors/AWSELBMonitor_dash/config.yml");
-        taskArgs.put("normalDashboard", "//Applications/AppDynamics/ma43/monitors/AWSELBMonitor_dash/normalDashboard.json");
-        taskArgs.put("simDashboard", "//Applications/AppDynamics/ma43/monitors/AWSELBMonitor_dash/simDashboard.json");
+//        taskArgs.put("normalDashboard", "//Applications/AppDynamics/ma43/monitors/AWSELBMonitor_dash/normalDashboard.json");
+//        taskArgs.put("simDashboard", "//Applications/AppDynamics/ma43/monitors/AWSELBMonitor_dash/simDashboard.json");
 
 
         monitor.execute(taskArgs, null);
