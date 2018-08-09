@@ -19,8 +19,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-//import static com.appdynamics.extensions.aws.elb.Constants.*;
 import static com.appdynamics.extensions.aws.elb.dashboard.DashboardConstants.*;
+
 
 /**
  * Created by bhuvnesh.kumar on 8/7/18.
@@ -87,15 +87,14 @@ public class ConnectionProperties {
 
         String password = getPasswordFromStartupArguments(controllerInfo);
 
-        if(password == ""){
+        if (password == "") {
             password = getPasswordFromConfig(controllerInfo, config);
         }
 
         return password;
     }
 
-    private static String getPasswordFromStartupArguments(ControllerInfo controllerInfo)
-    {
+    private static String getPasswordFromStartupArguments(ControllerInfo controllerInfo) {
         // Password from startup script
         Map<String, String> taskArgs = new HashMap<>();
         if (controllerInfo.getPassword() != null) {
@@ -111,10 +110,10 @@ public class ConnectionProperties {
 
     }
 
-    private static String getPasswordFromConfig(ControllerInfo controllerInfo, Map config){
+    private static String getPasswordFromConfig(ControllerInfo controllerInfo, Map config) {
         if (config.get(PASSWORD) != null) {
             return config.get(PASSWORD).toString();
-        } else if(config.get(ENCRYPTED_PASSWORD) != null && config.get(ENCRYPTION_KEY) != null){
+        } else if (config.get(ENCRYPTED_PASSWORD) != null && config.get(ENCRYPTION_KEY) != null) {
             Map<String, String> taskArgs = new HashMap<>();
             taskArgs.put(ENCRYPTED_PASSWORD, config.get(ENCRYPTED_PASSWORD).toString());
             taskArgs.put(ENCRYPTION_KEY, config.get(ENCRYPTION_KEY).toString());
@@ -127,7 +126,7 @@ public class ConnectionProperties {
 
     }
 
-    private static String getUsername( ControllerInfo controllerInfo, Map config) {
+    private static String getUsername(ControllerInfo controllerInfo, Map config) {
         // username from startup script
         if (controllerInfo.getUsername() != null && controllerInfo.getAccount() != null) {
             return controllerInfo.getUsername() + AT + controllerInfo.getAccount();

@@ -15,7 +15,6 @@ import org.apache.commons.io.FileUtils;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
@@ -23,10 +22,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.io.File;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
-import static com.appdynamics.extensions.aws.elb.dashboard.DashboardConstants.*;
 
 /**
  * Created by bhuvnesh.kumar on 7/17/18.
@@ -35,23 +31,14 @@ import static com.appdynamics.extensions.aws.elb.dashboard.DashboardConstants.*;
 @PrepareForTest(Dashboard.class)
 public class DashboardTest {
 
-//    private static final Logger logger = Logger.getLogger(DashboardTest.class);
+    //    private static final Logger logger = Logger.getLogger(DashboardTest.class);
     private org.slf4j.Logger logger = Mockito.mock(org.slf4j.Logger.class);
 
     private String dashboardJson;
-//    private Map dashboardMap = new HashMap();
 
     @Mock
     private ControllerInfo controllerInfo;
 
-//    private void creatDashboardMap() {
-//        try {
-//            dashboardMap.put(NORMAL_DASHBOARD, FileUtils.readFileToString(new File("/Users/bhuvnesh.kumar/repos/appdynamics/extensions/aws-elb-monitoring-extension/src/test/resources/conf/normalDashboard.json")));
-//            dashboardMap.put(SIM_DASHBOARD, FileUtils.readFileToString(new File("/Users/bhuvnesh.kumar/repos/appdynamics/extensions/aws-elb-monitoring-extension/src/test/resources/conf/simDashboard.json")));
-//        } catch (Exception e) {
-//            Assert.fail();
-//        }
-//    }
 
     private Map valueMapWithoutSim(Map config) {
         config.put("enabled", "true");
@@ -143,12 +130,9 @@ public class DashboardTest {
 
         ControllerInfo controllerInformation = new ControllerInfo();
         controllerInformation = setUpControllerInfoWithoutSim(controllerInformation);
-
         Map config = new HashMap();
         config = valueMapWithoutSim(config);
-//        getJsonAsString();
-//        creatDashboardMap();
-
+        getJsonAsString();
         CustomDashboardJsonUploader customDashboardJsonUploader = Mockito.mock(CustomDashboardJsonUploader.class);
         Mockito.doNothing().when(customDashboardJsonUploader).uploadDashboard(config.get("dashboardName").toString(), dashboardJson, config, false);
         Mockito.when(controllerInfo.getControllerInfo()).thenReturn(controllerInformation);
@@ -167,9 +151,6 @@ public class DashboardTest {
 
         Map config = new HashMap();
         config = valueMapWithSim(config);
-//        getJsonAsString();
-//        creatDashboardMap();
-
         CustomDashboardJsonUploader customDashboardJsonUploader = Mockito.mock(CustomDashboardJsonUploader.class);
         Mockito.doNothing().when(customDashboardJsonUploader).uploadDashboard(config.get("dashboardName").toString(), dashboardJson, config, false);
         Mockito.when(controllerInfo.getControllerInfo()).thenReturn(controllerInformation);
@@ -188,8 +169,6 @@ public class DashboardTest {
 
         Map config = new HashMap();
         config = valueMapWithSim(config);
-//        creatDashboardMap();
-
         CustomDashboardJsonUploader customDashboardJsonUploader = Mockito.mock(CustomDashboardJsonUploader.class);
         Mockito.doNothing().when(customDashboardJsonUploader).uploadDashboard(config.get("dashboardName").toString(), dashboardJson, config, false);
         Mockito.when(controllerInfo.getControllerInfo()).thenReturn(controllerInformation);

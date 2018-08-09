@@ -64,7 +64,7 @@ public class Dashboard {
         LOGGER.debug("Attempting to upload dashboard.");
 
         loadDashboardBasedOnSim();
-        dashboardString = ReplaceDefaultInfo.replaceFields(dashboardString, controllerInfo,config);
+        dashboardString = ReplaceDefaultInfo.replaceFields(dashboardString, controllerInfo, config);
         customDashboardJsonUploader.uploadDashboard(config.get(DASHBOARD_NAME).toString(), dashboardString, argsMap, false);
 
         LOGGER.debug("done with uploadDashboard()");
@@ -77,16 +77,16 @@ public class Dashboard {
             try {
                 LOGGER.debug("Getting the Normal Dashboard File");
                 dashboardString = FileUtils.readFileToString(new File(config.get("pathToNormalDashboard").toString()));
-            }catch (Exception e){
-                LOGGER.info("Unable to load Normal Dashboard File at Path: {}",config.get("pathToNormalDashboard").toString() );
+            } catch (Exception e) {
+                LOGGER.info("Unable to load Normal Dashboard File at Path: {}", config.get("pathToNormalDashboard").toString());
             }
         } else {
             try {
                 LOGGER.debug("Getting the SIM Dashboard File");
 
                 dashboardString = FileUtils.readFileToString(new File(config.get("pathToSIMDashboard").toString()));
-            }catch (Exception e){
-                LOGGER.info("Unable to load SIM Dashboard File at Path: {}",config.get("pathToSIMDashboard").toString() );
+            } catch (Exception e) {
+                LOGGER.info("Unable to load SIM Dashboard File at Path: {}", config.get("pathToSIMDashboard").toString());
             }
         }
     }

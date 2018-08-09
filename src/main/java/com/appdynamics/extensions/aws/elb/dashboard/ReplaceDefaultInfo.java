@@ -13,6 +13,7 @@ import com.appdynamics.extensions.logging.ExtensionsLoggerFactory;
 import org.slf4j.Logger;
 
 import java.util.Map;
+
 import static com.appdynamics.extensions.aws.elb.dashboard.DashboardConstants.*;
 
 //import static com.appdynamics.extensions.aws.elb.Constants.*;
@@ -24,9 +25,9 @@ public class ReplaceDefaultInfo {
     private static final Logger LOGGER = ExtensionsLoggerFactory.getLogger(ReplaceDefaultInfo.class);
 
 
-    public static String  replaceFields(String dashboardString, ControllerInfo controllerInfo, Map config) {
+    public static String replaceFields(String dashboardString, ControllerInfo controllerInfo, Map config) {
 
-        dashboardString = replaceApplicationName( dashboardString, controllerInfo);
+        dashboardString = replaceApplicationName(dashboardString, controllerInfo);
         dashboardString = replaceTierName(dashboardString, controllerInfo);
         dashboardString = replaceNodeName(dashboardString, controllerInfo);
         dashboardString = replaceDashboardName(dashboardString, controllerInfo, config);
