@@ -43,7 +43,6 @@ public class ELBMonitor extends SingleNamespaceCloudwatchMonitor<ELBConfiguratio
     private static final String DEFAULT_METRIC_PREFIX = String.format("%s%s%s%s",
             CUSTOM_METRICS, METRICS_SEPARATOR, AMAZON_SERVICE, METRICS_SEPARATOR);
 
-    //#Todo change the name
     private Map dashboardValuesFromConfig;
 
     private Dashboard dashboard;
@@ -78,14 +77,14 @@ public class ELBMonitor extends SingleNamespaceCloudwatchMonitor<ELBConfiguratio
     protected NamespaceMetricStatisticsCollector getNamespaceMetricsCollector(
             ELBConfiguration config) {
 
+        //#######################################
         // TODO send to commons library
         dashboardValuesFromConfig = config.getCustomDashboard();
         ControllerInfo controllerInfo = new ControllerInfo();
-//        org.slf4j.Logger dashboardLogger = ExtensionsLoggerFactory.getLogger(Dashboard.class);
-//        dashboard = new Dashboard(dashboardValuesFromConfig, dashboardJsons, new CustomDashboardJsonUploader(), controllerInfo, dashboardLogger);
         dashboard = new Dashboard(dashboardValuesFromConfig, new CustomDashboardJsonUploader(), controllerInfo);
 
         LOGGER.debug("Dashboard.class object Successfully Created");
+        //#######################################
 
         MetricsProcessor metricsProcessor = createMetricsProcessor(config);
 
@@ -135,9 +134,6 @@ public class ELBMonitor extends SingleNamespaceCloudwatchMonitor<ELBConfiguratio
         Map<String, String> taskArgs = new HashMap<String, String>();
 
         taskArgs.put("config-file", "//Applications/AppDynamics/ma43/monitors/AWSELBMonitor_dash/config.yml");
-//        taskArgs.put("normalDashboard", "//Applications/AppDynamics/ma43/monitors/AWSELBMonitor_dash/normalDashboard.json");
-//        taskArgs.put("simDashboard", "//Applications/AppDynamics/ma43/monitors/AWSELBMonitor_dash/simDashboard.json");
-
 
         monitor.execute(taskArgs, null);
 
