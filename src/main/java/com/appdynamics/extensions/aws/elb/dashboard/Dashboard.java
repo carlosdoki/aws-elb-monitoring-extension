@@ -65,7 +65,7 @@ public class Dashboard {
 
         loadDashboardBasedOnSim();
         dashboardString = ReplaceDefaultInfo.replaceFields(dashboardString, controllerInfo, config);
-        customDashboardJsonUploader.uploadDashboard(config.get(DASHBOARD_NAME).toString(), dashboardString, argsMap, false);
+//        customDashboardJsonUploader.uploadDashboard(config.get(DASHBOARD_NAME).toString(), dashboardString, argsMap, false);
 
         LOGGER.debug("done with uploadDashboard()");
     }

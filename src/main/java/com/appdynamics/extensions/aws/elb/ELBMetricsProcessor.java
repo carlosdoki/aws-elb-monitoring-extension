@@ -82,17 +82,17 @@ public class ELBMetricsProcessor implements MetricsProcessor {
 
         // TODO to commons
         ///////////// Dashboard Start Thread /////////////
-        LOGGER.debug("In Metric Processor going to upload dashboard");
-
-        Thread dashboardThread = new Thread(new Runnable() {
-            public void run() {
-                LOGGER.debug("Creating a new thread to send the dashboard");
-                dashboard.sendDashboard();
-            }
-        });
-        dashboardThread.start();
-
-        LOGGER.debug("Created Thread for Dashboard Upload");
+//        LOGGER.debug("In Metric Processor going to upload dashboard");
+//
+//        Thread dashboardThread = new Thread(new Runnable() {
+//            public void run() {
+//                LOGGER.debug("Creating a new thread to send the dashboard");
+//                dashboard.sendDashboard();
+//            }
+//        });
+//        dashboardThread.start();
+//
+//        LOGGER.debug("Created Thread for Dashboard Upload");
         ///////////// Dashboard Stop  Thread /////////////
 
 
