@@ -31,7 +31,7 @@ import java.util.Map;
 @PrepareForTest(Dashboard.class)
 public class DashboardTest {
 
-    //    private static final Logger logger = Logger.getLogger(DashboardTest.class);
+    //    private static final Logger logger = Logger.getLogger(SendDashboardTest.class);
     private org.slf4j.Logger logger = Mockito.mock(org.slf4j.Logger.class);
 
     private String dashboardJson;
