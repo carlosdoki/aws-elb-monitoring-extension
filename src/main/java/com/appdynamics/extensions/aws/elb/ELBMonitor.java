@@ -12,10 +12,7 @@ package com.appdynamics.extensions.aws.elb;
 import com.appdynamics.extensions.aws.SingleNamespaceCloudwatchMonitor;
 import com.appdynamics.extensions.aws.collectors.NamespaceMetricStatisticsCollector;
 import com.appdynamics.extensions.aws.elb.config.ELBConfiguration;
-import com.appdynamics.extensions.aws.elb.dashboard.Dashboard;
 import com.appdynamics.extensions.aws.metric.processors.MetricsProcessor;
-import com.appdynamics.extensions.conf.ControllerInfo;
-import com.appdynamics.extensions.dashboard.CustomDashboardJsonUploader;
 import com.singularity.ee.agent.systemagent.api.exception.TaskExecutionException;
 import org.apache.log4j.ConsoleAppender;
 import org.apache.log4j.Level;
@@ -27,7 +24,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static com.appdynamics.extensions.aws.elb.Constants.*;
-import static com.appdynamics.extensions.aws.elb.dashboard.DashboardConstants.METRICS_SEPARATOR;
 
 //import org.slf4j.Logger;
 
@@ -42,12 +38,8 @@ public class ELBMonitor extends SingleNamespaceCloudwatchMonitor<ELBConfiguratio
 //    private static final org.slf4j.Logger LOGGER = ExtensionsLoggerFactory.getLogger(ELBMonitor.class);
 
     private static final String DEFAULT_METRIC_PREFIX = String.format("%s%s%s%s",
-            CUSTOM_METRICS, METRICS_SEPARATOR, AMAZON_SERVICE, METRICS_SEPARATOR);
+            CUSTOM_METRICS, "|", AMAZON_SERVICE, "|");
 
-    private Map dashboardValuesFromConfig;
-
-    private Dashboard dashboard;
-    private Map dashboardJsons;
 
     public ELBMonitor() {
         super(ELBConfiguration.class);
@@ -78,15 +70,6 @@ public class ELBMonitor extends SingleNamespaceCloudwatchMonitor<ELBConfiguratio
     protected NamespaceMetricStatisticsCollector getNamespaceMetricsCollector(
             ELBConfiguration config) {
 
-        //#######################################
-        // TODO send to commons library
-        dashboardValuesFromConfig = config.getCustomDashboard();
-        ControllerInfo controllerInfo = new ControllerInfo();
-        dashboard = new Dashboard(dashboardValuesFromConfig, new CustomDashboardJsonUploader(), controllerInfo);
-
-        LOGGER.debug("Dashboard.class object Successfully Created");
-        //#######################################
-
         MetricsProcessor metricsProcessor = createMetricsProcessor(config);
 
 
@@ -115,7 +98,7 @@ public class ELBMonitor extends SingleNamespaceCloudwatchMonitor<ELBConfiguratio
     private MetricsProcessor createMetricsProcessor(ELBConfiguration config) {
         return new ELBMetricsProcessor(
                 config.getMetricsConfig().getIncludeMetrics(),
-                config.getDimensions(), dashboard);
+                config.getDimensions());
     }
 
 

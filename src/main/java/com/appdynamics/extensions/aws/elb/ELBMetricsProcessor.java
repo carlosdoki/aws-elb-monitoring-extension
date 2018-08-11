@@ -13,7 +13,6 @@ import com.amazonaws.services.cloudwatch.model.DimensionFilter;
 import com.appdynamics.extensions.aws.config.Dimension;
 import com.appdynamics.extensions.aws.config.IncludeMetric;
 import com.appdynamics.extensions.aws.dto.AWSMetric;
-import com.appdynamics.extensions.aws.elb.dashboard.Dashboard;
 import com.appdynamics.extensions.aws.metric.NamespaceMetricStatistics;
 import com.appdynamics.extensions.aws.metric.StatisticType;
 import com.appdynamics.extensions.aws.metric.processors.MetricsProcessor;
@@ -38,13 +37,11 @@ public class ELBMetricsProcessor implements MetricsProcessor {
     private List<IncludeMetric> includeMetrics;
     private List<Dimension> dimensions;
     private static final String NAMESPACE = AWS_NAMESPACE;
-    private Dashboard dashboard;
 
 
-    public ELBMetricsProcessor(List<IncludeMetric> includeMetrics, List<Dimension> dimensions, Dashboard dashboard) {
+    public ELBMetricsProcessor(List<IncludeMetric> includeMetrics, List<Dimension> dimensions) {
         this.includeMetrics = includeMetrics;
         this.dimensions = dimensions;
-        this.dashboard = dashboard;
     }
 
     public List<AWSMetric> getMetrics(AmazonCloudWatch awsCloudWatch, String accountName, LongAdder awsRequestsCounter) {
@@ -79,22 +76,6 @@ public class ELBMetricsProcessor implements MetricsProcessor {
         for (Dimension dimension : dimensions) {
             dimensionToMetricPathNameDictionary.put(dimension.getName(), dimension.getDisplayName());
         }
-
-        // TODO to commons
-        ///////////// Dashboard Start Thread /////////////
-//        LOGGER.debug("In Metric Processor going to upload dashboard");
-//
-//        Thread dashboardThread = new Thread(new Runnable() {
-//            public void run() {
-//                LOGGER.debug("Creating a new thread to send the dashboard");
-//                dashboard.sendDashboard();
-//            }
-//        });
-//        dashboardThread.start();
-//
-//        LOGGER.debug("Created Thread for Dashboard Upload");
-        ///////////// Dashboard Stop  Thread /////////////
-
 
         return MetricsProcessorHelper.createMetricStatsMapForUpload(namespaceMetricStats,
                 dimensionToMetricPathNameDictionary, false);
