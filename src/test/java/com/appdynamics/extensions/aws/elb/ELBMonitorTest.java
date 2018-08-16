@@ -25,8 +25,6 @@ public class ELBMonitorTest {
     public void testMetricsCollectionCredentialsEncrypted() throws Exception {
         Map<String, String> args = Maps.newHashMap();
         args.put("config-file", "src/test/resources/conf/itest-encrypted-config.yml");
-        args.put("simDashboard", "src/test/resources/conf/simDashboard.json");
-        args.put("normalDashboard", "src/test/resources/conf/normalDashboard.json");
 
         TaskOutput result = classUnderTest.execute(args, null);
         assertTrue(result.getStatusMessage().contains("Monitor ELBMonitor completes."));
@@ -37,8 +35,6 @@ public class ELBMonitorTest {
     public void testMetricsCoyllectionWithProxy() throws Exception {
         Map<String, String> args = Maps.newHashMap();
         args.put("config-file", "src/test/resources/conf/itest-proxy-config.yml");
-        args.put("simDashboard", "src/test/resources/conf/simDashboard.json");
-        args.put("normalDashboard", "src/test/resources/conf/normalDashboard.json");
 
         TaskOutput result = classUnderTest.execute(args, null);
         assertTrue(result.getStatusMessage().contains("Monitor ELBMonitor completes."));

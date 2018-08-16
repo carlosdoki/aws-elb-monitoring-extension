@@ -11,13 +11,13 @@ package com.appdynamics.extensions.aws.elb;
 
 import com.appdynamics.extensions.aws.SingleNamespaceCloudwatchMonitor;
 import com.appdynamics.extensions.aws.collectors.NamespaceMetricStatisticsCollector;
-import com.appdynamics.extensions.aws.elb.config.ELBConfiguration;
 import com.appdynamics.extensions.aws.metric.processors.MetricsProcessor;
 import com.singularity.ee.agent.systemagent.api.exception.TaskExecutionException;
 import org.apache.log4j.ConsoleAppender;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PatternLayout;
+import com.appdynamics.extensions.aws.config.Configuration;
 
 import java.io.OutputStreamWriter;
 import java.util.HashMap;
@@ -30,7 +30,7 @@ import static com.appdynamics.extensions.aws.elb.Constants.*;
 /**
  * @author Bhuvnesh Kumar
  */
-public class ELBMonitor extends SingleNamespaceCloudwatchMonitor<ELBConfiguration> {
+public class ELBMonitor extends SingleNamespaceCloudwatchMonitor<Configuration> {
 
 //    private static final Logger logger = Logger.getLogger(ELBMonitor.class);
 
@@ -42,7 +42,7 @@ public class ELBMonitor extends SingleNamespaceCloudwatchMonitor<ELBConfiguratio
 
 
     public ELBMonitor() {
-        super(ELBConfiguration.class);
+        super(Configuration.class);
     }
 
     @Override
@@ -61,14 +61,14 @@ public class ELBMonitor extends SingleNamespaceCloudwatchMonitor<ELBConfiguratio
     }
 
     @Override
-    protected void initialize(ELBConfiguration config) {
+    protected void initialize(Configuration config) {
         super.initialize(config);
     }
 
 
     @Override
     protected NamespaceMetricStatisticsCollector getNamespaceMetricsCollector(
-            ELBConfiguration config) {
+            Configuration config) {
 
         MetricsProcessor metricsProcessor = createMetricsProcessor(config);
 
@@ -78,7 +78,9 @@ public class ELBMonitor extends SingleNamespaceCloudwatchMonitor<ELBConfiguratio
                 config.getConcurrencyConfig(),
                 config.getMetricsConfig(),
                 metricsProcessor,
-                config.getMetricPrefix())
+                config.getMetricPrefix(),
+                config.getCustomDashboard(),
+                config.getControllerInfo())
                 .withCredentialsDecryptionConfig(config.getCredentialsDecryptionConfig())
                 .withProxyConfig(config.getProxyConfig())
                 .build();
@@ -95,7 +97,7 @@ public class ELBMonitor extends SingleNamespaceCloudwatchMonitor<ELBConfiguratio
         return LOGGER;
     }
 
-    private MetricsProcessor createMetricsProcessor(ELBConfiguration config) {
+    private MetricsProcessor createMetricsProcessor(Configuration config) {
         return new ELBMetricsProcessor(
                 config.getMetricsConfig().getIncludeMetrics(),
                 config.getDimensions());
