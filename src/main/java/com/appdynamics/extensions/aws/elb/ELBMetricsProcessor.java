@@ -30,14 +30,10 @@ import static com.appdynamics.extensions.aws.elb.Constants.AWS_NAMESPACE;
 
 
 public class ELBMetricsProcessor implements MetricsProcessor {
-
     private static final org.slf4j.Logger LOGGER = ExtensionsLoggerFactory.getLogger(ELBMetricsProcessor.class);
-
-
     private List<IncludeMetric> includeMetrics;
     private List<Dimension> dimensions;
     private static final String NAMESPACE = AWS_NAMESPACE;
-
 
     public ELBMetricsProcessor(List<IncludeMetric> includeMetrics, List<Dimension> dimensions) {
         this.includeMetrics = includeMetrics;
@@ -46,14 +42,9 @@ public class ELBMetricsProcessor implements MetricsProcessor {
 
     public List<AWSMetric> getMetrics(AmazonCloudWatch awsCloudWatch, String accountName, LongAdder awsRequestsCounter) {
         List<DimensionFilter> dimensionFilters = getDimensionFilters();
-
         MultiDimensionPredicate predicate = new MultiDimensionPredicate(dimensions);
-
         return MetricsProcessorHelper.getFilteredMetrics(awsCloudWatch, awsRequestsCounter,
-                NAMESPACE,
-                includeMetrics,
-                dimensionFilters,
-                predicate);
+                NAMESPACE, includeMetrics, dimensionFilters, predicate);
     }
 
     private List<DimensionFilter> getDimensionFilters() {
@@ -72,11 +63,9 @@ public class ELBMetricsProcessor implements MetricsProcessor {
 
     public List<com.appdynamics.extensions.metrics.Metric> createMetricStatsMapForUpload(NamespaceMetricStatistics namespaceMetricStats) {
         Map<String, String> dimensionToMetricPathNameDictionary = new HashMap<String, String>();
-
         for (Dimension dimension : dimensions) {
             dimensionToMetricPathNameDictionary.put(dimension.getName(), dimension.getDisplayName());
         }
-
         return MetricsProcessorHelper.createMetricStatsMapForUpload(namespaceMetricStats,
                 dimensionToMetricPathNameDictionary, false);
     }
@@ -84,6 +73,4 @@ public class ELBMetricsProcessor implements MetricsProcessor {
     public String getNamespace() {
         return NAMESPACE;
     }
-
-
 }

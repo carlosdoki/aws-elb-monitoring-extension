@@ -11,38 +11,24 @@ package com.appdynamics.extensions.aws.elb;
 
 import com.appdynamics.extensions.aws.SingleNamespaceCloudwatchMonitor;
 import com.appdynamics.extensions.aws.collectors.NamespaceMetricStatisticsCollector;
-import com.appdynamics.extensions.aws.metric.processors.MetricsProcessor;
-import com.singularity.ee.agent.systemagent.api.exception.TaskExecutionException;
-import org.apache.log4j.ConsoleAppender;
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
-import org.apache.log4j.PatternLayout;
 import com.appdynamics.extensions.aws.config.Configuration;
-
-import java.io.OutputStreamWriter;
-import java.util.HashMap;
-import java.util.Map;
+import com.appdynamics.extensions.aws.metric.processors.MetricsProcessor;
+import org.apache.log4j.Logger;
 
 import static com.appdynamics.extensions.aws.elb.Constants.*;
-
-//import org.slf4j.Logger;
 
 /**
  * @author Bhuvnesh Kumar
  */
 public class ELBMonitor extends SingleNamespaceCloudwatchMonitor<Configuration> {
 
-//    private static final Logger logger = Logger.getLogger(ELBMonitor.class);
-
     private static final Logger LOGGER = Logger.getLogger(ELBMonitor.class);
-//    private static final org.slf4j.Logger LOGGER = ExtensionsLoggerFactory.getLogger(ELBMonitor.class);
-
-    private static final String DEFAULT_METRIC_PREFIX = String.format("%s%s%s%s",
-            CUSTOM_METRICS, "|", AMAZON_SERVICE, "|");
-
+    private static final String DEFAULT_METRIC_PREFIX = String.format("%s%s%s%s", CUSTOM_METRICS, "|", AMAZON_SERVICE, "|");
 
     public ELBMonitor() {
         super(Configuration.class);
+        LOGGER.info(String.format("Using AWS ELB Monitor Version [%s]",
+                this.getClass().getPackage().getImplementationTitle()));
     }
 
     @Override
@@ -65,14 +51,15 @@ public class ELBMonitor extends SingleNamespaceCloudwatchMonitor<Configuration> 
         super.initialize(config);
     }
 
+    @Override
+    protected Logger getLogger() {
+        return LOGGER;
+    }
 
     @Override
     protected NamespaceMetricStatisticsCollector getNamespaceMetricsCollector(
             Configuration config) {
-
         MetricsProcessor metricsProcessor = createMetricsProcessor(config);
-
-
         return new NamespaceMetricStatisticsCollector
                 .Builder(config.getAccounts(),
                 config.getConcurrencyConfig(),
@@ -86,44 +73,9 @@ public class ELBMonitor extends SingleNamespaceCloudwatchMonitor<Configuration> 
                 .build();
     }
 
-    @Override
-    protected void initializeMoreStuff(Map<String, String> args) {
-
-    }
-
-    @Override
-    protected Logger getLogger() {
-
-        return LOGGER;
-    }
-
     private MetricsProcessor createMetricsProcessor(Configuration config) {
         return new ELBMetricsProcessor(
                 config.getMetricsConfig().getIncludeMetrics(),
                 config.getDimensions());
     }
-
-
-    public static void main(String[] args) throws TaskExecutionException {
-
-        ConsoleAppender ca = new ConsoleAppender();
-        ca.setWriter(new OutputStreamWriter(System.out));
-        ca.setLayout(new PatternLayout("%-5p [%t]: %m%n"));
-        ca.setThreshold(Level.DEBUG);
-
-
-//        logger.getRootLogger().addAppender(ca);
-
-        ELBMonitor monitor = new ELBMonitor();
-
-
-        Map<String, String> taskArgs = new HashMap<String, String>();
-
-        taskArgs.put("config-file", "//Applications/AppDynamics/ma43/monitors/AWSELBMonitor_dash/config.yml");
-
-        monitor.execute(taskArgs, null);
-
-    }
-
-
 }
