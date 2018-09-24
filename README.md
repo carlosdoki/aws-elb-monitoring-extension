@@ -8,78 +8,77 @@ Captures ELB statistics from Amazon CloudWatch and displays them in the AppDynam
 **cloudwatch:ListMetrics**
 **cloudwatch:GetMetricStatistics**
 
-2. In order to use this extension, you do need a [Standalone JAVA Machine Agent](https://docs.appdynamics.com/display/PRO44/Standalone+Machine+Agents) or [SIM Agent](https://docs.appdynamics.com/display/PRO44/Server+Visibility).  For more details on downloading these products, please  visit [here](https://download.appdynamics.com/).
+2. In order to use this extension, you do need a 
+[Standalone JAVA Machine Agent](https://docs.appdynamics.com/display/PRO44/Standalone+Machine+Agents) 
+or [SIM Agent](https://docs.appdynamics.com/display/PRO44/Server+Visibility). 
+For more details on downloading these products, please  visit [here](https://download.appdynamics.com/).
 
-3. The extension needs to be able to connect to AWS Cloudwatch in order to collect and send metrics. To do this, you will have to either establish a remote connection in between the extension and the product, or have an agent on the same machine running the product in order for the extension to collect and send the metrics.
+3. The extension needs to be able to connect to AWS CloudWatch in order to collect and send metrics. 
+To do this, you will have to either establish a remote connection in between the extension and the product, 
+or have an agent on the same machine running the product in order for the extension to collect and send the metrics.
 
 ## Installation
 
 1. Run `mvn clean install` from aws-elb-monitoring-extension directory
 2. Copy and unzip `AWSELBMonitor-<version>.zip` from `target` directory into `<machine_agent_dir>/monitors/`
-3. Edit config.yml file in AWSELBMonitor and provide the required configuration (see Configuration section)
+3. Edit `config.yml` file in `AWSELBMonitor` and provide the required configuration (see Configuration section)
 4. Restart the Machine Agent.
 
-Please place the extension in the `monitors` directory of your Machine Agent installation directory. Do not place the extension in the `extensions` directory of your Machine Agent installation directory.
+Please place the extension in the "**monitors**" directory of your Machine Agent installation directory. 
+Do not place the extension in the "**extensions**" directory of your Machine Agent installation directory.
 
 ## Configuration
-In order to use the extension, you need to update the config.yml file that is present in the extension folder. The following is an explanation of the configurable fields that are present in the config.yml file.
-AWS ELB has three different types of Load Balancers namely, Classic, Application and Network. You can only monitor one type of Load Balancer from one instance of the extension. 
-If you would like to monitor more than one type of Load Balancers, please download another copy of the extension and set it up based on the following instructions.
+In order to use the extension, you need to update the config.yml file that is present in the extension folder. 
+The following is a step-by-step explanation of the configurable fields that are present in the `config.yml` file.
 
-1. If SIM is enabled, then use the following metricPrefix `metricPrefix: "Custom Metrics|AWS ELB"` else configure the "COMPONENT_ID" under which the metrics need to be reported. 
-This can be done by changing the value of <COMPONENT_ID> in `metricPrefix: "Server|Component:<COMPONENT_ID>|Custom Metrics|AWS ELB|"`.
+
+1. If SIM is enabled, then use the following metricPrefix - 
+
+   `metricPrefix: "Custom Metrics|AWS ELB|"`
+    
+   Else, configure the "**COMPONENT_ID**" under which the metrics need to be reported. This can be done by changing the value of `<COMPONENT_ID>` in
+   `metricPrefix: "Server|Component:<COMPONENT_ID>|Custom Metrics|AWS ELB|"`.
+
    For example,
-     ```
-     metricPrefix: "Server|Component:100|Custom Metrics|AWS ELB|"
-     ```
-2. Provide accessKey(required) and secretKey(required) of AWS account(s), also provide displayAccountName(any name that represents your account) and regions(required). 
-If you are running this extension inside an EC2 instance which has IAM profile configured then awsAccessKey and awsSecretKey can be kept empty, extension will use IAM profile to authenticate.
-   ```
+         
+    ```
+    metricPrefix: "Server|Component:100|Custom Metrics|AWS ELB|"
+    ```
+2. Provide **accessKey**(required) and **secretKey**(required) of your account(s), also provide **displayAccountName**(any name that represents your account) and
+      **regions**(required). If you are running this extension inside an EC2 instance which has **IAM profile** configured then you don't have to configure **accessKey** and  **secretKey** values, extension will use **IAM profile** to authenticate. You can provide multiple accounts and regions as below - 
+   ~~~
    accounts:
      - awsAccessKey: "XXXXXXXX1"
        awsSecretKey: "XXXXXXXXXX1"
        displayAccountName: "TestAccount_1"
        regions: ["us-east-1","us-west-1","us-west-2"]
-   
+
      - awsAccessKey: "XXXXXXXX2"
        awsSecretKey: "XXXXXXXXXX2"
        displayAccountName: "TestAccount_2"
        regions: ["eu-central-1","eu-west-1"]
-   ```    
-3. If you want to encrypt the "awsAccessKey" and "awsSecretKey" then follow the "Credentials Encryption" section and provide the encrypted values in "awsAccessKey" and "awsSecretKey". 
-Configure "enableDecryption" of "credentialsDecryptionConfig" to true and provide the encryption key in "encryptionKey"
+   ~~~
+3. If you want to encrypt the **awsAccessKey** and **awsSecretKey** then follow the "Credentials Encryption" section and provide the encrypted values in **awsAccessKey** and **awsSecretKey**. Configure `enableDecryption` of `credentialsDecryptionConfig` to `true` and provide the encryption key in `encryptionKey`.
    For example,
    ```
-   #Encryption key for Encrypted accountAccessKey.
+   #Encryption key for Encrypted password.
    credentialsDecryptionConfig:
        enableDecryption: "true"
        encryptionKey: "XXXXXXXX"
-       encryptionKey: "XXXXXXXX"
    ```
-4. Provide the  namespace, dimension and the values you would like to monitor in that dimension. 
-    ```
-    # ELB has three different types of Load Balancers and all of them have their own Namespaces
-    # Each namespace has different Dimensions and each dimension can have different values
-    
-    # Classic (namespace : "AWS/ELB")
-    # Dimensions : AvailabilityZone, LoadBalancerName
-    
-    # Application (namespace : "AWS/ApplicationELB")
-    # Dimensions : AvailabilityZone, LoadBalancer, TargetGroup
-    
-    # Network (namespace : "AWS/NetworkELB")
-    # Dimensions : AvailabilityZone, LoadBalancer, TargetGroup
-    
-    namespace: "AWS/ELB"
-    dimensionName: "LoadBalancerName"
-    # Filters metrics based on the Dimension Value names provided. Accepts regex patterns
-    includeDimensionValueName: ["us-east-1a", "blog-*", "demos"]
+4. To report metrics only from specific dimension values, configure the `dimesion` section. 
+Dimensions for AWS ELB are `AvailabilityZone` and `LoadBalancerName`. 
+For example to report metrics only from only `AvailabilityZone` dimension with value `Sample`, configure `dimensions` as below -
 
     ```
+    dimensions:
+      - name: "AvailabilityZone"
+        displayName: "AvailabilityZone"
+        values: ["Sample"]
+    ```
+     If `.*` is used, all dimension values are monitored and if empty, none are monitored.
 
-5. All the metrics listed in the config.yml have been divided in three sections. The first one is for Classic Load Balancers, the second one is for Application Load Balancers and the third one is for Network Load Balancers.
-When configuring the config.yml, please uncomment the metrics for your namespace and comment the rest out. Metrics for each of the namespace have already been configured and added to the config.yml.
-6. Configure the metrics section.
+5. Configure the metrics section.
 
      For configuring the metrics, the following properties can be used:
 
@@ -107,67 +106,40 @@ When configuring the config.yml, please uncomment the metrics for your namespace
     ```
     
     **All these metric properties are optional, and the default value shown in the table is applied to the metric(if a property has not been specified) by default.**
+
+6. The extension does give you the ability to upload a Custom Dashboard that has already been built and configured 
+for you. If you would like to use this feature,provide the following information in the config.yml. If you *do NOT* 
+want to upload the dashboard, simply changes the flag of `enabled` to false in the `customDashboard` section.
+    ```
+    customDashboard:
+    enabled: true
+    dashboardName: "AWS ELB Monitor Dashboard"
+
+    # Update the path to the dashboard file.
+    pathToSIMDashboard: "monitors/AWSELBMonitor/normalDashboard.json"
+    pathToNormalDashboard: "monitors/AWSELBMonitor/normalDashboard.json"
+
+    ```
+7. In order to upload the Dashboard to the Controller, you need to provide a valid `username` and `password` in 
+order for the extension to authenticate the user and upload it to the Dashboards section. To do so, please fill out the following section in the `config.yml`. 
+    ```
+    controllerInfo:
+        host: ""
+        port: ""
+        account: ""
+        username: ""
+        password: ""
+        # OPTIONAL Items
+        encryptedPassword: ""
+        encryptionKey: ""
+        controllerSslEnabled: ""
+    ```
+
 ### config.yml
 
 Please avoid using tab (\t) when editing yaml files. Please copy all the contents of the config.yml file and go to [Yaml Validator](http://www.yamllint.com/) . On reaching the website, paste the contents and press the “Go” button on the bottom left.                                                       
 If you get a valid output, that means your formatting is correct and you may move on to the next step.
 
-**Below is an example config for monitoring multiple accounts and regions:**
-~~~
-metricPrefix: "Server|Component:<COMPONENT_ID>|Custom Metrics|Amazon ELB|"
-
-accounts:
-  - awsAccessKey: "XXXXXXXX1"
-    awsSecretKey: "XXXXXXXXXX1"
-    displayAccountName: "TestAccount_1"
-    regions: ["us-east-1","us-west-1","us-west-2"]
-
-  - awsAccessKey: "XXXXXXXX2"
-    awsSecretKey: "XXXXXXXXXX2"
-    displayAccountName: "TestAccount_2"
-    regions: ["eu-central-1","eu-west-1"]
-
-credentialsDecryptionConfig:
-    enableDecryption: "false"
-    encryptionKey:
-
-proxyConfig:
-    host:
-    port:
-    username:
-    accountAccessKey:   
-    
-namespace: "AWS/ELB"
-dimensionName: "LoadBalancerName"
-includeDimensionValueName: ["us-east-1a", "blog-*", "demos"]
-
-cloudWatchMonitoring: "Basic"
-
-concurrencyConfig:
-  noOfAccountThreads: 3
-  noOfRegionThreadsPerAccount: 3
-  noOfMetricThreadsPerRegion: 3
-  #Thread timeout in seconds
-  threadTimeOut: 30 
-
-metricsConfig:
-    includeMetrics:
-       - name: "ConditionalCheckFailedRequests"
-         alias: "ConditionalCheckFailedRequests"
-         statType: "ave"
-         delta: false
-         multiplier: 1
-         aggregationType: "AVERAGE"
-         timeRollUpType: "AVERAGE"
-         clusterRollUpType: "INDIVIDUAL"
-    metricsTimeRange:
-      startTimeInMinsBeforeNow: 5
-      endTimeInMinsBeforeNow: 0
-    
-    getMetricStatisticsRateLimit: 400
-
-    maxErrorRetrySize: 0
-~~~
 
 ## Metrics
 Typical metric path: **Application Infrastructure Performance|\<Tier\>|Custom Metrics|Amazon ELB|\<Account Name\>|\<Region\>|Table Name|\<table name\>** followed by the metrics defined in the link below:
@@ -206,7 +178,7 @@ Always feel free to fork and contribute any changes directly here on [GitHub](ht
    |--------------------------|------------|
    |Extension Version         |2.0.0       |
    |Controller Compatibility  |4.4 or Later|
-   |Last Update               |29th June, 2018 |
+   |Last Update               |29th September, 2018 |
 
 List of changes to this extension can be found [here](https://github.com/Appdynamics/aws-elb-monitoring-extension/blob/master/CHANGELOG.md)
 
