@@ -1,12 +1,12 @@
-# AppDynamics Monitoring Extension for use with AWS Elastic Load Balancers
+# AppDynamics Monitoring Extension for use with AWS Classic Elastic Load Balancers
 
 ## Use Case
-Captures ELB statistics from Amazon CloudWatch and displays them in the AppDynamics Metric Browser.
+Captures Classic ELB statistics from Amazon CloudWatch and displays them in the AppDynamics Metric Browser.
 
 ## Prerequisites
 1. Please give the following permissions to the account being used to with the extension.
-**cloudwatch:ListMetrics**
-**cloudwatch:GetMetricStatistics**
+ * **cloudwatch:ListMetrics** 
+ * **cloudwatch:GetMetricStatistics**
 
 2. In order to use this extension, you do need a 
 [Standalone JAVA Machine Agent](https://docs.appdynamics.com/display/PRO44/Standalone+Machine+Agents) 
@@ -62,11 +62,19 @@ The following is a step-by-step explanation of the configurable fields that are 
    For example,
    ```
    #Encryption key for Encrypted password.
-   credentialsDecryptionConfig:
-       enableDecryption: "true"
-       encryptionKey: "XXXXXXXX"
+    credentialsDecryptionConfig:
+      enableDecryption: "false"
+      encryptionKey:
    ```
-4. To report metrics only from specific dimension values, configure the `dimesion` section. 
+4. Provide all valid proxy information if you use it. If not, leave this section as is. 
+    ```
+    proxyConfig:
+      host:
+      port:
+      username:
+      password:
+    ```
+5. To report metrics from specific dimension values, configure the `dimesion` section. 
 Dimensions for AWS ELB are `AvailabilityZone` and `LoadBalancerName`. 
 For example to report metrics only from only `AvailabilityZone` dimension with value `Sample`, configure `dimensions` as below -
 
@@ -88,11 +96,11 @@ For example to report metrics only from only `AvailabilityZone` dimension with v
         values: ["Sample"]
     ```
 
-   If these fields are left empty, none of your instances will be monitored are monitored.
-   in order to monitor everything in the dimension, you can simply use ".*" to pull everything from your AWS Environment.
+   If these fields are left empty, none of your instances will be monitored.
+   In order to monitor everything under a dimension, you can simply use ".*" to pull everything from your AWS Environment.
      
 
-5. Configure the metrics section.
+6. Configure the metrics section.
 
      For configuring the metrics, the following properties can be used:
 
@@ -121,7 +129,35 @@ For example to report metrics only from only `AvailabilityZone` dimension with v
     
     **All these metric properties are optional, and the default value shown in the table is applied to the metric(if a property has not been specified) by default.**
 
-6. The extension does give you the ability to upload a Custom Dashboard that has already been built and configured 
+7. For several services AWS CloudWatch does not instantly update the metrics but it goes back in time to update that information. 
+This delay sometimes can take upto 5 minutes. The extension runs every minute(Detailed) or every 5 minutes (Basic) and gets the latest value at that time.
+There may be a case where the extension may miss the value before CloudWatch updates it. In order to make sure we don't do that, 
+the extension has the ability to look for metrics during a certain interval, where we already have set it to default at 5 minutes but you can 
+change it as per your requirements. 
+    ```
+    metricsTimeRange:
+      startTimeInMinsBeforeNow: 10
+      endTimeInMinsBeforeNow: 5
+    ```
+8. This field is set as per the defaults suggested by AWS. You can change this if your limit is different.
+    ```    
+    getMetricStatisticsRateLimit: 400
+    ```
+9. The maximum number of retry attempts for failed requests that can be retried. 
+    ```
+    maxErrorRetrySize: 3
+    ```
+10. CloudWatch can be used in two formats, Basic and Detailed. You can specify how you would like to run the extension by specifying the chosen format here.
+By default, the extension is set to Basic, which makes the extension run every 5 minutes.
+Refer https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-cloudwatch-new.html for more information.
+
+    ```
+    #Allowed values are Basic and Detailed. 
+    # Basic will fire CloudWatch API calls every 5 minutes
+    # Detailed will fire CloudWatch API calls every 1 minutes
+    cloudWatchMonitoring: "Basic"
+    ```
+11. The extension does give you the ability to upload a Custom Dashboard that has already been built and configured 
 for you. If you would like to use this feature,provide the following information in the config.yml. If you *do NOT* 
 want to upload the dashboard, simply changes the flag of `enabled` to false in the `customDashboard` section.
     ```
@@ -134,7 +170,7 @@ want to upload the dashboard, simply changes the flag of `enabled` to false in t
     pathToNormalDashboard: "monitors/AWSELBMonitor/normalDashboard.json"
 
     ```
-7. In order to upload the Dashboard to the Controller, you need to provide a valid `username` and `password` in 
+12. In order to upload the Dashboard to the Controller, you need to provide a valid `username` and `password` in 
 order for the extension to authenticate the user and upload it to the Dashboards section. To do so, please fill out the following section in the `config.yml`. 
     ```
     controllerInfo:

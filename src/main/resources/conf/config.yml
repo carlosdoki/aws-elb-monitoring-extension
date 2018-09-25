@@ -20,14 +20,16 @@ accounts:
     #
     regions: ["us-west-2"]
 
+#Provide Encryption key for Encrypted password.
 credentialsDecryptionConfig:
-    enableDecryption: "false"
-    encryptionKey:
+  enableDecryption: "false"
+  encryptionKey:
 
 proxyConfig:
-    host:
-    port:
-    username:
+  host:
+  port:
+  username:
+  password:
 
 # Classic (namespace : "AWS/ELB")
 # Dimensions : AvailabilityZone, LoadBalancerName
@@ -54,10 +56,10 @@ metricsConfig:
     includeMetrics:
        - name: "BackendConnectionErrors"
          alias: "Backend Connection Errors"
-         statType: "ave"
-         aggregationType: "OBSERVATION"
-         timeRollUpType: "CURRENT"
-         clusterRollUpType: "COLLECTIVE"
+         statType: "sum"
+         aggregationType: "AVERAGE"
+         timeRollUpType: "AVERAGE"
+         clusterRollUpType: "INDIVIDUAL"
          delta: false
          multiplier: 1
          metricsTimeRange:
@@ -66,97 +68,97 @@ metricsConfig:
        - name: "HealthyHostCount"
          alias: "Healthy Host Count"
          statType: "ave"
-         aggregationType: "OBSERVATION"
-         timeRollUpType: "CURRENT"
-         clusterRollUpType: "COLLECTIVE"
+         aggregationType: "AVERAGE"
+         timeRollUpType: "AVERAGE"
+         clusterRollUpType: "INDIVIDUAL"
          delta: false
          multiplier: 1
        - name: "HTTPCode_Backend_2XX"
          alias: "HTTPCode_Backend_2XX"
-         statType: "ave"
-         aggregationType: "OBSERVATION"
-         timeRollUpType: "CURRENT"
-         clusterRollUpType: "COLLECTIVE"
+         statType: "sum"
+         aggregationType: "AVERAGE"
+         timeRollUpType: "AVERAGE"
+         clusterRollUpType: "INDIVIDUAL"
          delta: false
          multiplier: 1
        - name: "HTTPCode_Backend_3XX"
          alias: "HTTPCode_Backend_3XX"
-         statType: "ave"
-         aggregationType: "OBSERVATION"
-         timeRollUpType: "CURRENT"
-         clusterRollUpType: "COLLECTIVE"
+         statType: "sum"
+         aggregationType: "AVERAGE"
+         timeRollUpType: "AVERAGE"
+         clusterRollUpType: "INDIVIDUAL"
          delta: false
          multiplier: 1
        - name: "HTTPCode_Backend_4XX"
          alias: "HTTPCode_Backend_4XX"
-         statType: "ave"
-         aggregationType: "OBSERVATION"
-         timeRollUpType: "CURRENT"
-         clusterRollUpType: "COLLECTIVE"
+         statType: "sum"
+         aggregationType: "AVERAGE"
+         timeRollUpType: "AVERAGE"
+         clusterRollUpType: "INDIVIDUAL"
          delta: false
          multiplier: 1
        - name: "HTTPCode_Backend_5XX"
          alias: "HTTPCode_Backend_5XX"
-         statType: "ave"
-         aggregationType: "OBSERVATION"
-         timeRollUpType: "CURRENT"
-         clusterRollUpType: "COLLECTIVE"
+         statType: "sum"
+         aggregationType: "AVERAGE"
+         timeRollUpType: "AVERAGE"
+         clusterRollUpType: "INDIVIDUAL"
          delta: false
          multiplier: 1
        - name: "HTTPCode_ELB_4XX"
          alias: "HTTPCode_ELB_4XX"
-         statType: "ave"
-         aggregationType: "OBSERVATION"
-         timeRollUpType: "CURRENT"
-         clusterRollUpType: "COLLECTIVE"
+         statType: "sum"
+         aggregationType: "AVERAGE"
+         timeRollUpType: "AVERAGE"
+         clusterRollUpType: "INDIVIDUAL"
          delta: false
          multiplier: 1
        - name: "HTTPCode_ELB_5XX"
          alias: "HTTPCode_ELB_5XX"
-         statType: "ave"
-         aggregationType: "OBSERVATION"
-         timeRollUpType: "CURRENT"
-         clusterRollUpType: "COLLECTIVE"
+         statType: "sum"
+         aggregationType: "AVERAGE"
+         timeRollUpType: "AVERAGE"
+         clusterRollUpType: "INDIVIDUAL"
          delta: false
          multiplier: 1
        - name: "Latency"
          alias: "Latency"
          statType: "ave"
-         aggregationType: "OBSERVATION"
-         timeRollUpType: "CURRENT"
-         clusterRollUpType: "COLLECTIVE"
+         aggregationType: "AVERAGE"
+         timeRollUpType: "AVERAGE"
+         clusterRollUpType: "INDIVIDUAL"
          delta: false
          multiplier: 1
        - name: "RequestCount"
          alias: "Request Count"
-         statType: "ave"
-         aggregationType: "OBSERVATION"
-         timeRollUpType: "CURRENT"
-         clusterRollUpType: "COLLECTIVE"
+         statType: "sum"
+         aggregationType: "AVERAGE"
+         timeRollUpType: "AVERAGE"
+         clusterRollUpType: "INDIVIDUAL"
          delta: false
          multiplier: 1
        - name: "SpilloverCount"
          alias: "Spillover Count"
-         statType: "ave"
-         aggregationType: "OBSERVATION"
-         timeRollUpType: "CURRENT"
-         clusterRollUpType: "COLLECTIVE"
+         statType: "sum"
+         aggregationType: "AVERAGE"
+         timeRollUpType: "AVERAGE"
+         clusterRollUpType: "INDIVIDUAL"
          delta: false
          multiplier: 1
        - name: "SurgeQueueLength"
          alias: "Surge Queue Length"
          statType: "ave"
-         aggregationType: "OBSERVATION"
-         timeRollUpType: "CURRENT"
-         clusterRollUpType: "COLLECTIVE"
+         aggregationType: "AVERAGE"
+         timeRollUpType: "AVERAGE"
+         clusterRollUpType: "INDIVIDUAL"
          delta: false
          multiplier: 1
        - name: "UnHealthyHostCount"
          alias: "UnHealthy Host Count"
          statType: "ave"
-         aggregationType: "OBSERVATION"
-         timeRollUpType: "CURRENT"
-         clusterRollUpType: "COLLECTIVE"
+         aggregationType: "AVERAGE"
+         timeRollUpType: "AVERAGE"
+         clusterRollUpType: "INDIVIDUAL"
          delta: false
          multiplier: 1
 
