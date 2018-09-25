@@ -71,12 +71,26 @@ Dimensions for AWS ELB are `AvailabilityZone` and `LoadBalancerName`.
 For example to report metrics only from only `AvailabilityZone` dimension with value `Sample`, configure `dimensions` as below -
 
     ```
-    dimensions:
+     dimensions:
       - name: "AvailabilityZone"
         displayName: "AvailabilityZone"
         values: ["Sample"]
     ```
-     If `.*` is used, all dimension values are monitored and if empty, none are monitored.
+    If you would like to monitor more than one dimension, you can do the following : 
+    
+    ```
+    dimensions:
+      - name: "LoadBalancerName"
+        displayName: "LoadBalancer Name"
+        values: ["Dev", "tools"]
+      - name: "AvailabilityZone"
+        displayName: "AvailabilityZone"
+        values: ["Sample"]
+    ```
+
+   If these fields are left empty, none of your instances will be monitored are monitored.
+   in order to monitor everything in the dimension, you can simply use ".*" to pull everything from your AWS Environment.
+     
 
 5. Configure the metrics section.
 
