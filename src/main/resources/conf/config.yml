@@ -62,9 +62,6 @@ metricsConfig:
          clusterRollUpType: "INDIVIDUAL"
          delta: false
          multiplier: 1
-         metricsTimeRange:
-            startTimeInMinsBeforeNow: 2880
-            endTimeInMinsVeforeNow: 0
        - name: "HealthyHostCount"
          alias: "Healthy Host Count"
          statType: "ave"

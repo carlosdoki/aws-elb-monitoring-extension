@@ -41,20 +41,9 @@ public class ELBMetricsProcessor implements MetricsProcessor {
     }
 
     public List<AWSMetric> getMetrics(AmazonCloudWatch awsCloudWatch, String accountName, LongAdder awsRequestsCounter) {
-        List<DimensionFilter> dimensionFilters = getDimensionFilters();
         MultiDimensionPredicate predicate = new MultiDimensionPredicate(dimensions);
         return MetricsProcessorHelper.getFilteredMetrics(awsCloudWatch, awsRequestsCounter,
-                NAMESPACE, includeMetrics, dimensionFilters, predicate);
-    }
-
-    private List<DimensionFilter> getDimensionFilters() {
-        List<DimensionFilter> dimensionFilters = new ArrayList<DimensionFilter>();
-        for (Dimension dimension : dimensions) {
-            DimensionFilter dimensionFilter = new DimensionFilter();
-            dimensionFilter.withName(dimension.getName());
-            dimensionFilters.add(dimensionFilter);
-        }
-        return dimensionFilters;
+                NAMESPACE, includeMetrics, null, predicate);
     }
 
     public StatisticType getStatisticType(AWSMetric metric) {

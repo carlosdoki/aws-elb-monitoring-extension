@@ -28,6 +28,9 @@ Please place the extension in the "**monitors**" directory of your Machine Agent
 Do not place the extension in the "**extensions**" directory of your Machine Agent installation directory.
 
 ## Configuration
+
+### config.yml
+
 In order to use the extension, you need to update the config.yml file that is present in the extension folder. 
 The following is a step-by-step explanation of the configurable fields that are present in the `config.yml` file.
 
@@ -184,8 +187,6 @@ order for the extension to authenticate the user and upload it to the Dashboards
         encryptionKey: ""
         controllerSslEnabled: ""
     ```
-
-### config.yml
 
 Please avoid using tab (\t) when editing yaml files. Please copy all the contents of the config.yml file and go to [Yaml Validator](http://www.yamllint.com/) . On reaching the website, paste the contents and press the “Go” button on the bottom left.                                                       
 If you get a valid output, that means your formatting is correct and you may move on to the next step.
