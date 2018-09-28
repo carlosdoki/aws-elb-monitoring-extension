@@ -119,13 +119,13 @@ metricsConfig:
          delta: false
          multiplier: 1
        - name: "Latency"
-         alias: "Latency"
+         alias: "Latency (x1000)"
          statType: "ave"
          aggregationType: "AVERAGE"
          timeRollUpType: "AVERAGE"
          clusterRollUpType: "INDIVIDUAL"
          delta: false
-         multiplier: 1
+         multiplier: 1000
        - name: "RequestCount"
          alias: "Request Count"
          statType: "sum"
@@ -199,14 +199,13 @@ customDashboard:
 
 controllerInfo:
     host: ""
-    port: ""
+    port:
     account: ""
     username: ""
     password: ""
     # OPTIONAL Items
     encryptedPassword: ""
     encryptionKey: ""
-    controllerSslEnabled: ""
 
 
 regionEndPoints:
