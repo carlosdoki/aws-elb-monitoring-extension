@@ -161,13 +161,12 @@ metricsConfig:
 
 
     metricsTimeRange:
-      startTimeInMinsBeforeNow: 10
-      endTimeInMinsBeforeNow: 5
+      startTimeInMinsBeforeNow: 5
+      endTimeInMinsBeforeNow: 0
 
     # Rate limit ( per second ) for GetMetricStatistics, default value is 400. https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/cloudwatch_limits.html
     getMetricStatisticsRateLimit: 400
 
-    #
     # The max number of retry attempts for failed retryable requests
     # (ex: 5xx error responses from a service) or throttling errors
     #
@@ -191,7 +190,7 @@ customDashboard:
     dashboardName: "AWS ELB Monitor Dashboard"
 
     # Update the path to the dashboard file.
-    pathToSIMDashboard: "monitors/AWSELBMonitor/normalDashboard.json"
+    pathToSIMDashboard: "monitors/AWSELBMonitor/simDashboard.json"
     pathToNormalDashboard: "monitors/AWSELBMonitor/normalDashboard.json"
 
 # To upload the dashboard, please create a user from Controller UI or
@@ -206,7 +205,6 @@ controllerInfo:
     # OPTIONAL Items
     encryptedPassword: ""
     encryptionKey: ""
-
 
 regionEndPoints:
   us-east-1 : monitoring.us-east-1.amazonaws.com
