@@ -15,6 +15,9 @@ import com.appdynamics.extensions.aws.config.Configuration;
 import com.appdynamics.extensions.aws.metric.processors.MetricsProcessor;
 import org.apache.log4j.Logger;
 
+import java.util.List;
+import java.util.Map;
+
 import static com.appdynamics.extensions.aws.elb.Constants.*;
 
 /**
@@ -42,8 +45,8 @@ public class ELBMonitor extends SingleNamespaceCloudwatchMonitor<Configuration> 
     }
 
     @Override
-    protected int getTaskCount() {
-        return 3;
+    protected List<Map<String, ?>> getServers() {
+        return (List<Map<String, ?>>) getContextConfiguration().getConfigYml().get("servers");
     }
 
     @Override
