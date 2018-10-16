@@ -46,7 +46,7 @@ public class ELBMonitor extends SingleNamespaceCloudwatchMonitor<Configuration> 
 
     @Override
     protected List<Map<String, ?>> getServers() {
-        return (List<Map<String, ?>>) getContextConfiguration().getConfigYml().get("servers");
+        return (List<Map<String, ?>>) getContextConfiguration().getConfigYml().get("accounts");
     }
 
     @Override
