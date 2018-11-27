@@ -197,3 +197,25 @@ metricsConfig:
     # (ex: 5xx error responses from a service) or throttling errors
     #
     maxErrorRetrySize: 0
+# Generate a custom dashboard based on the provided template
+customDashboard:
+    enabled: true
+    dashboardName: "AWS ELB Monitor Dashboard"
+
+    # Update the path to the dashboard file.
+    pathToSIMDashboard: "monitors/AWSELBMonitor/simDashboard.json"
+    pathToNormalDashboard: "monitors/AWSELBMonitor/normalDashboard.json"
+    periodicDashboardCheckInSeconds: 300
+# To upload the dashboard, please create a user from Controller UI or
+# add the credentials of an existing user.
+
+controllerInfo:
+    host: ""
+    port:
+    account: ""
+    username: ""
+    password: ""
+    # OPTIONAL Items
+    encryptedPassword: ""
+    encryptionKey: ""
+

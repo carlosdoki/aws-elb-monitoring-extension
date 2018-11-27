@@ -16,7 +16,6 @@ import java.util.Map;
 
 import static org.junit.Assert.assertTrue;
 
-
 public class ELBMonitorTest {
 
     private ELBMonitor classUnderTest = new ELBMonitor();
