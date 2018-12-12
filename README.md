@@ -177,8 +177,8 @@ want to upload the dashboard, simply changes the flag of `enabled` to false in t
 order for the extension to authenticate the user and upload it to the Dashboards section. To do so, please fill out the following section in the `config.yml`. 
     ```
     controllerInfo:
-        host: ""
-        port: ""
+        controllerHost: ""
+        controllerPort: ""
         account: ""
         username: ""
         password: ""

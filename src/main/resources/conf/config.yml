@@ -188,7 +188,7 @@ concurrencyConfig:
 customDashboard:
     enabled: true
     dashboardName: "AWS ELB Monitor Dashboard"
-
+    sslCertCheckEnabled: true
     # Update the path to the dashboard file.
     pathToSIMDashboard: "monitors/AWSELBMonitor/simDashboard.json"
     pathToNormalDashboard: "monitors/AWSELBMonitor/normalDashboard.json"
@@ -197,8 +197,8 @@ customDashboard:
 # add the credentials of an existing user.
 
 controllerInfo:
-    host: ""
-    port:
+    controllerHost: ""
+    controllerPort:
     account: ""
     username: ""
     password: ""

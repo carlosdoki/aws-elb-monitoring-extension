@@ -18,8 +18,8 @@ credentialsDecryptionConfig:
 proxyConfig:
     host: 54.72.204.154
     port: 8081
-    username:
-
+    username: ""
+    password: ""
 dimensions:
    - name: "LoadBalancerName"
      displayName: "LoadBalancer Name"
@@ -196,7 +196,7 @@ metricsConfig:
 customDashboard:
     enabled: true
     dashboardName: "AWS ELB Monitor Dashboard"
-
+    sslCertCheckEnabled: false
     # Update the path to the dashboard file.
     pathToSIMDashboard: "monitors/AWSELBMonitor/simDashboard.json"
     pathToNormalDashboard: "monitors/AWSELBMonitor/normalDashboard.json"
@@ -205,8 +205,8 @@ customDashboard:
 # add the credentials of an existing user.
 
 controllerInfo:
-    host: ""
-    port:
+    controllerHost: ""
+    controllerPort:
     account: ""
     username: ""
     password: ""

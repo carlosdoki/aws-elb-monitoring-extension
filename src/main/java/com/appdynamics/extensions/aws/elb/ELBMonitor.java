@@ -7,7 +7,6 @@
  */
 
 package com.appdynamics.extensions.aws.elb;
-//#TODO add tag support in this extension
 
 import com.appdynamics.extensions.aws.SingleNamespaceCloudwatchMonitor;
 import com.appdynamics.extensions.aws.collectors.NamespaceMetricStatisticsCollector;
