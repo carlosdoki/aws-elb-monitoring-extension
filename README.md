@@ -160,33 +160,6 @@ Refer https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-cloudwatch-new.h
     # Detailed will fire CloudWatch API calls every 1 minutes
     cloudWatchMonitoring: "Basic"
     ```
-11. The extension does give you the ability to upload a Custom Dashboard that has already been built and configured 
-for you. If you would like to use this feature,provide the following information in the config.yml. If you *do NOT* 
-want to upload the dashboard, simply changes the flag of `enabled` to false in the `customDashboard` section.
-    ```
-    customDashboard:
-    enabled: true
-    dashboardName: "AWS ELB Monitor Dashboard"
-
-    # Update the path to the dashboard file.
-    pathToSIMDashboard: "monitors/AWSELBMonitor/normalDashboard.json"
-    pathToNormalDashboard: "monitors/AWSELBMonitor/normalDashboard.json"
-
-    ```
-12. In order to upload the Dashboard to the Controller, you need to provide a valid `username` and `password` in 
-order for the extension to authenticate the user and upload it to the Dashboards section. To do so, please fill out the following section in the `config.yml`. 
-    ```
-    controllerInfo:
-        controllerHost: ""
-        controllerPort: ""
-        account: ""
-        username: ""
-        password: ""
-        # OPTIONAL Items
-        encryptedPassword: ""
-        encryptionKey: ""
-        controllerSslEnabled: ""
-    ```
 
 Please avoid using tab (\t) when editing yaml files. Please copy all the contents of the config.yml file and go to [Yaml Validator](http://www.yamllint.com/) . On reaching the website, paste the contents and press the “Go” button on the bottom left.                                                       
 If you get a valid output, that means your formatting is correct and you may move on to the next step.
@@ -227,7 +200,7 @@ Always feel free to fork and contribute any changes directly here on [GitHub](ht
 ## Version
    |          Name            |  Version   |
    |--------------------------|------------|
-   |Extension Version         |2.0.0       |
+   |Extension Version         |1.2.        |
    |Controller Compatibility  |4.4 or Later|
    |Last Update               |29th September, 2018 |
 

@@ -44,8 +44,8 @@ public class ELBMonitor extends SingleNamespaceCloudwatchMonitor<Configuration> 
     }
 
     @Override
-    protected List<Map<String, ?>> getServers() {
-        return (List<Map<String, ?>>) getContextConfiguration().getConfigYml().get("accounts");
+    protected int getTaskCount() {
+        return 3;
     }
 
     @Override
@@ -67,9 +67,7 @@ public class ELBMonitor extends SingleNamespaceCloudwatchMonitor<Configuration> 
                 config.getConcurrencyConfig(),
                 config.getMetricsConfig(),
                 metricsProcessor,
-                config.getMetricPrefix(),
-                config.getCustomDashboard(),
-                config.getControllerInfo())
+                config.getMetricPrefix())
                 .withCredentialsDecryptionConfig(config.getCredentialsDecryptionConfig())
                 .withProxyConfig(config.getProxyConfig())
                 .build();
