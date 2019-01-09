@@ -192,7 +192,7 @@ Please provide the following in order for us to assist you better.
 4. Start the machine agent and please let it run for 10 mins. Then zip and upload all the logs in the directory <MachineAgent>/logs/*.
 5. Attach the zipped <MachineAgent>/conf/* directory here.
 6. Attach the zipped <MachineAgent>/monitors/ExtensionFolderYouAreHavingIssuesWith directory here.
-   For any support related questions, you can also contact help@appdynamics.com.
+   For any support related questions, you can also contact [help@appdynamics.com](mailto:help@appdynamics.com).
 
 ## Contributing
 Always feel free to fork and contribute any changes directly here on [GitHub](https://github.com/Appdynamics/aws-elb-monitoring-extension).
@@ -200,9 +200,9 @@ Always feel free to fork and contribute any changes directly here on [GitHub](ht
 ## Version
    |          Name            |  Version   |
    |--------------------------|------------|
-   |Extension Version         |1.2.        |
+   |Extension Version         |1.2         |
    |Controller Compatibility  |4.4 or Later|
-   |Last Update               |29th September, 2018 |
+   |Last Update               |9th January, 2019 |
 
 List of changes to this extension can be found [here](https://github.com/Appdynamics/aws-elb-monitoring-extension/blob/master/CHANGELOG.md)
 

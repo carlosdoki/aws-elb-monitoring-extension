@@ -26,7 +26,7 @@ public class ELBMonitorTest {
         args.put("config-file", "src/test/resources/conf/itest-encrypted-config.yml");
 
         TaskOutput result = classUnderTest.execute(args, null);
-        assertTrue(result.getStatusMessage().contains("Monitor ELBMonitor completes."));
+        assertTrue(result.getStatusMessage().contains("Monitor {} completes."));
 
     }
 
@@ -36,7 +36,7 @@ public class ELBMonitorTest {
         args.put("config-file", "src/test/resources/conf/itest-proxy-config.yml");
 
         TaskOutput result = classUnderTest.execute(args, null);
-        assertTrue(result.getStatusMessage().contains("Monitor ELBMonitor completes."));
+        assertTrue(result.getStatusMessage().contains("Monitor {} completes."));
     }
 
 
