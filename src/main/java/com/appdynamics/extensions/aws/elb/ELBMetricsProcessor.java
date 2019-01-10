@@ -9,53 +9,47 @@
 package com.appdynamics.extensions.aws.elb;
 
 import com.amazonaws.services.cloudwatch.AmazonCloudWatch;
-import com.amazonaws.services.cloudwatch.model.Metric;
-import com.appdynamics.extensions.aws.config.MetricType;
+import com.appdynamics.extensions.aws.config.Dimension;
+import com.appdynamics.extensions.aws.config.IncludeMetric;
+import com.appdynamics.extensions.aws.dto.AWSMetric;
 import com.appdynamics.extensions.aws.metric.NamespaceMetricStatistics;
 import com.appdynamics.extensions.aws.metric.StatisticType;
 import com.appdynamics.extensions.aws.metric.processors.MetricsProcessor;
 import com.appdynamics.extensions.aws.metric.processors.MetricsProcessorHelper;
+import com.appdynamics.extensions.aws.predicate.MultiDimensionPredicate;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.regex.Pattern;
+import java.util.concurrent.atomic.LongAdder;
 
-/**
- * @author Satish Muddam
- */
+import static com.appdynamics.extensions.aws.elb.Constants.AWS_NAMESPACE;
+
 public class ELBMetricsProcessor implements MetricsProcessor {
+    private List<IncludeMetric> includeMetrics;
+    private List<Dimension> dimensions;
+    private static final String NAMESPACE = AWS_NAMESPACE;
 
-    private static final String NAMESPACE = "AWS/ELB";
-
-    private static final String[] DIMENSIONS = {"LoadBalancerName", "AvailabilityZone"};
-
-    private List<MetricType> metricTypes;
-
-    private Pattern excludeMetricsPattern;
-
-    public ELBMetricsProcessor(List<MetricType> metricTypes,
-                               Set<String> excludeMetrics) {
-        this.metricTypes = metricTypes;
-        this.excludeMetricsPattern = MetricsProcessorHelper.createPattern(excludeMetrics);
+    public ELBMetricsProcessor(List<IncludeMetric> includeMetrics, List<Dimension> dimensions) {
+        this.includeMetrics = includeMetrics;
+        this.dimensions = dimensions;
     }
 
-    public List<Metric> getMetrics(AmazonCloudWatch awsCloudWatch, String accountName) {
-        return MetricsProcessorHelper.getFilteredMetrics(awsCloudWatch,
-                NAMESPACE,
-                excludeMetricsPattern,
-                DIMENSIONS);
+    public List<AWSMetric> getMetrics(AmazonCloudWatch awsCloudWatch, String accountName, LongAdder awsRequestsCounter) {
+        MultiDimensionPredicate predicate = new MultiDimensionPredicate(dimensions);
+        return MetricsProcessorHelper.getFilteredMetrics(awsCloudWatch, awsRequestsCounter,
+                NAMESPACE, includeMetrics, null, predicate);
     }
 
-    public StatisticType getStatisticType(Metric metric) {
-        return MetricsProcessorHelper.getStatisticType(metric, metricTypes);
+    public StatisticType getStatisticType(AWSMetric metric) {
+        return MetricsProcessorHelper.getStatisticType(metric.getIncludeMetric(), includeMetrics);
     }
 
-    public Map<String, Double> createMetricStatsMapForUpload(NamespaceMetricStatistics namespaceMetricStats) {
+    public List<com.appdynamics.extensions.metrics.Metric> createMetricStatsMapForUpload(NamespaceMetricStatistics namespaceMetricStats) {
         Map<String, String> dimensionToMetricPathNameDictionary = new HashMap<String, String>();
-        dimensionToMetricPathNameDictionary.put(DIMENSIONS[0], "LoadBalancer Name");
-        dimensionToMetricPathNameDictionary.put(DIMENSIONS[1], "Availability Zone");
+        for (Dimension dimension : dimensions) {
+            dimensionToMetricPathNameDictionary.put(dimension.getName(), dimension.getDisplayName());
+        }
 
         return MetricsProcessorHelper.createMetricStatsMapForUpload(namespaceMetricStats,
                 dimensionToMetricPathNameDictionary, false);
@@ -64,5 +58,4 @@ public class ELBMetricsProcessor implements MetricsProcessor {
     public String getNamespace() {
         return NAMESPACE;
     }
-
 }
