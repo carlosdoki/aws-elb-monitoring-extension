@@ -1,6 +1,6 @@
 ### Version 1.2.1
 
-* Fixed dimension filter bug where dimensions were not being sent correctly
+* Fixed dimension filter bug where dimensions were not sent correctly
 
 ### Version 1.2
 
