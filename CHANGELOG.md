@@ -1,3 +1,8 @@
+### Version 1.2.2
+
+* Fixed memory leak issue identified with our AWS Commons Extensions
+
+
 ### Version 1.2.1
 
 * Fixed dimension filter bug where dimensions were not sent correctly
