@@ -1,3 +1,7 @@
+### Version 1.2.1
+
+* Fixed dimension filter bug where dimensions were not sent correctly
+
 ### Version 1.2
 
 * Porting to aws-cloudwatch-exts-commons 2.0.0
