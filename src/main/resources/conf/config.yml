@@ -33,6 +33,10 @@ proxyConfig:
 
 # Classic (namespace : "AWS/ELB")
 # Dimensions : AvailabilityZone, LoadBalancerName
+# Filters metrics based on provided Dimension values.
+# Accepts comma separated values and regex patterns.
+# If `values:[".*"]` is used, all are monitored,
+# If `values:[]` is used, none are monitored
 
 dimensions:
    - name: "LoadBalancerName"
