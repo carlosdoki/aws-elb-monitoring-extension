@@ -1,3 +1,6 @@
+### Version 2.0.0
+Updated aws-cloudwatch-exts-commons from 2.0.0 to 2.2.0
+
 ### Version 1.2.2
 
 * Fixed memory leak issue identified with our AWS Commons Extensions
