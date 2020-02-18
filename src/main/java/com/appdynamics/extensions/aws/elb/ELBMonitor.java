@@ -11,13 +11,15 @@ package com.appdynamics.extensions.aws.elb;
 import com.appdynamics.extensions.aws.SingleNamespaceCloudwatchMonitor;
 import com.appdynamics.extensions.aws.collectors.NamespaceMetricStatisticsCollector;
 import com.appdynamics.extensions.aws.config.Configuration;
+import static com.appdynamics.extensions.aws.elb.Constants.AMAZON_SERVICE;
+import static com.appdynamics.extensions.aws.elb.Constants.CUSTOM_METRICS;
+import static com.appdynamics.extensions.aws.elb.Constants.MONITOR_NAME;
 import com.appdynamics.extensions.aws.metric.processors.MetricsProcessor;
+import com.google.common.collect.Lists;
 import org.apache.log4j.Logger;
 
 import java.util.List;
 import java.util.Map;
-
-import static com.appdynamics.extensions.aws.elb.Constants.*;
 
 /**
  * @author Bhuvnesh Kumar
@@ -44,8 +46,8 @@ public class ELBMonitor extends SingleNamespaceCloudwatchMonitor<Configuration> 
     }
 
     @Override
-    protected int getTaskCount() {
-        return 3;
+    protected List<Map<String, ?>> getServers() {
+        return Lists.newArrayList();
     }
 
     @Override
