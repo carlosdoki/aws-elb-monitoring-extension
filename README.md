@@ -1,4 +1,4 @@
-# AppDynamics Monitoring Extension for use with AWS Classic Elastic Load Balancers
+# AppDynamics Monitoring Extension for use with AWS Elastic Load Balancers
 
 ## Use Case
 
@@ -166,7 +166,6 @@ The following is a step-by-step explanation of the configurable fields that are 
     ```
 10. The maximum number of retry attempts for failed requests that can be retried.
 
-
     ```
     maxErrorRetrySize: 3
     ```
@@ -227,7 +226,7 @@ Always feel free to fork and contribute any changes directly here on [GitHub](ht
 
 | Name                     | Version        |
 | ------------------------ | -------------- |
-| Extension Version        | 2.0.2          |
+| Extension Version        | 2.2.2          |
 | Controller Compatibility | 4.4 or Later   |
 | Last Update              | March 24, 2021 |
 
